@@ -1,0 +1,4343 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+.gitignore
+eslint.config.js
+index.html
+package.json
+public/favicon.svg
+public/icons.svg
+README.md
+src/App.jsx
+src/assets/hero.png
+src/assets/react.svg
+src/assets/vite.svg
+src/components/Breadcrumb.jsx
+src/components/ChallengeCard.jsx
+src/components/ChallengeGrid.jsx
+src/components/ChartCard.jsx
+src/components/charts/BarChartBox.jsx
+src/components/charts/chartTheme.js
+src/components/charts/ComparisonChart.jsx
+src/components/charts/DonutChartBox.jsx
+src/components/charts/HorizontalBarChart.jsx
+src/components/charts/LineChartBox.jsx
+src/components/charts/PieChartBox.jsx
+src/components/DataCard.jsx
+src/components/DataGrid.jsx
+src/components/FinalReflection.jsx
+src/components/Footer.jsx
+src/components/Header.jsx
+src/components/Hero.jsx
+src/components/InsightCard.jsx
+src/components/PageHero.jsx
+src/components/PageLayout.jsx
+src/components/ResponsiveTable.jsx
+src/components/SectionIntro.jsx
+src/components/StatCard.jsx
+src/components/TopicImage.jsx
+src/components/TopicPageScaffold.jsx
+src/components/TopicSection.jsx
+src/components/VisualPanel.jsx
+src/data/challenges.js
+src/data/chartData.js
+src/data/keyStats.js
+src/data/navigation.js
+src/data/topicImages.js
+src/data/topics.js
+src/hooks/useRevealOnScroll.js
+src/main.jsx
+src/pages/Agua.jsx
+src/pages/Datos.jsx
+src/pages/Economia.jsx
+src/pages/Educacion.jsx
+src/pages/Home.jsx
+src/pages/Instituciones.jsx
+src/pages/NotFound.jsx
+src/pages/Pemex.jsx
+src/pages/Salud.jsx
+src/pages/Seguridad.jsx
+src/pages/Sociedad.jsx
+src/styles/charts.css
+src/styles/components.css
+src/styles/index.css
+src/styles/pages.css
+src/styles/responsive.css
+src/styles/variables.css
+vite.config.js
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path=".gitignore">
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+</file>
+
+<file path="eslint.config.js">
+import js from '@eslint/js'
+import globals from 'globals'
+import reactHooks from 'eslint-plugin-react-hooks'
+import reactRefresh from 'eslint-plugin-react-refresh'
+import { defineConfig, globalIgnores } from 'eslint/config'
+
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{js,jsx}'],
+    extends: [
+      js.configs.recommended,
+      reactHooks.configs.flat.recommended,
+      reactRefresh.configs.vite,
+    ],
+    languageOptions: {
+      globals: globals.browser,
+      parserOptions: { ecmaFeatures: { jsx: true } },
+    },
+  },
+])
+</file>
+
+<file path="index.html">
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Página informativa sobre los principales retos económicos, sociales, institucionales y ambientales que enfrenta México en el presente."
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Source+Serif+4:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Problemas y retos de el México presente</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+</file>
+
+<file path="package.json">
+{
+  "name": "mexico-presente",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "bootstrap-icons": "^1.13.1",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "react-router-dom": "^7.17.0",
+    "recharts": "^3.8.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "eslint": "^10.3.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.6.0",
+    "vite": "^8.0.12"
+  }
+}
+</file>
+
+<file path="public/favicon.svg">
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="46" fill="none" viewBox="0 0 48 46"><path fill="#863bff" d="M25.946 44.938c-.664.845-2.021.375-2.021-.698V33.937a2.26 2.26 0 0 0-2.262-2.262H10.287c-.92 0-1.456-1.04-.92-1.788l7.48-10.471c1.07-1.497 0-3.578-1.842-3.578H1.237c-.92 0-1.456-1.04-.92-1.788L10.013.474c.214-.297.556-.474.92-.474h28.894c.92 0 1.456 1.04.92 1.788l-7.48 10.471c-1.07 1.498 0 3.579 1.842 3.579h11.377c.943 0 1.473 1.088.89 1.83L25.947 44.94z" style="fill:#863bff;fill:color(display-p3 .5252 .23 1);fill-opacity:1"/><mask id="a" width="48" height="46" x="0" y="0" maskUnits="userSpaceOnUse" style="mask-type:alpha"><path fill="#000" d="M25.842 44.938c-.664.844-2.021.375-2.021-.698V33.937a2.26 2.26 0 0 0-2.262-2.262H10.183c-.92 0-1.456-1.04-.92-1.788l7.48-10.471c1.07-1.498 0-3.579-1.842-3.579H1.133c-.92 0-1.456-1.04-.92-1.787L9.91.473c.214-.297.556-.474.92-.474h28.894c.92 0 1.456 1.04.92 1.788l-7.48 10.471c-1.07 1.498 0 3.578 1.842 3.578h11.377c.943 0 1.473 1.088.89 1.832L25.843 44.94z" style="fill:#000;fill-opacity:1"/></mask><g mask="url(#a)"><g filter="url(#b)"><ellipse cx="5.508" cy="14.704" fill="#ede6ff" rx="5.508" ry="14.704" style="fill:#ede6ff;fill:color(display-p3 .9275 .9033 1);fill-opacity:1" transform="matrix(.00324 1 1 -.00324 -4.47 31.516)"/></g><g filter="url(#c)"><ellipse cx="10.399" cy="29.851" fill="#ede6ff" rx="10.399" ry="29.851" style="fill:#ede6ff;fill:color(display-p3 .9275 .9033 1);fill-opacity:1" transform="matrix(.00324 1 1 -.00324 -39.328 7.883)"/></g><g filter="url(#d)"><ellipse cx="5.508" cy="30.487" fill="#7e14ff" rx="5.508" ry="30.487" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(89.814 -25.913 -14.639)scale(1 -1)"/></g><g filter="url(#e)"><ellipse cx="5.508" cy="30.599" fill="#7e14ff" rx="5.508" ry="30.599" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(89.814 -32.644 -3.334)scale(1 -1)"/></g><g filter="url(#f)"><ellipse cx="5.508" cy="30.599" fill="#7e14ff" rx="5.508" ry="30.599" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="matrix(.00324 1 1 -.00324 -34.34 30.47)"/></g><g filter="url(#g)"><ellipse cx="14.072" cy="22.078" fill="#ede6ff" rx="14.072" ry="22.078" style="fill:#ede6ff;fill:color(display-p3 .9275 .9033 1);fill-opacity:1" transform="rotate(93.35 24.506 48.493)scale(-1 1)"/></g><g filter="url(#h)"><ellipse cx="3.47" cy="21.501" fill="#7e14ff" rx="3.47" ry="21.501" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(89.009 28.708 47.59)scale(-1 1)"/></g><g filter="url(#i)"><ellipse cx="3.47" cy="21.501" fill="#7e14ff" rx="3.47" ry="21.501" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(89.009 28.708 47.59)scale(-1 1)"/></g><g filter="url(#j)"><ellipse cx=".387" cy="8.972" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(39.51 .387 8.972)"/></g><g filter="url(#k)"><ellipse cx="47.523" cy="-6.092" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(37.892 47.523 -6.092)"/></g><g filter="url(#l)"><ellipse cx="41.412" cy="6.333" fill="#47bfff" rx="5.971" ry="9.665" style="fill:#47bfff;fill:color(display-p3 .2799 .748 1);fill-opacity:1" transform="rotate(37.892 41.412 6.333)"/></g><g filter="url(#m)"><ellipse cx="-1.879" cy="38.332" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(37.892 -1.88 38.332)"/></g><g filter="url(#n)"><ellipse cx="-1.879" cy="38.332" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(37.892 -1.88 38.332)"/></g><g filter="url(#o)"><ellipse cx="35.651" cy="29.907" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(37.892 35.651 29.907)"/></g><g filter="url(#p)"><ellipse cx="38.418" cy="32.4" fill="#47bfff" rx="5.971" ry="15.297" style="fill:#47bfff;fill:color(display-p3 .2799 .748 1);fill-opacity:1" transform="rotate(37.892 38.418 32.4)"/></g></g><defs><filter id="b" width="60.045" height="41.654" x="-19.77" y="16.149" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="7.659"/></filter><filter id="c" width="90.34" height="51.437" x="-54.613" y="-7.533" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="7.659"/></filter><filter id="d" width="79.355" height="29.4" x="-49.64" y="2.03" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="e" width="79.579" height="29.4" x="-45.045" y="20.029" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="f" width="79.579" height="29.4" x="-43.513" y="21.178" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="g" width="74.749" height="58.852" x="15.756" y="-17.901" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="7.659"/></filter><filter id="h" width="61.377" height="25.362" x="23.548" y="2.284" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="i" width="61.377" height="25.362" x="23.548" y="2.284" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="j" width="56.045" height="63.649" x="-27.636" y="-22.853" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="k" width="54.814" height="64.646" x="20.116" y="-38.415" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="l" width="33.541" height="35.313" x="24.641" y="-11.323" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="m" width="54.814" height="64.646" x="-29.286" y="6.009" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="n" width="54.814" height="64.646" x="-29.286" y="6.009" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="o" width="54.814" height="64.646" x="8.244" y="-2.416" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="p" width="39.409" height="43.623" x="18.713" y="10.588" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter></defs></svg>
+</file>
+
+<file path="public/icons.svg">
+<svg xmlns="http://www.w3.org/2000/svg">
+  <symbol id="bluesky-icon" viewBox="0 0 16 17">
+    <g clip-path="url(#bluesky-clip)"><path fill="#08060d" d="M7.75 7.735c-.693-1.348-2.58-3.86-4.334-5.097-1.68-1.187-2.32-.981-2.74-.79C.188 2.065.1 2.812.1 3.251s.241 3.602.398 4.13c.52 1.744 2.367 2.333 4.07 2.145-2.495.37-4.71 1.278-1.805 4.512 3.196 3.309 4.38-.71 4.987-2.746.608 2.036 1.307 5.91 4.93 2.746 2.72-2.746.747-4.143-1.747-4.512 1.702.189 3.55-.4 4.07-2.145.156-.528.397-3.691.397-4.13s-.088-1.186-.575-1.406c-.42-.19-1.06-.395-2.741.79-1.755 1.24-3.64 3.752-4.334 5.099"/></g>
+    <defs><clipPath id="bluesky-clip"><path fill="#fff" d="M.1.85h15.3v15.3H.1z"/></clipPath></defs>
+  </symbol>
+  <symbol id="discord-icon" viewBox="0 0 20 19">
+    <path fill="#08060d" d="M16.224 3.768a14.5 14.5 0 0 0-3.67-1.153c-.158.286-.343.67-.47.976a13.5 13.5 0 0 0-4.067 0c-.128-.306-.317-.69-.476-.976A14.4 14.4 0 0 0 3.868 3.77C1.546 7.28.916 10.703 1.231 14.077a14.7 14.7 0 0 0 4.5 2.306q.545-.748.965-1.587a9.5 9.5 0 0 1-1.518-.74q.191-.14.372-.293c2.927 1.369 6.107 1.369 8.999 0q.183.152.372.294-.723.437-1.52.74.418.838.963 1.588a14.6 14.6 0 0 0 4.504-2.308c.37-3.911-.63-7.302-2.644-10.309m-9.13 8.234c-.878 0-1.599-.82-1.599-1.82 0-.998.705-1.82 1.6-1.82.894 0 1.614.82 1.599 1.82.001 1-.705 1.82-1.6 1.82m5.91 0c-.878 0-1.599-.82-1.599-1.82 0-.998.705-1.82 1.6-1.82.893 0 1.614.82 1.599 1.82 0 1-.706 1.82-1.6 1.82"/>
+  </symbol>
+  <symbol id="documentation-icon" viewBox="0 0 21 20">
+    <path fill="none" stroke="#aa3bff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.35" d="m15.5 13.333 1.533 1.322c.645.555.967.833.967 1.178s-.322.623-.967 1.179L15.5 18.333m-3.333-5-1.534 1.322c-.644.555-.966.833-.966 1.178s.322.623.966 1.179l1.534 1.321"/>
+    <path fill="none" stroke="#aa3bff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.35" d="M17.167 10.836v-4.32c0-1.41 0-2.117-.224-2.68-.359-.906-1.118-1.621-2.08-1.96-.599-.21-1.349-.21-2.848-.21-2.623 0-3.935 0-4.983.369-1.684.591-3.013 1.842-3.641 3.428C3 6.449 3 7.684 3 10.154v2.122c0 2.558 0 3.838.706 4.726q.306.383.713.671c.76.536 1.79.64 3.581.66"/>
+    <path fill="none" stroke="#aa3bff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.35" d="M3 10a2.78 2.78 0 0 1 2.778-2.778c.555 0 1.209.097 1.748-.047.48-.129.854-.503.982-.982.145-.54.048-1.194.048-1.749a2.78 2.78 0 0 1 2.777-2.777"/>
+  </symbol>
+  <symbol id="github-icon" viewBox="0 0 19 19">
+    <path fill="#08060d" fill-rule="evenodd" d="M9.356 1.85C5.05 1.85 1.57 5.356 1.57 9.694a7.84 7.84 0 0 0 5.324 7.44c.387.079.528-.168.528-.376 0-.182-.013-.805-.013-1.454-2.165.467-2.616-.935-2.616-.935-.349-.91-.864-1.143-.864-1.143-.71-.48.051-.48.051-.48.787.051 1.2.805 1.2.805.695 1.194 1.817.857 2.268.649.064-.507.27-.857.49-1.052-1.728-.182-3.545-.857-3.545-3.87 0-.857.31-1.558.8-2.104-.078-.195-.349-1 .077-2.078 0 0 .657-.208 2.14.805a7.5 7.5 0 0 1 1.946-.26c.657 0 1.328.092 1.946.26 1.483-1.013 2.14-.805 2.14-.805.426 1.078.155 1.883.078 2.078.502.546.799 1.247.799 2.104 0 3.013-1.818 3.675-3.558 3.87.284.247.528.714.528 1.454 0 1.052-.012 1.896-.012 2.156 0 .208.142.455.528.377a7.84 7.84 0 0 0 5.324-7.441c.013-4.338-3.48-7.844-7.773-7.844" clip-rule="evenodd"/>
+  </symbol>
+  <symbol id="social-icon" viewBox="0 0 20 20">
+    <path fill="none" stroke="#aa3bff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.35" d="M12.5 6.667a4.167 4.167 0 1 0-8.334 0 4.167 4.167 0 0 0 8.334 0"/>
+    <path fill="none" stroke="#aa3bff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.35" d="M2.5 16.667a5.833 5.833 0 0 1 8.75-5.053m3.837.474.513 1.035c.07.144.257.282.414.309l.93.155c.596.1.736.536.307.965l-.723.73a.64.64 0 0 0-.152.531l.207.903c.164.715-.213.991-.84.618l-.872-.52a.63.63 0 0 0-.577 0l-.872.52c-.624.373-1.003.094-.84-.618l.207-.903a.64.64 0 0 0-.152-.532l-.723-.729c-.426-.43-.289-.864.306-.964l.93-.156a.64.64 0 0 0 .412-.31l.513-1.034c.28-.562.735-.562 1.012 0"/>
+  </symbol>
+  <symbol id="x-icon" viewBox="0 0 19 19">
+    <path fill="#08060d" fill-rule="evenodd" d="M1.893 1.98c.052.072 1.245 1.769 2.653 3.77l2.892 4.114c.183.261.333.48.333.486s-.068.089-.152.183l-.522.593-.765.867-3.597 4.087c-.375.426-.734.834-.798.905a1 1 0 0 0-.118.148c0 .01.236.017.664.017h.663l.729-.83c.4-.457.796-.906.879-.999a692 692 0 0 0 1.794-2.038c.034-.037.301-.34.594-.675l.551-.624.345-.392a7 7 0 0 1 .34-.374c.006 0 .93 1.306 2.052 2.903l2.084 2.965.045.063h2.275c1.87 0 2.273-.003 2.266-.021-.008-.02-1.098-1.572-3.894-5.547-2.013-2.862-2.28-3.246-2.273-3.266.008-.019.282-.332 2.085-2.38l2-2.274 1.567-1.782c.022-.028-.016-.03-.65-.03h-.674l-.3.342a871 871 0 0 1-1.782 2.025c-.067.075-.405.458-.75.852a100 100 0 0 1-.803.91c-.148.172-.299.344-.99 1.127-.304.343-.32.358-.345.327-.015-.019-.904-1.282-1.976-2.808L6.365 1.85H1.8zm1.782.91 8.078 11.294c.772 1.08 1.413 1.973 1.425 1.984.016.017.241.02 1.05.017l1.03-.004-2.694-3.766L7.796 5.75 5.722 2.852l-1.039-.004-1.039-.004z" clip-rule="evenodd"/>
+  </symbol>
+</svg>
+</file>
+
+<file path="README.md">
+# Problemas y retos de el México presente
+
+Aplicación editorial creada con React, Vite, Bootstrap 5, Bootstrap Icons, React Router y Recharts. El sitio organiza los temas en rutas internas y presenta los datos mediante gráficas y visualizaciones.
+
+## Instalar dependencias
+
+```bash
+npm install
+```
+
+## Correr en desarrollo
+
+```bash
+npm run dev
+```
+
+## Compilar para producción
+
+```bash
+npm run build
+```
+
+## Cambiar imágenes
+
+Todas las URLs de imágenes están en:
+
+```txt
+src/data/topicImages.js
+```
+
+Cada entrada incluye `src`, `alt` y `caption`. Cambia solo ese archivo para reemplazar imágenes por tema.
+
+## Editar datos de gráficas
+
+Los datos usados por Recharts están centralizados en:
+
+```txt
+src/data/chartData.js
+```
+
+Ahí se pueden ajustar proyecciones, porcentajes y comparativas sin tocar los componentes visuales.
+
+## Editar contenido principal
+
+El contenido temático está en:
+
+```txt
+src/data/topics.js
+src/data/navigation.js
+```
+
+Las páginas están en:
+
+```txt
+src/pages/
+```
+
+Los componentes reutilizables están en:
+
+```txt
+src/components/
+src/components/charts/
+```
+
+Los estilos personalizados están en:
+
+```txt
+src/styles/
+```
+</file>
+
+<file path="src/App.jsx">
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
+import Footer from './components/Footer'
+import Header from './components/Header'
+import Agua from './pages/Agua'
+import Datos from './pages/Datos'
+import Economia from './pages/Economia'
+import Educacion from './pages/Educacion'
+import Home from './pages/Home'
+import Instituciones from './pages/Instituciones'
+import NotFound from './pages/NotFound'
+import Pemex from './pages/Pemex'
+import Salud from './pages/Salud'
+import Seguridad from './pages/Seguridad'
+import Sociedad from './pages/Sociedad'
+import { useRevealOnScroll } from './hooks/useRevealOnScroll'
+
+function AppRoutes() {
+  const location = useLocation()
+  useRevealOnScroll(location.pathname)
+
+  return (
+    <>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/economia" element={<Economia />} />
+        <Route path="/pemex" element={<Pemex />} />
+        <Route path="/instituciones" element={<Instituciones />} />
+        <Route path="/seguridad" element={<Seguridad />} />
+        <Route path="/sociedad" element={<Sociedad />} />
+        <Route path="/educacion" element={<Educacion />} />
+        <Route path="/agua" element={<Agua />} />
+        <Route path="/salud" element={<Salud />} />
+        <Route path="/datos" element={<Datos />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      <Footer />
+    </>
+  )
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <div className="site-shell">
+        <AppRoutes />
+      </div>
+    </BrowserRouter>
+  )
+}
+
+export default App
+</file>
+
+<file path="src/assets/react.svg">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--logos" width="35.93" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 228"><path fill="#00D8FF" d="M210.483 73.824a171.49 171.49 0 0 0-8.24-2.597c.465-1.9.893-3.777 1.273-5.621c6.238-30.281 2.16-54.676-11.769-62.708c-13.355-7.7-35.196.329-57.254 19.526a171.23 171.23 0 0 0-6.375 5.848a155.866 155.866 0 0 0-4.241-3.917C100.759 3.829 77.587-4.822 63.673 3.233C50.33 10.957 46.379 33.89 51.995 62.588a170.974 170.974 0 0 0 1.892 8.48c-3.28.932-6.445 1.924-9.474 2.98C17.309 83.498 0 98.307 0 113.668c0 15.865 18.582 31.778 46.812 41.427a145.52 145.52 0 0 0 6.921 2.165a167.467 167.467 0 0 0-2.01 9.138c-5.354 28.2-1.173 50.591 12.134 58.266c13.744 7.926 36.812-.22 59.273-19.855a145.567 145.567 0 0 0 5.342-4.923a168.064 168.064 0 0 0 6.92 6.314c21.758 18.722 43.246 26.282 56.54 18.586c13.731-7.949 18.194-32.003 12.4-61.268a145.016 145.016 0 0 0-1.535-6.842c1.62-.48 3.21-.974 4.76-1.488c29.348-9.723 48.443-25.443 48.443-41.52c0-15.417-17.868-30.326-45.517-39.844Zm-6.365 70.984c-1.4.463-2.836.91-4.3 1.345c-3.24-10.257-7.612-21.163-12.963-32.432c5.106-11 9.31-21.767 12.459-31.957c2.619.758 5.16 1.557 7.61 2.4c23.69 8.156 38.14 20.213 38.14 29.504c0 9.896-15.606 22.743-40.946 31.14Zm-10.514 20.834c2.562 12.94 2.927 24.64 1.23 33.787c-1.524 8.219-4.59 13.698-8.382 15.893c-8.067 4.67-25.32-1.4-43.927-17.412a156.726 156.726 0 0 1-6.437-5.87c7.214-7.889 14.423-17.06 21.459-27.246c12.376-1.098 24.068-2.894 34.671-5.345a134.17 134.17 0 0 1 1.386 6.193ZM87.276 214.515c-7.882 2.783-14.16 2.863-17.955.675c-8.075-4.657-11.432-22.636-6.853-46.752a156.923 156.923 0 0 1 1.869-8.499c10.486 2.32 22.093 3.988 34.498 4.994c7.084 9.967 14.501 19.128 21.976 27.15a134.668 134.668 0 0 1-4.877 4.492c-9.933 8.682-19.886 14.842-28.658 17.94ZM50.35 144.747c-12.483-4.267-22.792-9.812-29.858-15.863c-6.35-5.437-9.555-10.836-9.555-15.216c0-9.322 13.897-21.212 37.076-29.293c2.813-.98 5.757-1.905 8.812-2.773c3.204 10.42 7.406 21.315 12.477 32.332c-5.137 11.18-9.399 22.249-12.634 32.792a134.718 134.718 0 0 1-6.318-1.979Zm12.378-84.26c-4.811-24.587-1.616-43.134 6.425-47.789c8.564-4.958 27.502 2.111 47.463 19.835a144.318 144.318 0 0 1 3.841 3.545c-7.438 7.987-14.787 17.08-21.808 26.988c-12.04 1.116-23.565 2.908-34.161 5.309a160.342 160.342 0 0 1-1.76-7.887Zm110.427 27.268a347.8 347.8 0 0 0-7.785-12.803c8.168 1.033 15.994 2.404 23.343 4.08c-2.206 7.072-4.956 14.465-8.193 22.045a381.151 381.151 0 0 0-7.365-13.322Zm-45.032-43.861c5.044 5.465 10.096 11.566 15.065 18.186a322.04 322.04 0 0 0-30.257-.006c4.974-6.559 10.069-12.652 15.192-18.18ZM82.802 87.83a323.167 323.167 0 0 0-7.227 13.238c-3.184-7.553-5.909-14.98-8.134-22.152c7.304-1.634 15.093-2.97 23.209-3.984a321.524 321.524 0 0 0-7.848 12.897Zm8.081 65.352c-8.385-.936-16.291-2.203-23.593-3.793c2.26-7.3 5.045-14.885 8.298-22.6a321.187 321.187 0 0 0 7.257 13.246c2.594 4.48 5.28 8.868 8.038 13.147Zm37.542 31.03c-5.184-5.592-10.354-11.779-15.403-18.433c4.902.192 9.899.29 14.978.29c5.218 0 10.376-.117 15.453-.343c-4.985 6.774-10.018 12.97-15.028 18.486Zm52.198-57.817c3.422 7.8 6.306 15.345 8.596 22.52c-7.422 1.694-15.436 3.058-23.88 4.071a382.417 382.417 0 0 0 7.859-13.026a347.403 347.403 0 0 0 7.425-13.565Zm-16.898 8.101a358.557 358.557 0 0 1-12.281 19.815a329.4 329.4 0 0 1-23.444.823c-7.967 0-15.716-.248-23.178-.732a310.202 310.202 0 0 1-12.513-19.846h.001a307.41 307.41 0 0 1-10.923-20.627a310.278 310.278 0 0 1 10.89-20.637l-.001.001a307.318 307.318 0 0 1 12.413-19.761c7.613-.576 15.42-.876 23.31-.876H128c7.926 0 15.743.303 23.354.883a329.357 329.357 0 0 1 12.335 19.695a358.489 358.489 0 0 1 11.036 20.54a329.472 329.472 0 0 1-11 20.722Zm22.56-122.124c8.572 4.944 11.906 24.881 6.52 51.026c-.344 1.668-.73 3.367-1.15 5.09c-10.622-2.452-22.155-4.275-34.23-5.408c-7.034-10.017-14.323-19.124-21.64-27.008a160.789 160.789 0 0 1 5.888-5.4c18.9-16.447 36.564-22.941 44.612-18.3ZM128 90.808c12.625 0 22.86 10.235 22.86 22.86s-10.235 22.86-22.86 22.86s-22.86-10.235-22.86-22.86s10.235-22.86 22.86-22.86Z"></path></svg>
+</file>
+
+<file path="src/assets/vite.svg">
+<svg xmlns="http://www.w3.org/2000/svg" width="77" height="47" fill="none" aria-labelledby="vite-logo-title" viewBox="0 0 77 47"><title id="vite-logo-title">Vite</title><style>.parenthesis{fill:#000}@media (prefers-color-scheme:dark){.parenthesis{fill:#fff}}</style><path fill="#9135ff" d="M40.151 45.71c-.663.844-2.02.374-2.02-.699V34.708a2.26 2.26 0 0 0-2.262-2.262H24.493c-.92 0-1.457-1.04-.92-1.788l7.479-10.471c1.07-1.498 0-3.578-1.842-3.578H15.443c-.92 0-1.456-1.04-.92-1.788l9.696-13.576c.213-.297.556-.474.92-.474h28.894c.92 0 1.456 1.04.92 1.788l-7.48 10.472c-1.07 1.497 0 3.578 1.842 3.578h11.376c.944 0 1.474 1.087.89 1.83L40.153 45.712z"/><mask id="a" width="48" height="47" x="14" y="0" maskUnits="userSpaceOnUse" style="mask-type:alpha"><path fill="#000" d="M40.047 45.71c-.663.843-2.02.374-2.02-.699V34.708a2.26 2.26 0 0 0-2.262-2.262H24.389c-.92 0-1.457-1.04-.92-1.788l7.479-10.472c1.07-1.497 0-3.578-1.842-3.578H15.34c-.92 0-1.456-1.04-.92-1.788l9.696-13.575c.213-.297.556-.474.92-.474H53.93c.92 0 1.456 1.04.92 1.788L47.37 13.03c-1.07 1.498 0 3.578 1.842 3.578h11.376c.944 0 1.474 1.088.89 1.831L40.049 45.712z"/></mask><g mask="url(#a)"><g filter="url(#b)"><ellipse cx="5.508" cy="14.704" fill="#eee6ff" rx="5.508" ry="14.704" transform="rotate(269.814 20.96 11.29)scale(-1 1)"/></g><g filter="url(#c)"><ellipse cx="10.399" cy="29.851" fill="#eee6ff" rx="10.399" ry="29.851" transform="rotate(89.814 -16.902 -8.275)scale(1 -1)"/></g><g filter="url(#d)"><ellipse cx="5.508" cy="30.487" fill="#8900ff" rx="5.508" ry="30.487" transform="rotate(89.814 -19.197 -7.127)scale(1 -1)"/></g><g filter="url(#e)"><ellipse cx="5.508" cy="30.599" fill="#8900ff" rx="5.508" ry="30.599" transform="rotate(89.814 -25.928 4.177)scale(1 -1)"/></g><g filter="url(#f)"><ellipse cx="5.508" cy="30.599" fill="#8900ff" rx="5.508" ry="30.599" transform="rotate(89.814 -25.738 5.52)scale(1 -1)"/></g><g filter="url(#g)"><ellipse cx="14.072" cy="22.078" fill="#eee6ff" rx="14.072" ry="22.078" transform="rotate(93.35 31.245 55.578)scale(-1 1)"/></g><g filter="url(#h)"><ellipse cx="3.47" cy="21.501" fill="#8900ff" rx="3.47" ry="21.501" transform="rotate(89.009 35.419 55.202)scale(-1 1)"/></g><g filter="url(#i)"><ellipse cx="3.47" cy="21.501" fill="#8900ff" rx="3.47" ry="21.501" transform="rotate(89.009 35.419 55.202)scale(-1 1)"/></g><g filter="url(#j)"><ellipse cx="14.592" cy="9.743" fill="#8900ff" rx="4.407" ry="29.108" transform="rotate(39.51 14.592 9.743)"/></g><g filter="url(#k)"><ellipse cx="61.728" cy="-5.321" fill="#8900ff" rx="4.407" ry="29.108" transform="rotate(37.892 61.728 -5.32)"/></g><g filter="url(#l)"><ellipse cx="55.618" cy="7.104" fill="#00c2ff" rx="5.971" ry="9.665" transform="rotate(37.892 55.618 7.104)"/></g><g filter="url(#m)"><ellipse cx="12.326" cy="39.103" fill="#8900ff" rx="4.407" ry="29.108" transform="rotate(37.892 12.326 39.103)"/></g><g filter="url(#n)"><ellipse cx="12.326" cy="39.103" fill="#8900ff" rx="4.407" ry="29.108" transform="rotate(37.892 12.326 39.103)"/></g><g filter="url(#o)"><ellipse cx="49.857" cy="30.678" fill="#8900ff" rx="4.407" ry="29.108" transform="rotate(37.892 49.857 30.678)"/></g><g filter="url(#p)"><ellipse cx="52.623" cy="33.171" fill="#00c2ff" rx="5.971" ry="15.297" transform="rotate(37.892 52.623 33.17)"/></g></g><path d="M6.919 0c-9.198 13.166-9.252 33.575 0 46.789h6.215c-9.25-13.214-9.196-33.623 0-46.789zm62.424 0h-6.215c9.198 13.166 9.252 33.575 0 46.789h6.215c9.25-13.214 9.196-33.623 0-46.789" class="parenthesis"/><defs><filter id="b" width="60.045" height="41.654" x="-5.564" y="16.92" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="7.659"/></filter><filter id="c" width="90.34" height="51.437" x="-40.407" y="-6.762" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="7.659"/></filter><filter id="d" width="79.355" height="29.4" x="-35.435" y="2.801" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="e" width="79.579" height="29.4" x="-30.84" y="20.8" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="f" width="79.579" height="29.4" x="-29.307" y="21.949" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="g" width="74.749" height="58.852" x="29.961" y="-17.13" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="7.659"/></filter><filter id="h" width="61.377" height="25.362" x="37.754" y="3.055" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="i" width="61.377" height="25.362" x="37.754" y="3.055" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="j" width="56.045" height="63.649" x="-13.43" y="-22.082" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="k" width="54.814" height="64.646" x="34.321" y="-37.644" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="l" width="33.541" height="35.313" x="38.847" y="-10.552" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="m" width="54.814" height="64.646" x="-15.081" y="6.78" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="n" width="54.814" height="64.646" x="-15.081" y="6.78" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="o" width="54.814" height="64.646" x="22.45" y="-1.645" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="p" width="39.409" height="43.623" x="32.919" y="11.36" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter></defs></svg>
+</file>
+
+<file path="src/components/Breadcrumb.jsx">
+import { Link } from 'react-router-dom'
+
+function Breadcrumb({ current }) {
+  return (
+    <nav className="breadcrumb-nav" aria-label="Ruta de navegación">
+      <Link to="/">Inicio</Link>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">{current}</span>
+    </nav>
+  )
+}
+
+export default Breadcrumb
+</file>
+
+<file path="src/components/ChallengeCard.jsx">
+function ChallengeCard({ challenge }) {
+  return (
+    <article className="challenge-card reveal">
+      <div className="card-icon" aria-hidden="true">
+        <i className={`bi ${challenge.icon}`}></i>
+      </div>
+      <span className="chip">{challenge.category}</span>
+      <h3>{challenge.title}</h3>
+      <p>{challenge.description}</p>
+    </article>
+  )
+}
+
+export default ChallengeCard
+</file>
+
+<file path="src/components/ChallengeGrid.jsx">
+import { challenges } from '../data/challenges'
+import ChallengeCard from './ChallengeCard'
+
+function ChallengeGrid() {
+  return (
+    <div className="row g-4 challenge-grid">
+      {challenges.map((challenge) => (
+        <div className="col-md-6 col-lg-4" key={challenge.title}>
+          <ChallengeCard challenge={challenge} />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export default ChallengeGrid
+</file>
+
+<file path="src/components/ChartCard.jsx">
+function ChartCard({ title, description, children, note }) {
+  return (
+    <article className="chart-card reveal">
+      <div className="chart-header">
+        <h3>{title}</h3>
+        {description ? <p>{description}</p> : null}
+      </div>
+      <div className="chart-frame">{children}</div>
+      {note ? <p className="chart-note">{note}</p> : null}
+    </article>
+  )
+}
+
+export default ChartCard
+</file>
+
+<file path="src/components/charts/BarChartBox.jsx">
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts'
+import ChartCard from '../ChartCard'
+import { chartColors, commonTooltipStyle, formatNumber } from './chartTheme'
+
+function BarChartBox({ data, xKey, yKey, title, description, note, unit = '' }) {
+  return (
+    <ChartCard title={title} description={description} note={note}>
+      <ResponsiveContainer width="100%" height={280}>
+        <BarChart data={data} margin={{ top: 12, right: 12, left: 0, bottom: 8 }}>
+          <CartesianGrid stroke={chartColors.grid} strokeDasharray="3 3" />
+          <XAxis dataKey={xKey} tick={{ fill: chartColors.text }} />
+          <YAxis tick={{ fill: chartColors.text }} tickFormatter={formatNumber} />
+          <Tooltip
+            contentStyle={commonTooltipStyle}
+            formatter={(value) => [`${formatNumber(value)}${unit ? ` ${unit}` : ''}`, 'Valor']}
+          />
+          <Bar dataKey={yKey} fill={chartColors.primary} radius={[4, 4, 0, 0]} />
+        </BarChart>
+      </ResponsiveContainer>
+    </ChartCard>
+  )
+}
+
+export default BarChartBox
+</file>
+
+<file path="src/components/charts/chartTheme.js">
+export const chartColors = {
+  primary: '#18241b',
+  secondary: '#904b36',
+  tertiary: '#2c3749',
+  grid: '#c3c8c2',
+  text: '#434843',
+  surface: '#faf9f7',
+}
+
+export const commonTooltipStyle = {
+  backgroundColor: '#faf9f7',
+  border: '1px solid #c3c8c2',
+  borderRadius: 4,
+  color: '#1a1c1b',
+}
+
+export function formatNumber(value) {
+  return new Intl.NumberFormat('es-MX').format(value)
+}
+</file>
+
+<file path="src/components/charts/ComparisonChart.jsx">
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts'
+import ChartCard from '../ChartCard'
+import { chartColors, commonTooltipStyle, formatNumber } from './chartTheme'
+
+function ComparisonChart({ data, title, description, note, unit = '' }) {
+  return (
+    <ChartCard title={title} description={description} note={note}>
+      <ResponsiveContainer width="100%" height={280}>
+        <BarChart data={data} margin={{ top: 12, right: 12, left: 0, bottom: 8 }}>
+          <CartesianGrid stroke={chartColors.grid} strokeDasharray="3 3" />
+          <XAxis dataKey="label" tick={{ fill: chartColors.text }} />
+          <YAxis tick={{ fill: chartColors.text }} tickFormatter={formatNumber} />
+          <Tooltip
+            contentStyle={commonTooltipStyle}
+            formatter={(value) => [`${formatNumber(value)}${unit ? ` ${unit}` : ''}`, 'Valor']}
+          />
+          <Bar dataKey="value" fill={chartColors.secondary} radius={[4, 4, 0, 0]} />
+        </BarChart>
+      </ResponsiveContainer>
+    </ChartCard>
+  )
+}
+
+export default ComparisonChart
+</file>
+
+<file path="src/components/charts/DonutChartBox.jsx">
+import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts'
+import ChartCard from '../ChartCard'
+import { chartColors, commonTooltipStyle } from './chartTheme'
+
+const donutColors = [chartColors.primary, chartColors.secondary, chartColors.tertiary, '#747873']
+
+function DonutChartBox({ data, nameKey = 'label', valueKey = 'value', title, description, note }) {
+  return (
+    <ChartCard title={title} description={description} note={note}>
+      <ResponsiveContainer width="100%" height={280}>
+        <PieChart>
+          <Pie
+            data={data}
+            dataKey={valueKey}
+            nameKey={nameKey}
+            innerRadius={58}
+            outerRadius={92}
+            paddingAngle={2}
+          >
+            {data.map((entry, index) => (
+              <Cell key={entry[nameKey]} fill={donutColors[index % donutColors.length]} />
+            ))}
+          </Pie>
+          <Tooltip contentStyle={commonTooltipStyle} formatter={(value) => [`${value}%`, 'Valor']} />
+          <Legend wrapperStyle={{ color: chartColors.text }} />
+        </PieChart>
+      </ResponsiveContainer>
+    </ChartCard>
+  )
+}
+
+export default DonutChartBox
+</file>
+
+<file path="src/components/charts/HorizontalBarChart.jsx">
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts'
+import ChartCard from '../ChartCard'
+import { chartColors, commonTooltipStyle, formatNumber } from './chartTheme'
+
+function HorizontalBarChart({
+  data,
+  xKey = 'value',
+  yKey = 'label',
+  title,
+  description,
+  note,
+  unit = '',
+  height = 320,
+}) {
+  return (
+    <ChartCard title={title} description={description} note={note}>
+      <ResponsiveContainer width="100%" height={height}>
+        <BarChart
+          data={data}
+          layout="vertical"
+          margin={{ top: 12, right: 18, left: 28, bottom: 8 }}
+        >
+          <CartesianGrid stroke={chartColors.grid} strokeDasharray="3 3" />
+          <XAxis type="number" tick={{ fill: chartColors.text }} tickFormatter={formatNumber} />
+          <YAxis
+            dataKey={yKey}
+            type="category"
+            width={150}
+            tick={{ fill: chartColors.text, fontSize: 12 }}
+          />
+          <Tooltip
+            contentStyle={commonTooltipStyle}
+            formatter={(value) => [`${formatNumber(value)}${unit ? ` ${unit}` : ''}`, 'Valor']}
+          />
+          <Bar dataKey={xKey} fill={chartColors.tertiary} radius={[0, 4, 4, 0]} />
+        </BarChart>
+      </ResponsiveContainer>
+    </ChartCard>
+  )
+}
+
+export default HorizontalBarChart
+</file>
+
+<file path="src/components/charts/LineChartBox.jsx">
+import {
+  CartesianGrid,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts'
+import ChartCard from '../ChartCard'
+import { chartColors, commonTooltipStyle } from './chartTheme'
+
+function LineChartBox({ data, xKey, yKey, title, description, note, unit = '%' }) {
+  return (
+    <ChartCard title={title} description={description} note={note}>
+      <ResponsiveContainer width="100%" height={280}>
+        <LineChart data={data} margin={{ top: 12, right: 14, left: 0, bottom: 8 }}>
+          <CartesianGrid stroke={chartColors.grid} strokeDasharray="3 3" />
+          <XAxis dataKey={xKey} tick={{ fill: chartColors.text }} />
+          <YAxis tick={{ fill: chartColors.text }} />
+          <Tooltip
+            contentStyle={commonTooltipStyle}
+            formatter={(value) => [`${value}${unit}`, 'Valor']}
+          />
+          <Line
+            type="monotone"
+            dataKey={yKey}
+            stroke={chartColors.tertiary}
+            strokeWidth={3}
+            dot={{ r: 5, fill: chartColors.secondary, strokeWidth: 0 }}
+            activeDot={{ r: 7, fill: chartColors.primary }}
+          />
+        </LineChart>
+      </ResponsiveContainer>
+    </ChartCard>
+  )
+}
+
+export default LineChartBox
+</file>
+
+<file path="src/components/charts/PieChartBox.jsx">
+import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts'
+import ChartCard from '../ChartCard'
+import { chartColors, commonTooltipStyle } from './chartTheme'
+
+const pieColors = [chartColors.primary, chartColors.secondary, chartColors.tertiary, '#747873']
+
+function PieChartBox({ data, nameKey = 'label', valueKey = 'value', title, description, note }) {
+  return (
+    <ChartCard title={title} description={description} note={note}>
+      <ResponsiveContainer width="100%" height={280}>
+        <PieChart>
+          <Pie data={data} dataKey={valueKey} nameKey={nameKey} outerRadius={88} label>
+            {data.map((entry, index) => (
+              <Cell key={entry[nameKey]} fill={pieColors[index % pieColors.length]} />
+            ))}
+          </Pie>
+          <Tooltip contentStyle={commonTooltipStyle} formatter={(value) => [`${value}%`, 'Valor']} />
+          <Legend wrapperStyle={{ color: chartColors.text }} />
+        </PieChart>
+      </ResponsiveContainer>
+    </ChartCard>
+  )
+}
+
+export default PieChartBox
+</file>
+
+<file path="src/components/DataCard.jsx">
+function DataCard({ stat }) {
+  return (
+    <article className="data-card reveal">
+      <span className="chip">{stat.category}</span>
+      <strong>{stat.value}</strong>
+      <p>{stat.label}</p>
+    </article>
+  )
+}
+
+export default DataCard
+</file>
+
+<file path="src/components/DataGrid.jsx">
+import { keyStats } from '../data/keyStats'
+import DataCard from './DataCard'
+import SectionIntro from './SectionIntro'
+
+function DataGrid() {
+  return (
+    <section id="datos-clave" className="section-block data-section">
+      <div className="container">
+        <SectionIntro
+          eyebrow="Datos clave"
+          title="Cifras para dimensionar los retos"
+          summary="Una selección de indicadores presentes en el documento base para leer economía, sociedad, educación, agua y salud con mayor claridad."
+        />
+        <div className="row g-4">
+          {keyStats.map((stat) => (
+            <div className="col-sm-6 col-lg-4 col-xl-3" key={`${stat.value}-${stat.label}`}>
+              <DataCard stat={stat} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default DataGrid
+</file>
+
+<file path="src/components/FinalReflection.jsx">
+function FinalReflection() {
+  return (
+    <section id="reflexion" className="final-reflection">
+      <div className="container">
+        <div className="reflection-content reveal">
+          <p className="eyebrow">Reflexión final</p>
+          <h2>Un país entre la oportunidad y el límite</h2>
+          <p>
+            México cuenta con ventajas importantes por su ubicación geográfica, su
+            integración comercial y la oportunidad del nearshoring. Sin embargo, esas
+            oportunidades no podrán aprovecharse plenamente si persisten los problemas de
+            inseguridad, debilidad institucional, presión fiscal, rezago educativo,
+            desigualdad, crisis hídrica y deficiencias en salud.
+          </p>
+          <p className="reflection-close">
+            El futuro del país depende no solo de atraer inversión, sino de construir
+            instituciones confiables, servicios públicos sólidos, educación de calidad,
+            justicia funcional y uso responsable de los recursos naturales.
+          </p>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default FinalReflection
+</file>
+
+<file path="src/components/Footer.jsx">
+import { Link } from 'react-router-dom'
+import { navigationItems } from '../data/navigation'
+
+function Footer() {
+  return (
+    <footer className="site-footer">
+      <div className="container">
+        <div className="row g-4 align-items-start">
+          <div className="col-lg-5">
+            <h2>Problemas y retos de el México presente</h2>
+            <p>Sitio editorial de difusión informativa.</p>
+          </div>
+          <div className="col-lg-7">
+            <nav aria-label="Navegación secundaria">
+              <ul className="footer-links">
+                {navigationItems.map((item) => (
+                  <li key={item.path}>
+                    <Link to={item.path}>{item.label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </footer>
+  )
+}
+
+export default Footer
+</file>
+
+<file path="src/components/Header.jsx">
+import { useState } from 'react'
+import { Link, NavLink } from 'react-router-dom'
+import { navigationItems } from '../data/navigation'
+
+function Header() {
+  const [open, setOpen] = useState(false)
+
+  return (
+    <header className="site-header sticky-top">
+      <nav className="navbar navbar-expand-lg" aria-label="Navegación principal">
+        <div className="container">
+          <Link className="navbar-brand" to="/" onClick={() => setOpen(false)}>
+            México Presente
+          </Link>
+          <button
+            className="navbar-toggler"
+            type="button"
+            aria-controls="primary-navigation"
+            aria-expanded={open}
+            aria-label="Abrir menú de navegación"
+            onClick={() => setOpen((current) => !current)}
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div
+            id="primary-navigation"
+            className={`collapse navbar-collapse ${open ? 'show' : ''}`}
+          >
+            <ul className="navbar-nav ms-lg-auto">
+              {navigationItems.map((link) => (
+                <li className="nav-item" key={link.path}>
+                  <NavLink
+                    className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+                    to={link.path}
+                    end={link.path === '/'}
+                    onClick={() => setOpen(false)}
+                  >
+                    {link.label}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+  )
+}
+
+export default Header
+</file>
+
+<file path="src/components/Hero.jsx">
+import { topicImages } from '../data/topicImages'
+import TopicImage from './TopicImage'
+
+function Hero() {
+  return (
+    <section id="top" className="hero-section">
+      <div className="container">
+        <div className="row align-items-center g-5">
+          <div className="col-lg-7">
+            <div className="hero-copy reveal">
+              <p className="eyebrow">Análisis social y económico</p>
+              <h1>Problemas y retos de el México presente</h1>
+              <p className="hero-subtitle">
+                Una mirada clara a los desafíos económicos, sociales, institucionales y
+                ambientales que definen el rumbo actual del país.
+              </p>
+              <div className="d-flex flex-column flex-sm-row gap-3">
+                <a className="btn btn-primary-custom" href="#panorama">
+                  Explorar temas
+                </a>
+                <a className="btn btn-outline-custom" href="#datos-clave">
+                  Ver datos clave
+                </a>
+              </div>
+            </div>
+          </div>
+          <div className="col-lg-5">
+            <div className="hero-panel reveal">
+              <TopicImage image={topicImages.panorama} className="hero-image" />
+              <article className="editorial-card">
+                <span className="meta-label">Lectura central</span>
+                <h2>La paradoja del México presente</h2>
+                <p>
+                  El país tiene una posición estratégica para aprovechar el nearshoring,
+                  pero enfrenta límites profundos en instituciones, agua, educación,
+                  seguridad y finanzas públicas.
+                </p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default Hero
+</file>
+
+<file path="src/components/InsightCard.jsx">
+function InsightCard({ icon = 'bi-lightbulb', title, text, meta }) {
+  return (
+    <article className="insight-card reveal">
+      <div className="card-icon" aria-hidden="true">
+        <i className={`bi ${icon}`}></i>
+      </div>
+      {meta ? <p className="meta-label">{meta}</p> : null}
+      <h3>{title}</h3>
+      <p>{text}</p>
+    </article>
+  )
+}
+
+export default InsightCard
+</file>
+
+<file path="src/components/PageHero.jsx">
+import TopicImage from './TopicImage'
+
+function PageHero({ eyebrow, title, summary, image }) {
+  return (
+    <section className="page-hero">
+      <div className="container">
+        <div className="row align-items-center g-5">
+          <div className="col-lg-6">
+            <div className="page-hero-copy reveal">
+              {eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
+              <h1>{title}</h1>
+              <p className="hero-subtitle">{summary}</p>
+            </div>
+          </div>
+          {image ? (
+            <div className="col-lg-6">
+              <TopicImage image={image} className="page-hero-image reveal" />
+            </div>
+          ) : null}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default PageHero
+</file>
+
+<file path="src/components/PageLayout.jsx">
+import { useEffect } from 'react'
+
+const siteTitle = 'Problemas y retos de el México presente'
+
+function PageLayout({ title, children }) {
+  useEffect(() => {
+    document.title = title ? `${title} | ${siteTitle}` : siteTitle
+  }, [title])
+
+  return <main>{children}</main>
+}
+
+export default PageLayout
+</file>
+
+<file path="src/components/ResponsiveTable.jsx">
+function ResponsiveTable({ table, title }) {
+  if (!table) return null
+
+  return (
+    <article className="table-panel reveal">
+      {title ? <h3>{title}</h3> : null}
+      <div className="table-responsive editorial-table-wrap">
+        <table className="table editorial-table align-middle">
+          <thead>
+            <tr>
+              {table.columns.map((column) => (
+                <th scope="col" key={column}>
+                  {column}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {table.rows.map((row) => (
+              <tr key={row.join('-')}>
+                {row.map((cell, index) => (
+                  <td key={`${cell}-${index}`}>{cell}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </article>
+  )
+}
+
+export default ResponsiveTable
+</file>
+
+<file path="src/components/SectionIntro.jsx">
+function SectionIntro({ eyebrow, title, summary, centered = false }) {
+  return (
+    <div className={`section-intro reveal ${centered ? 'text-center mx-auto' : ''}`}>
+      <p className="eyebrow">{eyebrow}</p>
+      <h2>{title}</h2>
+      {summary ? <p>{summary}</p> : null}
+    </div>
+  )
+}
+
+export default SectionIntro
+</file>
+
+<file path="src/components/StatCard.jsx">
+function StatCard({ value, label, detail, icon = 'bi-activity' }) {
+  return (
+    <article className="stat-card reveal">
+      <div className="card-icon" aria-hidden="true">
+        <i className={`bi ${icon}`}></i>
+      </div>
+      <strong>{value}</strong>
+      <p>{label}</p>
+      {detail ? <small>{detail}</small> : null}
+    </article>
+  )
+}
+
+export default StatCard
+</file>
+
+<file path="src/components/TopicImage.jsx">
+import { useState } from 'react'
+
+function TopicImage({ image, className = '' }) {
+  const [failed, setFailed] = useState(false)
+
+  return (
+    <figure className={`topic-visual ${className}`}>
+      {failed ? (
+        <div className="image-fallback" role="img" aria-label={image.alt}>
+          Imagen no disponible
+        </div>
+      ) : (
+        <img
+          className="topic-image"
+          src={image.src}
+          alt={image.alt}
+          onError={() => setFailed(true)}
+        />
+      )}
+      <figcaption>{image.caption}</figcaption>
+    </figure>
+  )
+}
+
+export default TopicImage
+</file>
+
+<file path="src/components/TopicPageScaffold.jsx">
+import { Link } from 'react-router-dom'
+import { topicImages } from '../data/topicImages'
+import Breadcrumb from './Breadcrumb'
+import InsightCard from './InsightCard'
+import PageHero from './PageHero'
+import PageLayout from './PageLayout'
+import ResponsiveTable from './ResponsiveTable'
+import VisualPanel from './VisualPanel'
+
+function FlowDiagram({ items }) {
+  if (!items?.length) return null
+
+  return (
+    <div className="flow-diagram" role="list" aria-label="Secuencia visual">
+      {items.map((item) => (
+        <div className="flow-step" role="listitem" key={item}>
+          {item}
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function MatrixPanel({ matrix }) {
+  if (!matrix) return null
+
+  return (
+    <VisualPanel title={matrix.title} description="Lectura cualitativa, sin porcentajes inventados.">
+      <div className="matrix-grid">
+        {matrix.items.map(([label, status]) => (
+          <div className="matrix-item" key={label}>
+            <span>{label}</span>
+            <strong>{status}</strong>
+          </div>
+        ))}
+      </div>
+    </VisualPanel>
+  )
+}
+
+function InfoCardGrid({ title, eyebrow, items, variant = 'default' }) {
+  if (!items?.length) return null
+
+  return (
+    <section className={`narrative-section narrative-${variant}`}>
+      <div className="container">
+        <div className="section-intro">
+          {eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
+          <h2>{title}</h2>
+        </div>
+        <div className="row g-4">
+          {items.map((item) => (
+            <div className="col-md-6 col-xl-4" key={item.title}>
+              <article className="narrative-card reveal">
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </article>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function InstitutionCards({ institutions, intro }) {
+  if (!institutions?.length) return null
+
+  return (
+    <VisualPanel title="¿Por qué importan los organismos autónomos?" description={intro}>
+      <div className="row g-4">
+        {institutions.map((institution) => (
+          <div className="col-md-6 col-xl-4" key={institution.name}>
+            <article className="institution-card">
+              <p className="meta-label">{institution.area}</p>
+              <h3>{institution.name}</h3>
+              <dl>
+                <dt>Función</dt>
+                <dd>{institution.function}</dd>
+                <dt>Riesgo</dt>
+                <dd>{institution.risk}</dd>
+              </dl>
+            </article>
+          </div>
+        ))}
+      </div>
+    </VisualPanel>
+  )
+}
+
+function TopicPageScaffold({ topic, charts, dataCards, extraPanels, afterSummary }) {
+  const hasCharts = Boolean(charts)
+  const hasDataCards = Boolean(dataCards)
+  const hasVisualContent =
+    hasCharts ||
+    hasDataCards ||
+    topic.matrix ||
+    topic.flow ||
+    extraPanels ||
+    topic.institutions ||
+    topic.judicial ||
+    topic.callout ||
+    topic.table
+
+  let visualEyebrow = 'Lectura visual'
+  let visualTitle = 'Lectura visual del problema'
+  let visualDescription =
+    'Los recursos visuales se usan para explicar relaciones, magnitudes o secuencias que ayudan a entender el tema.'
+
+  if (hasCharts && hasDataCards) {
+    visualTitle = 'Datos clave y visualizaciones'
+    visualDescription =
+      'Las gráficas se reservan para comparaciones o tendencias; los datos puntuales se muestran como tarjetas.'
+  } else if (hasCharts) {
+    visualEyebrow = 'Gráfica relevante'
+    visualTitle = 'Dato comparativo central'
+    visualDescription =
+      'Esta gráfica se mantiene porque ayuda a dimensionar una tendencia, diferencia o magnitud importante.'
+  } else if (hasDataCards) {
+    visualEyebrow = 'Datos clave'
+    visualTitle = 'Cifras para dimensionar'
+    visualDescription =
+      'Estos datos se entienden mejor como tarjetas acompañadas de explicación, no como gráficas.'
+  }
+
+  return (
+    <PageLayout title={topic.navLabel}>
+      <Breadcrumb current={topic.navLabel} />
+      <PageHero
+        eyebrow={topic.eyebrow}
+        title={topic.title}
+        summary={topic.summary}
+        image={topicImages[topic.imageKey]}
+      />
+
+      <section className="section-block">
+        <div className="container">
+          <div className="row g-5 align-items-start">
+            <div className="col-lg-7">
+              <article className="topic-copy reveal">
+                <p className="eyebrow">Introducción del problema</p>
+                <h2>Cuál es el problema</h2>
+                <p className="topic-summary">{topic.problemIntro || topic.body}</p>
+              </article>
+            </div>
+            <div className="col-lg-5">
+              <article className="key-idea-panel reveal">
+                <p className="eyebrow">Idea clave</p>
+                <h3>{topic.keyIdea}</h3>
+              </article>
+              <div className="insight-stack mt-4">
+                {topic.insights?.slice(0, 3).map((insight) => (
+                  <InsightCard key={insight.title} {...insight} />
+                ))}
+              </div>
+            </div>
+          </div>
+          {afterSummary}
+        </div>
+      </section>
+
+      <InfoCardGrid title="Por qué ocurre" eyebrow="Causas principales" items={topic.causes} />
+
+      <InfoCardGrid
+        title="Consecuencias reales para México"
+        eyebrow="Efectos"
+        items={topic.consequences}
+        variant="consequences"
+      />
+
+      {hasVisualContent ? (
+        <section className="section-block section-muted">
+          <div className="container">
+            <div className="section-intro">
+              <p className="eyebrow">{visualEyebrow}</p>
+              <h2>{visualTitle}</h2>
+              <p>{visualDescription}</p>
+            </div>
+            {hasCharts ? <div className="chart-grid focused-chart-grid">{charts}</div> : null}
+            {hasDataCards ? <div className="row g-4 data-card-row">{dataCards}</div> : null}
+            <MatrixPanel matrix={topic.matrix} />
+            {topic.flow ? (
+              <VisualPanel title="Flujo de causa y consecuencia">
+                <FlowDiagram items={topic.flow} />
+              </VisualPanel>
+            ) : null}
+            {extraPanels}
+            <InstitutionCards institutions={topic.institutions} intro={topic.institutionsIntro} />
+            {topic.judicial ? (
+              <VisualPanel
+                title="Poder Judicial"
+                description="Dimensiones clave para sostener confianza y profesionalismo."
+              >
+                <div className="pill-grid">
+                  {topic.judicial.map((item) => (
+                    <span key={item}>{item}</span>
+                  ))}
+                </div>
+              </VisualPanel>
+            ) : null}
+            {topic.callout ? (
+              <article className="info-callout reveal">
+                <div className="card-icon" aria-hidden="true">
+                  <i className="bi bi-question-circle"></i>
+                </div>
+                <div>
+                  <h3>{topic.callout.title}</h3>
+                  <p>{topic.callout.text}</p>
+                </div>
+              </article>
+            ) : null}
+            <ResponsiveTable table={topic.table} title="Lectura por áreas" />
+          </div>
+        </section>
+      ) : null}
+
+      <section className="section-block">
+        <div className="container">
+          <div className="row g-4">
+            <div className="col-lg-5">
+              <div className="section-intro">
+                <p className="eyebrow">Retos actuales</p>
+                <h2>Lo que debe resolverse</h2>
+              </div>
+            </div>
+            <div className="col-lg-7">
+              <div className="challenge-list">
+                {topic.realChallenges?.map((challenge) => (
+                  <article className="challenge-row challenge-row-expanded reveal" key={challenge.title}>
+                    <i className="bi bi-arrow-right-short" aria-hidden="true"></i>
+                    <div>
+                      <h3>{challenge.title}</h3>
+                      <p>{challenge.text}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section-block connections-section">
+        <div className="container">
+          <article className="connections-panel reveal">
+            <p className="eyebrow">Cómo se conecta con otros problemas</p>
+            <h2>Relaciones entre temas</h2>
+            <p>{topic.connections}</p>
+          </article>
+        </div>
+      </section>
+
+      <section className="section-block meaning-section">
+        <div className="container">
+          <article className="meaning-panel reveal">
+            <div>
+              <p className="eyebrow">Cierre del tema</p>
+              <h2>Reflexión</h2>
+              <p>{topic.conclusion || topic.meaning}</p>
+            </div>
+            <div className="page-actions">
+              <Link className="btn btn-outline-custom" to="/">
+                <i className="bi bi-house-door" aria-hidden="true"></i>
+                Volver al inicio
+              </Link>
+              <Link className="btn btn-primary-custom" to={topic.nextPath}>
+                Ver {topic.nextLabel}
+                <i className="bi bi-arrow-right" aria-hidden="true"></i>
+              </Link>
+            </div>
+          </article>
+        </div>
+      </section>
+    </PageLayout>
+  )
+}
+
+export default TopicPageScaffold
+</file>
+
+<file path="src/components/TopicSection.jsx">
+import { topicImages } from '../data/topicImages'
+import TopicImage from './TopicImage'
+import ResponsiveTable from './ResponsiveTable'
+
+function TopicSection({ topic, reverse = false }) {
+  const textOrder = reverse ? 'order-1 order-lg-2' : 'order-1 order-lg-1'
+  const imageOrder = reverse ? 'order-2 order-lg-1' : 'order-2 order-lg-2'
+
+  return (
+    <section id={topic.id} className="topic-section section-block">
+      <div className="container">
+        <div className="row align-items-center g-5">
+          <div className={`col-lg-6 ${textOrder}`}>
+            <article className="topic-copy reveal">
+              <p className="eyebrow">{topic.eyebrow}</p>
+              <h2>{topic.title}</h2>
+              <p className="topic-summary">{topic.summary}</p>
+              {topic.paragraphs.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+              <ul className="highlight-list">
+                {topic.highlights.map((highlight) => (
+                  <li key={highlight}>{highlight}</li>
+                ))}
+              </ul>
+            </article>
+          </div>
+          <div className={`col-lg-6 ${imageOrder}`}>
+            <TopicImage image={topicImages[topic.imageKey]} className="reveal" />
+          </div>
+        </div>
+        {topic.callout ? (
+          <article className="info-callout reveal">
+            <div className="card-icon" aria-hidden="true">
+              <i className="bi bi-question-circle"></i>
+            </div>
+            <div>
+              <h3>{topic.callout.title}</h3>
+              <p>{topic.callout.text}</p>
+            </div>
+          </article>
+        ) : null}
+        <ResponsiveTable table={topic.table} />
+      </div>
+    </section>
+  )
+}
+
+export default TopicSection
+</file>
+
+<file path="src/components/VisualPanel.jsx">
+function VisualPanel({ title, description, children, variant = 'default' }) {
+  return (
+    <article className={`visual-panel visual-panel-${variant} reveal`}>
+      <div className="visual-panel-header">
+        <h3>{title}</h3>
+        {description ? <p>{description}</p> : null}
+      </div>
+      {children}
+    </article>
+  )
+}
+
+export default VisualPanel
+</file>
+
+<file path="src/data/challenges.js">
+export const challenges = [
+  {
+    icon: 'bi-graph-down-arrow',
+    category: 'Economía',
+    title: 'Economía en desaceleración',
+    description:
+      'El crecimiento proyectado para 2026 se ajusta a la baja mientras persisten riesgos comerciales, climáticos y externos.',
+  },
+  {
+    icon: 'bi-box-seam',
+    category: 'Territorio',
+    title: 'Nearshoring desigual',
+    description:
+      'La relocalización abre oportunidades, pero se concentra donde existen talento, logística, energía, agua y regulación funcional.',
+  },
+  {
+    icon: 'bi-fuel-pump',
+    category: 'Finanzas públicas',
+    title: 'Presión fiscal por Pemex',
+    description:
+      'La petrolera mantiene necesidades de liquidez elevadas y absorbe recursos que podrían fortalecer infraestructura pública.',
+  },
+  {
+    icon: 'bi-bank',
+    category: 'Instituciones',
+    title: 'Debilitamiento institucional',
+    description:
+      'La pérdida de órganos técnicos reduce contrapesos, transparencia, evaluación independiente y certidumbre regulatoria.',
+  },
+  {
+    icon: 'bi-shield-exclamation',
+    category: 'Justicia',
+    title: 'Impunidad y desconfianza',
+    description:
+      'La baja denuncia y la débil investigación penal hacen que el problema real de seguridad supere los registros oficiales.',
+  },
+  {
+    icon: 'bi-people',
+    category: 'Sociedad',
+    title: 'Pobreza y desigualdad',
+    description:
+      'La pobreza multidimensional y la limitada movilidad social reducen la capacidad de millones de personas para aprovechar oportunidades.',
+  },
+  {
+    icon: 'bi-journal-text',
+    category: 'Educación',
+    title: 'Rezago educativo',
+    description:
+      'La pérdida de aprendizaje y la falta de evaluación rigurosa comprometen la formación de capital humano.',
+  },
+  {
+    icon: 'bi-droplet-half',
+    category: 'Ambiente',
+    title: 'Crisis hídrica',
+    description:
+      'El estrés hídrico, la sobreexplotación y el tratamiento insuficiente del agua limitan bienestar e inversión.',
+  },
+  {
+    icon: 'bi-heart-pulse',
+    category: 'Salud',
+    title: 'Salud pública fragmentada',
+    description:
+      'La universalización requiere resolver abasto, personal, infraestructura y acceso efectivo en regiones rurales.',
+  },
+]
+</file>
+
+<file path="src/data/chartData.js">
+export const gdpProjectionData = [
+  { year: '2025 mín.', value: -0.5 },
+  { year: '2025 máx.', value: 0.7 },
+  { year: '2026', value: 1.1 },
+  { year: '2027', value: 2.1 },
+]
+
+export const inflationData = [
+  { year: '2025', value: 4.1 },
+  { year: '2026', value: 3.5 },
+  { year: '2027', value: 3.0 },
+]
+
+export const employmentRangeData = [
+  { label: 'Mínimo esperado', value: 260000 },
+  { label: 'Máximo esperado', value: 460000 },
+]
+
+export const pemexSupportData = [
+  { year: '2025', value: 40000, unit: 'millones de dólares' },
+  { year: '2026', value: 14000, unit: 'millones de dólares' },
+]
+
+export const debtProjectionData = [
+  { label: 'Deuda pública aproximada 2028', value: 55, unit: '% del PIB' },
+]
+
+export const impunityData = [
+  { crime: 'Violencia familiar', value: 98.6 },
+  { crime: 'Narcomenudeo', value: 94.1 },
+]
+
+export const prosecutionPolicyData = [
+  { label: 'Fiscalías con política formal', value: 16 },
+  { label: 'Fiscalías sin política formal', value: 16 },
+]
+
+export const povertyData = [
+  { label: 'Pobreza multidimensional', value: 29.6 },
+  { label: 'Resto de la población', value: 70.4 },
+]
+
+export const extremePovertyData = [
+  { label: 'Pobreza extrema', value: 5.3 },
+  { label: 'Resto de la población', value: 94.7 },
+]
+
+export const inequalityOriginData = [
+  { factor: 'Recursos de la región de origen', value: 54 },
+  { factor: 'Escolaridad de los padres', value: 11 },
+  { factor: 'Región del país', value: 8 },
+  { factor: 'Sexo de nacimiento', value: 7 },
+  { factor: 'Origen rural', value: 6 },
+]
+
+export const pisaComparisonData = [
+  { label: 'México', value: 407 },
+  { label: 'Promedio OCDE', value: 478 },
+]
+
+export const educationLagData = [
+  {
+    label: 'Personas mayores de 15 años en rezago educativo',
+    value: 24.2,
+    unit: 'millones',
+  },
+  {
+    label: 'Niñas, niños y adolescentes con déficit',
+    value: 3.4,
+    unit: 'millones',
+  },
+]
+
+export const wastewaterData = [
+  { label: 'Aguas residuales domésticas', value: 65 },
+  { label: 'Otros orígenes', value: 35 },
+]
+
+export const healthInfrastructureData = [
+  { label: 'Hospitales rurales de segundo nivel', value: 81 },
+  { label: 'Unidades Médicas Rurales', value: 3982 },
+]
+</file>
+
+<file path="src/data/keyStats.js">
+export const keyStats = [
+  {
+    value: '1.1%',
+    label: 'Crecimiento del PIB proyectado para 2026',
+    category: 'Economía',
+  },
+  {
+    value: '3.5%',
+    label: 'Inflación estimada al cierre de 2026',
+    category: 'Economía',
+  },
+  {
+    value: '260,000 a 460,000',
+    label: 'Rango esperado de creación de empleo formal',
+    category: 'Empleo',
+  },
+  {
+    value: '29.6%',
+    label: 'Población en pobreza multidimensional',
+    category: 'Sociedad',
+  },
+  {
+    value: '5.3%',
+    label: 'Población en pobreza extrema',
+    category: 'Sociedad',
+  },
+  {
+    value: '24.2 millones',
+    label: 'Personas mayores de 15 años en rezago educativo',
+    category: 'Educación',
+  },
+  {
+    value: '407 puntos',
+    label: 'Promedio de México en PISA 2022',
+    category: 'Educación',
+  },
+  {
+    value: '65%',
+    label: 'Proporción aproximada de aguas residuales domésticas en la Cuenca de México',
+    category: 'Agua',
+  },
+  {
+    value: '81',
+    label: 'Hospitales rurales de segundo nivel en IMSS-Bienestar',
+    category: 'Salud',
+  },
+  {
+    value: '3,982',
+    label: 'Unidades Médicas Rurales',
+    category: 'Salud',
+  },
+]
+</file>
+
+<file path="src/data/navigation.js">
+export const navigationItems = [
+  {
+    path: '/',
+    label: 'Inicio',
+    icon: 'bi-house-door',
+    description: 'Portada general de los retos nacionales.',
+  },
+  {
+    path: '/economia',
+    label: 'Economía',
+    icon: 'bi-graph-up-arrow',
+    description: 'Crecimiento, inflación, empleo y nearshoring.',
+  },
+  {
+    path: '/pemex',
+    label: 'Pemex',
+    icon: 'bi-fuel-pump',
+    description: 'Presión fiscal y costo de oportunidad.',
+  },
+  {
+    path: '/instituciones',
+    label: 'Instituciones',
+    icon: 'bi-bank',
+    description: 'Estado de derecho, confianza y contrapesos.',
+  },
+  {
+    path: '/seguridad',
+    label: 'Seguridad',
+    icon: 'bi-shield-exclamation',
+    description: 'Impunidad, denuncia y confianza pública.',
+  },
+  {
+    path: '/sociedad',
+    label: 'Sociedad',
+    icon: 'bi-people',
+    description: 'Pobreza, desigualdad y movilidad social.',
+  },
+  {
+    path: '/educacion',
+    label: 'Educación',
+    icon: 'bi-journal-text',
+    description: 'Rezago, aprendizaje y competitividad.',
+  },
+  {
+    path: '/agua',
+    label: 'Agua',
+    icon: 'bi-droplet-half',
+    description: 'Crisis hídrica, salud y territorio.',
+  },
+  {
+    path: '/salud',
+    label: 'Salud',
+    icon: 'bi-heart-pulse',
+    description: 'Cobertura, abasto e infraestructura rural.',
+  },
+  {
+    path: '/datos',
+    label: 'Datos',
+    icon: 'bi-bar-chart',
+    description: 'Dashboard con indicadores y gráficas.',
+  },
+]
+</file>
+
+<file path="src/data/topicImages.js">
+// Cambia aqui las URL de las imagenes. Cada pagina lee su imagen desde este archivo.
+
+export const topicImages = {
+  panorama: {
+    src: 'https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?auto=format&fit=crop&w=1400&q=80',
+    alt: 'Vista urbana de México relacionada con sus retos actuales',
+    caption:
+      'México enfrenta oportunidades importantes, pero también desafíos económicos, sociales e institucionales.',
+  },
+  economia: {
+    src: 'https://images.unsplash.com/photo-1494412651409-8963ce7935a7?auto=format&fit=crop&w=1400&q=80',
+    alt: 'Zona industrial relacionada con economía y cadenas de suministro',
+    caption:
+      'La economía mexicana combina oportunidades de inversión con retos de infraestructura y desigualdad regional.',
+  },
+  pemex: {
+    src: 'https://images.unsplash.com/photo-1516937941344-00b4e0337589?auto=format&fit=crop&w=1400&q=80',
+    alt: 'Infraestructura energética relacionada con petróleo y finanzas públicas',
+    caption:
+      'Pemex representa uno de los mayores retos fiscales y financieros para el país.',
+  },
+  instituciones: {
+    src: 'https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=1400&q=80',
+    alt: 'Edificio institucional relacionado con Estado de derecho',
+    caption:
+      'La fortaleza institucional es clave para la transparencia, la regulación y la confianza pública.',
+  },
+  seguridad: {
+    src: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1400&q=80',
+    alt: 'Escena urbana relacionada con seguridad pública y justicia',
+    caption:
+      'La impunidad y la desconfianza ciudadana son retos centrales para el sistema de justicia.',
+  },
+  sociedad: {
+    src: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1400&q=80',
+    alt: 'Personas en un entorno comunitario relacionado con desigualdad social',
+    caption:
+      'La pobreza y la desigualdad limitan la movilidad social y el acceso a oportunidades.',
+  },
+  educacion: {
+    src: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1400&q=80',
+    alt: 'Aula relacionada con educación y aprendizaje',
+    caption:
+      'El rezago educativo compromete la competitividad y el desarrollo futuro de México.',
+  },
+  agua: {
+    src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=80',
+    alt: 'Paisaje relacionado con agua y medio ambiente',
+    caption:
+      'La crisis hídrica es un límite ambiental, económico y social para el desarrollo del país.',
+  },
+  salud: {
+    src: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=1400&q=80',
+    alt: 'Hospital relacionado con salud pública',
+    caption:
+      'El sistema de salud busca ampliar cobertura, pero enfrenta retos de abasto, personal e infraestructura.',
+  },
+}
+</file>
+
+<file path="src/data/topics.js">
+export const topics = {
+  economia: {
+    path: '/economia',
+    nextPath: '/pemex',
+    nextLabel: 'Pemex',
+    navLabel: 'Economía',
+    eyebrow: 'Crecimiento y oportunidad',
+    title: 'Economía y nearshoring',
+    imageKey: 'economia',
+    summary:
+      'México tiene una oportunidad real por su cercanía con Estados Unidos y por el T-MEC, pero esa ventaja no se convierte automáticamente en crecimiento para todo el país.',
+    keyIdea:
+      'El nearshoring no es una promesa automática: necesita infraestructura, seguridad, agua, energía, talento y Estado de derecho.',
+    problemIntro:
+      'El problema económico no es solo que el crecimiento sea bajo. El reto de fondo es que México tiene una ventana de oportunidad por la reconfiguración de cadenas de suministro, pero no todas las regiones cuentan con las condiciones para aprovecharla. Las empresas no se instalan únicamente porque un país esté cerca de Estados Unidos; también necesitan electricidad confiable, agua disponible, transporte, vivienda para trabajadores, personal técnico, seguridad y reglas claras. Por eso el nearshoring puede beneficiar con fuerza a ciertas ciudades industriales, mientras otras regiones quedan rezagadas.',
+    causes: [
+      {
+        title: 'Infraestructura desigual',
+        text: 'Las regiones con logística, transporte y servicios urbanos tienen más posibilidades de atraer inversión. Donde faltan carreteras eficientes, transporte público o vivienda, la llegada de empresas se vuelve más difícil.',
+      },
+      {
+        title: 'Agua y energía como límite',
+        text: 'La industria necesita suministro constante. El estrés hídrico y los costos energéticos pueden frenar proyectos incluso en estados con vocación manufacturera.',
+      },
+      {
+        title: 'Talento técnico insuficiente',
+        text: 'Las cadenas productivas modernas requieren personal capacitado, habilidades técnicas e idiomas. Si la formación educativa no acompaña la demanda laboral, la oportunidad se reduce.',
+      },
+      {
+        title: 'Certidumbre y seguridad',
+        text: 'La inversión necesita reglas estables, trámites razonables y entornos seguros. Si una región se percibe riesgosa o burocrática, pierde competitividad frente a otras.',
+      },
+    ],
+    consequences: [
+      {
+        title: 'Beneficios concentrados',
+        text: 'Ciudades como Ciudad Juárez, Hermosillo, Chihuahua, Cancún y Saltillo parten con ventajas laborales o industriales, mientras zonas con menos infraestructura enfrentan barreras mayores.',
+      },
+      {
+        title: 'Crecimiento por debajo del potencial',
+        text: 'Aunque el país tenga ubicación estratégica, la falta de condiciones locales puede mantener el crecimiento en niveles moderados.',
+      },
+      {
+        title: 'Mayor desigualdad regional',
+        text: 'Si la inversión se concentra en pocos polos, la brecha entre norte industrial, centro urbano y sur rezagado puede ampliarse.',
+      },
+    ],
+    realChallenges: [
+      {
+        title: 'Convertir ubicación en productividad',
+        text: 'La cercanía con Estados Unidos solo genera valor si se acompaña con infraestructura, reglas confiables y servicios que permitan producir con continuidad.',
+      },
+      {
+        title: 'Preparar capital humano',
+        text: 'Sin educación técnica, matemáticas, lectura, ciencia e inglés, los nuevos empleos pueden quedarse en actividades de bajo valor agregado.',
+      },
+      {
+        title: 'Evitar un nearshoring excluyente',
+        text: 'El reto es que la inversión no solo fortalezca a las ciudades ya competitivas, sino que también impulse regiones con rezagos históricos.',
+      },
+    ],
+    connections:
+      'Este tema se conecta con educación porque la industria necesita talento; con agua y energía porque la producción depende de recursos básicos; con seguridad e instituciones porque la inversión necesita confianza; y con Pemex porque la presión fiscal reduce espacio para infraestructura.',
+    conclusion:
+      'México tiene una oportunidad importante, pero aprovecharla exige construir condiciones. El nearshoring no resolverá por sí solo los problemas estructurales: puede amplificar ventajas existentes o profundizar desigualdades si no se atienden sus requisitos básicos.',
+    body:
+      'La economía combina una expectativa de crecimiento moderada con una inflación que tiende a bajar gradualmente y una tasa de referencia situada en 6.5% desde mayo de 2026. La relocalización de cadenas productivas puede abrir inversión y empleo, aunque su efecto depende de condiciones locales muy concretas.',
+    meaning:
+      'El reto es convertir la ubicación estratégica en productividad distribuida. Sin servicios urbanos, energía confiable, agua suficiente y certidumbre, el nearshoring puede concentrarse en pocos polos y profundizar desigualdades.',
+    insights: [
+      {
+        icon: 'bi-geo-alt',
+        title: 'Ventaja geográfica',
+        text: 'La cercanía con Estados Unidos y el T-MEC abren una oportunidad, pero no sustituyen infraestructura ni seguridad.',
+      },
+      {
+        icon: 'bi-droplet',
+        title: 'Recursos básicos',
+        text: 'El agua y la energía pueden definir si una región puede sostener nuevas industrias.',
+      },
+      {
+        icon: 'bi-person-workspace',
+        title: 'Talento técnico',
+        text: 'La creación de empleo depende de habilidades disponibles y formación alineada con la industria.',
+      },
+    ],
+    matrix: {
+      title: 'Condiciones que decide una inversión',
+      items: [
+        ['Talento técnico', 'Alto'],
+        ['Vivienda', 'Medio'],
+        ['Transporte', 'Medio'],
+        ['Agua', 'Crítico'],
+        ['Energía', 'Alto'],
+        ['Regulación', 'Pendiente'],
+        ['Seguridad', 'Crítico'],
+        ['Estado de derecho', 'Alto'],
+      ],
+    },
+  },
+  pemex: {
+    path: '/pemex',
+    nextPath: '/instituciones',
+    nextLabel: 'Instituciones',
+    navLabel: 'Pemex',
+    eyebrow: 'Finanzas públicas',
+    title: 'Pemex y presión fiscal',
+    imageKey: 'pemex',
+    summary:
+      'Pemex no solo es un tema energético: también es un problema fiscal porque sus necesidades financieras presionan el presupuesto público.',
+    keyIdea:
+      'Cuando el Estado destina recursos a sostener deuda o vencimientos, esos recursos dejan de estar disponibles para otros problemas nacionales.',
+    problemIntro:
+      'El problema central es que Pemex mantiene necesidades de liquidez elevadas y depende de apoyos del gobierno para enfrentar compromisos financieros. Eso crea una presión directa sobre las finanzas públicas. No se trata únicamente de rescatar a una empresa pública, sino de decidir qué se deja de financiar cuando una parte importante del dinero público se usa para cubrir deuda, vencimientos o falta de flujo de caja.',
+    causes: [
+      {
+        title: 'Endeudamiento y vencimientos',
+        text: 'La empresa debe cumplir compromisos financieros de corto y mediano plazo. Cuando no genera suficientes recursos propios, el gobierno aparece como respaldo.',
+      },
+      {
+        title: 'Flujo de caja negativo',
+        text: 'Si los ingresos operativos no alcanzan para sostener inversión y deuda, la empresa entra en una dinámica de apoyo recurrente.',
+      },
+      {
+        title: 'Refinanciar no es invertir',
+        text: 'Refinanciar deuda significa cambiar plazos o cubrir obligaciones existentes. Invertir productivamente implica mejorar exploración, producción, mantenimiento o tecnología.',
+      },
+    ],
+    consequences: [
+      {
+        title: 'Costo de oportunidad',
+        text: 'El dinero destinado a apoyar a Pemex no puede usarse al mismo tiempo en agua, salud, educación, seguridad o infraestructura productiva.',
+      },
+      {
+        title: 'Menor margen fiscal',
+        text: 'Si la deuda pública se acerca a 55% del PIB hacia 2028, el Estado tendrá menos espacio para responder ante crisis o financiar proyectos estratégicos.',
+      },
+      {
+        title: 'Inversión desplazada',
+        text: 'Cuando los recursos se orientan a refinanciar deuda, se retrasa la inversión que podría mejorar la capacidad operativa de la empresa.',
+      },
+    ],
+    realChallenges: [
+      {
+        title: 'Reducir dependencia del presupuesto',
+        text: 'El reto es que la empresa no requiera apoyos constantes para operar o cumplir vencimientos.',
+      },
+      {
+        title: 'Separar rescate de productividad',
+        text: 'Cubrir deuda evita crisis inmediatas, pero no garantiza una empresa más eficiente si no hay inversión productiva.',
+      },
+      {
+        title: 'Proteger otras prioridades públicas',
+        text: 'La presión fiscal de Pemex no debe desplazar infraestructura hídrica, salud pública, educación o seguridad.',
+      },
+    ],
+    connections:
+      'Pemex se conecta con agua, salud y educación porque compite por recursos presupuestarios. También se relaciona con economía y nearshoring porque menos espacio fiscal significa menos infraestructura para atraer inversión.',
+    conclusion:
+      'El reto de Pemex consiste en evitar que el apoyo financiero permanente se vuelva una carga que limite el desarrollo nacional. Sostener deuda no equivale a construir capacidades productivas.',
+    body:
+      'Los apoyos fiscales a la empresa buscan sostener compromisos financieros y operativos. Incluso cuando Pemex accede a emisiones locales, el documento señala que esos recursos se orientan al refinanciamiento de deuda existente, no a nueva formación de capital.',
+    meaning:
+      'La pregunta de fondo no es solo energética, sino fiscal. Mientras Pemex requiera transferencias elevadas, el margen del Estado para financiar bienes públicos será más estrecho.',
+    insights: [
+      {
+        icon: 'bi-cash-stack',
+        title: 'Dependencia financiera',
+        text: 'La empresa necesita apoyo público para enfrentar liquidez y vencimientos.',
+      },
+      {
+        icon: 'bi-signpost-split',
+        title: 'Costo de oportunidad',
+        text: 'Los recursos usados en rescate no pueden destinarse al mismo tiempo a infraestructura social o productiva.',
+      },
+      {
+        icon: 'bi-building-gear',
+        title: 'Menor espacio público',
+        text: 'La presión reduce margen para obras, servicios y mantenimiento institucional.',
+      },
+    ],
+  },
+  instituciones: {
+    path: '/instituciones',
+    nextPath: '/seguridad',
+    nextLabel: 'Seguridad',
+    navLabel: 'Instituciones',
+    eyebrow: 'Estado de derecho',
+    title: 'Instituciones y Estado de derecho',
+    imageKey: 'instituciones',
+    summary:
+      'Las instituciones importan porque ayudan a que las decisiones públicas sean transparentes, evaluables y menos dependientes de intereses políticos inmediatos.',
+    keyIdea:
+      'Perder contrapesos no es un asunto administrativo menor: puede reducir transparencia, evaluación independiente y confianza.',
+    problemIntro:
+      'El documento describe una reorganización institucional que concentra funciones antes realizadas por organismos autónomos. El problema no es solo dónde queda una oficina o cuánto cuesta mantenerla. La pregunta importante es quién vigila, quién evalúa y quién regula cuando las decisiones afectan derechos, competencia económica, energía, educación o política social. Cuando los contrapesos se debilitan, aumenta el riesgo de decisiones menos técnicas y más políticas.',
+    causes: [
+      {
+        title: 'Concentración de funciones',
+        text: 'Al trasladar funciones técnicas a dependencias gubernamentales, se reduce la distancia entre quien decide y quien debe evaluar o regular.',
+      },
+      {
+        title: 'Ahorro frente a capacidad técnica',
+        text: 'El ahorro estimado puede parecer atractivo, pero debe compararse con el costo de perder medición independiente, transparencia y certidumbre.',
+      },
+      {
+        title: 'Debilidad de contrapesos',
+        text: 'Sin órganos con autonomía, la sociedad cuenta con menos herramientas para revisar decisiones, exigir información y detectar errores.',
+      },
+    ],
+    consequences: [
+      {
+        title: 'Menor transparencia',
+        text: 'La ciudadanía puede tener más dificultad para conocer cómo se gasta, contrata o decide desde el poder público.',
+      },
+      {
+        title: 'Menos evaluación independiente',
+        text: 'Sin diagnósticos autónomos, medir pobreza, educación o resultados sociales puede volverse más vulnerable a intereses políticos.',
+      },
+      {
+        title: 'Menor certidumbre para invertir',
+        text: 'Los mercados regulados necesitan reglas claras. Si la regulación parece inestable, aumentan los riesgos para inversión y competencia.',
+      },
+    ],
+    realChallenges: [
+      {
+        title: 'Mantener transparencia efectiva',
+        text: 'El acceso a información debe seguir siendo útil, oportuno y exigible para la sociedad.',
+      },
+      {
+        title: 'Proteger decisiones técnicas',
+        text: 'Competencia, energía, telecomunicaciones, educación y pobreza requieren criterios profesionales, no solo decisiones políticas.',
+      },
+      {
+        title: 'Cuidar confianza judicial',
+        text: 'La elección popular de cargos judiciales plantea el reto de conservar independencia, profesionalismo y respeto a derechos.',
+      },
+    ],
+    connections:
+      'Las instituciones se relacionan con economía porque la inversión necesita certidumbre; con seguridad porque la justicia depende de confianza; con sociedad y educación porque la evaluación independiente permite saber si una política funciona.',
+    conclusion:
+      'Un país no solo necesita programas y presupuesto. También necesita instituciones que midan, vigilen y corrijan. Sin contrapesos, los errores públicos pueden durar más y ser más costosos.',
+    body:
+      'La reorganización de organismos autónomos concentra funciones en dependencias gubernamentales. El documento ubica el cambio como parte de una simplificación orgánica que elimina siete organismos y estima un ahorro de 4,422 millones de pesos.',
+    meaning:
+      'Cuando las instituciones son menos predecibles, se debilitan la confianza ciudadana, la certidumbre regulatoria y la capacidad de medir resultados públicos.',
+    insights: [
+      {
+        icon: 'bi-eye',
+        title: 'Transparencia',
+        text: 'El acceso a información pública permite vigilar decisiones, gasto y resultados.',
+      },
+      {
+        icon: 'bi-sliders',
+        title: 'Regulación técnica',
+        text: 'Mercados complejos requieren criterios estables y especializados.',
+      },
+      {
+        icon: 'bi-clipboard-data',
+        title: 'Evaluación',
+        text: 'Medir pobreza, educación y desempeño ayuda a corregir políticas con evidencia.',
+      },
+    ],
+    institutionsIntro:
+      '¿Por qué importan los organismos autónomos? Porque separan ciertas funciones técnicas del ciclo político inmediato. No resuelven todos los problemas, pero ofrecen información, regulación y vigilancia que ayudan a que el poder público sea más controlable.',
+    institutions: [
+      {
+        name: 'INAI',
+        function: 'Acceso a la información pública, transparencia y protección de datos.',
+        risk: 'Si su función pierde independencia, la fiscalización ciudadana del gasto y de las contrataciones puede debilitarse.',
+        area: 'Rendición de cuentas',
+      },
+      {
+        name: 'Cofece e IFT',
+        function: 'Competencia económica, mercados regulados y telecomunicaciones.',
+        risk: 'La regulación puede volverse menos predecible, afectar competencia y elevar incertidumbre para inversión y consumidores.',
+        area: 'Competencia',
+      },
+      {
+        name: 'Coneval',
+        function: 'Medición de pobreza y evaluación de política social.',
+        risk: 'Sin diagnóstico independiente, puede ser más difícil saber si una política realmente reduce carencias.',
+        area: 'Política social',
+      },
+      {
+        name: 'CRE y CNH',
+        function: 'Regulación técnica del sector energético.',
+        risk: 'La regulación energética puede quedar más expuesta a criterios políticos y reducir confianza de largo plazo.',
+        area: 'Energía',
+      },
+      {
+        name: 'Mejoredu',
+        function: 'Evaluación y mejora continua del sistema educativo.',
+        risk: 'Se pierde una herramienta para diagnosticar aprendizajes y orientar intervenciones con evidencia.',
+        area: 'Educación',
+      },
+    ],
+    flow: ['Transparencia', 'Confianza pública', 'Inversión', 'Desarrollo'],
+    judicial: ['Elección popular', 'Independencia', 'Profesionalismo', 'Confianza'],
+  },
+  seguridad: {
+    path: '/seguridad',
+    nextPath: '/sociedad',
+    nextLabel: 'Sociedad',
+    navLabel: 'Seguridad',
+    eyebrow: 'Justicia penal',
+    title: 'Seguridad e impunidad',
+    imageKey: 'seguridad',
+    summary:
+      'La seguridad no se entiende solo contando delitos u homicidios: también hay que ver denuncia, investigación, sanción y reparación.',
+    keyIdea:
+      'La cifra negra muestra la distancia entre lo que ocurre y lo que el sistema registra o atiende.',
+    problemIntro:
+      'El problema de seguridad no termina cuando se cuenta cuántos delitos ocurren. También importa saber si las víctimas denuncian, si la fiscalía investiga, si existe sanción y si la persona afectada obtiene justicia. Cuando la ciudadanía percibe que denunciar no sirve, muchos delitos quedan fuera de las estadísticas. Esa distancia se llama cifra negra y debilita la confianza pública.',
+    causes: [
+      {
+        title: 'Desconfianza para denunciar',
+        text: 'Si la denuncia implica tiempo, burocracia, riesgo o revictimización, muchas personas prefieren no acudir a la autoridad.',
+      },
+      {
+        title: 'Capacidad limitada de investigación',
+        text: 'Las fiscalías pueden recibir casos, pero sin personal, metodología y seguimiento, las carpetas no avanzan hacia sanciones.',
+      },
+      {
+        title: 'Impunidad acumulada',
+        text: 'Cuando los delitos no se sancionan, se refuerza la idea de que el sistema no protege a las víctimas.',
+      },
+    ],
+    consequences: [
+      {
+        title: 'Delitos invisibles',
+        text: 'La cifra oficial puede mostrar solo una parte del problema, porque muchos hechos no se denuncian o no se investigan.',
+      },
+      {
+        title: 'Menor confianza ciudadana',
+        text: 'Si la experiencia de las personas contradice el discurso institucional, la relación con la autoridad se deteriora.',
+      },
+      {
+        title: 'Reproducción de impunidad',
+        text: 'La falta de consecuencias puede incentivar nuevos delitos y debilitar la convivencia social.',
+      },
+    ],
+    realChallenges: [
+      {
+        title: 'Hacer que denunciar tenga sentido',
+        text: 'La denuncia debe ser accesible, segura y útil; si no produce respuesta, la cifra negra seguirá creciendo.',
+      },
+      {
+        title: 'Investigar con calidad',
+        text: 'No basta con abrir carpetas. Se necesita investigación que llegue a sanción y reparación.',
+      },
+      {
+        title: 'Medir lo que no se ve',
+        text: 'La política de seguridad debe considerar delitos no denunciados y no depender solo de registros oficiales.',
+      },
+    ],
+    connections:
+      'La seguridad se conecta con instituciones porque necesita fiscalías confiables; con economía porque la violencia frena inversión; con sociedad porque afecta más a quienes tienen menos herramientas para defenderse.',
+    conclusion:
+      'Un país más seguro no se construye solo con menos registros, sino con más confianza, mejor investigación y menor impunidad. La cifra negra recuerda que lo invisible también forma parte del problema.',
+    body:
+      'La impunidad elevada en delitos de impacto social revela una brecha entre ocurrencia, registro e investigación. El documento también registra que 29% de los hogares, más de 11.4 millones de viviendas, tuvo al menos una víctima de delito en el último año.',
+    meaning:
+      'Reducir impunidad exige fiscalías profesionales, información confiable y una relación más cercana entre ciudadanía e instituciones de seguridad.',
+    insights: [
+      {
+        icon: 'bi-file-earmark-text',
+        title: 'Denuncia',
+        text: 'La confianza determina si un delito entra al sistema institucional o queda dentro de la cifra negra.',
+      },
+      {
+        icon: 'bi-search',
+        title: 'Investigación',
+        text: 'Sin capacidad investigadora, la denuncia no se convierte en justicia.',
+      },
+      {
+        icon: 'bi-shield-check',
+        title: 'Sanción',
+        text: 'La respuesta efectiva reduce impunidad y reconstruye confianza pública.',
+      },
+    ],
+    callout: {
+      title: '¿Qué es la cifra negra?',
+      text: 'Es el conjunto de delitos que ocurren, pero no se denuncian o no derivan en una investigación efectiva. Si es alta, la realidad delictiva es mayor que lo que muestran los registros oficiales.',
+    },
+    flow: ['Delito', 'No denuncia', 'No investigación', 'Impunidad', 'Desconfianza', 'Más cifra negra'],
+  },
+  sociedad: {
+    path: '/sociedad',
+    nextPath: '/educacion',
+    nextLabel: 'Educación',
+    navLabel: 'Sociedad',
+    eyebrow: 'Desigualdad y movilidad',
+    title: 'Pobreza, desigualdad y movilidad social',
+    imageKey: 'sociedad',
+    summary:
+      'La pobreza no es solo falta de dinero: también es acumulación de carencias que limitan oportunidades desde el origen.',
+    keyIdea:
+      'El lugar donde una persona nace puede condicionar sus oportunidades futuras.',
+    problemIntro:
+      'La pobreza multidimensional permite entender que la desigualdad no se reduce únicamente al ingreso. Una persona puede enfrentar carencias educativas, falta de acceso a salud, vivienda precaria, servicios insuficientes, empleo inestable y un entorno regional con pocas oportunidades. Cuando esas carencias se acumulan desde la infancia, la movilidad social se vuelve difícil.',
+    causes: [
+      {
+        title: 'Carencias acumuladas',
+        text: 'Educación, salud, vivienda, servicios y empleo se combinan. Una carencia suele reforzar otra.',
+      },
+      {
+        title: 'Región de nacimiento',
+        text: 'Nacer en una región con menos infraestructura, menor conectividad o menos servicios públicos limita oportunidades desde el inicio.',
+      },
+      {
+        title: 'Movilidad educativa estancada',
+        text: 'Si los jóvenes de menores ingresos no superan la escolaridad de sus padres, la desigualdad se reproduce entre generaciones.',
+      },
+    ],
+    consequences: [
+      {
+        title: 'Oportunidades desiguales',
+        text: 'El esfuerzo personal importa, pero no parte del mismo punto para todos. Las condiciones de origen pesan demasiado.',
+      },
+      {
+        title: 'Menor acceso a empleos de calidad',
+        text: 'Sin educación, salud y redes de apoyo, las personas quedan más expuestas a empleos precarios.',
+      },
+      {
+        title: 'Desconfianza social',
+        text: 'Cuando la movilidad parece cerrada, crece la percepción de injusticia y se debilita la cohesión social.',
+      },
+    ],
+    realChallenges: [
+      {
+        title: 'Atender pobreza como sistema',
+        text: 'No basta transferir ingreso si persisten carencias en salud, educación, vivienda y servicios.',
+      },
+      {
+        title: 'Reducir desigualdad territorial',
+        text: 'Las políticas deben mirar regiones concretas, no solo promedios nacionales.',
+      },
+      {
+        title: 'Medir con independencia',
+        text: 'Sin evaluación confiable, es difícil saber si una política reduce pobreza o solo cambia indicadores superficiales.',
+      },
+    ],
+    connections:
+      'Sociedad se conecta con educación porque el rezago limita movilidad; con salud y agua porque las carencias básicas afectan bienestar; con instituciones porque se necesita medición independiente para diseñar políticas efectivas.',
+    conclusion:
+      'La pobreza es una red de obstáculos. Superarla exige mejorar ingresos, pero también servicios, educación, salud, vivienda y oportunidades territoriales.',
+    body:
+      'La pobreza no solo depende del ingreso. También expresa carencias educativas, sanitarias, laborales, de vivienda y de servicios. El documento subraya que 48% de la desigualdad económica se asocia con falta de igualdad de oportunidades desde el nacimiento.',
+    meaning:
+      'El país necesita conectar crecimiento económico con servicios públicos efectivos y políticas que reduzcan desigualdades de origen.',
+    featured: 'El lugar donde una persona nace puede condicionar sus oportunidades futuras.',
+    dataPoint:
+      '48% de la desigualdad económica se asocia con falta de igualdad de oportunidades desde el nacimiento.',
+    insights: [
+      {
+        icon: 'bi-house-heart',
+        title: 'Carencias múltiples',
+        text: 'La pobreza se expresa en ingreso, servicios, salud, educación y vivienda.',
+      },
+      {
+        icon: 'bi-signpost',
+        title: 'Origen territorial',
+        text: 'Los recursos de la región de origen son el factor más fuerte dentro de la desigualdad de origen.',
+      },
+      {
+        icon: 'bi-arrow-up-right-circle',
+        title: 'Movilidad social',
+        text: 'Subir de condición requiere servicios efectivos y mercados incluyentes.',
+      },
+    ],
+  },
+  educacion: {
+    path: '/educacion',
+    nextPath: '/agua',
+    nextLabel: 'Agua',
+    navLabel: 'Educación',
+    eyebrow: 'Aprendizaje y futuro',
+    title: 'Educación y pérdida de aprendizaje',
+    imageKey: 'educacion',
+    summary:
+      'El rezago educativo afecta el futuro económico del país porque limita pensamiento crítico, productividad e innovación.',
+    keyIdea:
+      'Si México quiere empleos de mayor valor, necesita formación sólida en lectura, matemáticas, ciencia, tecnología e idiomas.',
+    problemIntro:
+      'La educación es una base para casi todos los demás retos. Si millones de personas llegan a la vida adulta con rezago educativo, el país tiene menos capacidad para aprovechar industrias de mayor valor, innovar y reducir desigualdad. La pérdida de aprendizaje no solo afecta calificaciones; afecta la posibilidad de comprender información, resolver problemas y acceder a empleos técnicos.',
+    causes: [
+      {
+        title: 'Rezago acumulado',
+        text: 'El documento registra 24.2 millones de personas mayores de 15 años en rezago educativo y 3.4 millones de niñas, niños y adolescentes con déficit.',
+      },
+      {
+        title: 'Menos tiempo lectivo',
+        text: 'El calendario lectivo efectivo señalado para 2025-2026 fue de 150 días, lo que reduce tiempo para recuperar aprendizajes.',
+      },
+      {
+        title: 'Evaluación debilitada',
+        text: 'Sin instrumentos sólidos de evaluación, es más difícil saber dónde están las brechas y qué intervenciones funcionan.',
+      },
+    ],
+    consequences: [
+      {
+        title: 'Menor pensamiento crítico',
+        text: 'La comprensión lectora y científica ayuda a analizar información. Si falla, la ciudadanía tiene menos herramientas para decidir.',
+      },
+      {
+        title: 'Menor productividad',
+        text: 'Sin habilidades matemáticas y técnicas, el país compite con empleos de menor complejidad.',
+      },
+      {
+        title: 'Más desigualdad',
+        text: 'Quienes nacen en hogares con menos recursos tienen menos oportunidades de recuperar aprendizajes por cuenta propia.',
+      },
+      {
+        title: 'Menor innovación',
+        text: 'La ciencia, tecnología e industria avanzada requieren formación que no se improvisa.',
+      },
+    ],
+    realChallenges: [
+      {
+        title: 'Recuperar aprendizajes básicos',
+        text: 'Leer, escribir, razonar matemáticamente y comprender ciencia son condiciones para seguir aprendiendo.',
+      },
+      {
+        title: 'Vincular educación y economía',
+        text: 'El nearshoring requiere talento técnico. Sin formación adecuada, la oportunidad puede quedarse en empleos de bajo valor.',
+      },
+      {
+        title: 'Diagnosticar con evidencia',
+        text: 'Sin evaluación clara, las políticas educativas pueden avanzar sin saber si realmente mejoran aprendizajes.',
+      },
+    ],
+    connections:
+      'Educación se conecta con economía y nearshoring por la demanda de talento técnico; con sociedad porque define movilidad social; con instituciones porque requiere evaluación independiente.',
+    conclusion:
+      'La educación no es un tema aislado: es una condición para que México produzca mejor, reduzca desigualdad y participe en sectores de mayor valor.',
+    body:
+      'El bajo desempeño en PISA y el rezago entre personas mayores de 15 años apuntan a una brecha estructural. El documento también señala un calendario lectivo de apenas 150 días efectivos para 2025-2026, lo que agrava la pérdida de aprendizajes.',
+    meaning:
+      'Sin recuperación de aprendizajes y evaluación sólida, el nearshoring puede encontrar un cuello de botella en capital humano.',
+    featured: 'Pérdida aproximada de 2 años de aprendizaje',
+    insights: [
+      {
+        icon: 'bi-book',
+        title: 'Comprensión',
+        text: 'Leer e interpretar información sostiene pensamiento crítico.',
+      },
+      {
+        icon: 'bi-calculator',
+        title: 'Matemáticas',
+        text: 'Resolver problemas abre puertas a empleos técnicos.',
+      },
+      {
+        icon: 'bi-tools',
+        title: 'Competitividad',
+        text: 'El aprendizaje define la capacidad de aprovechar industrias de mayor valor.',
+      },
+    ],
+    table: {
+      columns: ['Área', 'Reto educativo', 'Consecuencia'],
+      rows: [
+        ['Ciencias', 'Dificultad para explicar fenómenos y usar evidencia', 'Menor preparación técnica y científica'],
+        ['Matemáticas', 'Rezago en resolución de problemas', 'Menor acceso a empleos de mayor complejidad'],
+        ['Comprensión lectora', 'Dificultad para interpretar información', 'Menor pensamiento crítico y aprendizaje autónomo'],
+      ],
+    },
+  },
+  agua: {
+    path: '/agua',
+    nextPath: '/salud',
+    nextLabel: 'Salud',
+    navLabel: 'Agua',
+    eyebrow: 'Vulnerabilidad socioambiental',
+    title: 'Crisis hídrica',
+    imageKey: 'agua',
+    summary:
+      'La crisis hídrica no se resuelve solo con que llueva más: también depende de acuíferos, infraestructura, distribución y gobernanza.',
+    keyIdea:
+      'El agua es una condición básica para salud, industria, agricultura, vivienda y nearshoring.',
+    problemIntro:
+      'El documento señala una recuperación temporal de presas al 94% hacia marzo de 2026 tras 43 meses de sequía continua, pero eso no significa que el problema esté resuelto. La crisis hídrica tiene causas estructurales: acuíferos sobreexplotados, hundimiento, tandeos, mala calidad del agua, tratamiento insuficiente y desigualdad en el acceso.',
+    causes: [
+      {
+        title: 'Sobreexplotación de acuíferos',
+        text: 'Extraer más agua de la que se recupera reduce disponibilidad futura y agrava hundimientos.',
+      },
+      {
+        title: 'Infraestructura insuficiente',
+        text: 'Redes deterioradas, tratamiento limitado y distribución desigual hacen que el agua no llegue con calidad ni continuidad.',
+      },
+      {
+        title: 'Uso riesgoso de aguas residuales',
+        text: 'El documento señala que 65% del caudal residual en la Cuenca de México es de origen doméstico y puede generar riesgos sanitarios si no se gestiona bien.',
+      },
+    ],
+    consequences: [
+      {
+        title: 'Tandeos y desigualdad',
+        text: 'Las zonas periféricas y de menores ingresos suelen enfrentar suministro intermitente y agua de peor calidad.',
+      },
+      {
+        title: 'Riesgo sanitario',
+        text: 'El uso de aguas residuales sin tratamiento suficiente puede introducir patógenos a la cadena alimentaria.',
+      },
+      {
+        title: 'Límite para industria',
+        text: 'Sin agua confiable, proyectos productivos y nearshoring pierden viabilidad en ciertas regiones.',
+      },
+    ],
+    realChallenges: [
+      {
+        title: 'Distinguir lluvia de solución',
+        text: 'Una recuperación temporal de presas ayuda, pero no corrige sobreexplotación, fugas ni mala gestión.',
+      },
+      {
+        title: 'Invertir en tratamiento y redes',
+        text: 'Sin infraestructura, el agua disponible no se convierte en acceso seguro.',
+      },
+      {
+        title: 'Gobernar con enfoque territorial',
+        text: 'La crisis no afecta igual a todos; las políticas deben atender desigualdad urbana, rural e industrial.',
+      },
+    ],
+    connections:
+      'Agua se conecta con salud por los riesgos sanitarios; con economía porque limita industria y nearshoring; con sociedad porque el acceso desigual afecta más a hogares vulnerables.',
+    conclusion:
+      'La crisis hídrica es un problema de recursos, infraestructura y justicia territorial. Llover más puede aliviar, pero no reemplaza una política de agua de largo plazo.',
+    body:
+      'La crisis hídrica combina sobreexplotación, hundimiento, tandeos, mala calidad del agua y una gestión insuficiente de aguas residuales. El problema conecta infraestructura, territorio, salud y gobernanza.',
+    meaning:
+      'Resolver el agua implica mirar más allá de la lluvia: se requiere infraestructura, tratamiento, regulación y coordinación metropolitana.',
+    flow: ['Sobreexplotación', 'Menor disponibilidad', 'Tandeos', 'Desigualdad', 'Riesgo sanitario y económico'],
+    insights: [
+      {
+        icon: 'bi-droplet',
+        title: 'Sobreexplotación',
+        text: 'La extracción sostenida presiona reservas subterráneas y eleva vulnerabilidad.',
+      },
+      {
+        icon: 'bi-building-down',
+        title: 'Hundimiento',
+        text: 'El agotamiento del subsuelo agrava daños urbanos e infraestructura.',
+      },
+      {
+        icon: 'bi-diagram-3',
+        title: 'Gobernanza',
+        text: 'La coordinación institucional es tan importante como la obra física.',
+      },
+    ],
+  },
+  salud: {
+    path: '/salud',
+    nextPath: '/datos',
+    nextLabel: 'Datos',
+    navLabel: 'Salud',
+    eyebrow: 'Cobertura y acceso',
+    title: 'Salud pública',
+    imageKey: 'salud',
+    summary:
+      'Cobertura no significa atención real: para atender a la población se necesitan médicos, especialistas, medicamentos, transporte y hospitales funcionales.',
+    keyIdea:
+      'La salud pública se mide por el acceso efectivo, no solo por la existencia formal de una red de atención.',
+    problemIntro:
+      'El sistema de salud busca ampliar cobertura mediante IMSS-Bienestar, especialmente para personas sin seguridad social formal. Sin embargo, la cobertura solo se vuelve real cuando una persona puede llegar a una unidad, recibir diagnóstico, encontrar medicamentos, ser referida a un hospital y acceder a especialistas si los necesita. En zonas rurales e indígenas, cada paso puede convertirse en una barrera.',
+    causes: [
+      {
+        title: 'Distancia y transporte',
+        text: 'Llegar a una unidad médica puede implicar tiempo y costo, especialmente en comunidades rurales.',
+      },
+      {
+        title: 'Falta de especialistas',
+        text: 'La atención de segundo y tercer nivel suele concentrarse en centros urbanos, dejando zonas periféricas con menor acceso.',
+      },
+      {
+        title: 'Abasto y coordinación',
+        text: 'La centralización administrativa exige coordinar compras, nómina, insumos y operación diaria sin interrumpir servicios.',
+      },
+    ],
+    consequences: [
+      {
+        title: 'Cobertura incompleta',
+        text: 'Una persona puede estar dentro del sistema y aun así no recibir atención oportuna.',
+      },
+      {
+        title: 'Desigualdad sanitaria',
+        text: 'Las zonas rurales e indígenas enfrentan más obstáculos para acceder a medicina especializada.',
+      },
+      {
+        title: 'Presión sobre familias',
+        text: 'Cuando faltan medicamentos o traslados, las familias absorben costos que deberían estar cubiertos por el sistema.',
+      },
+    ],
+    realChallenges: [
+      {
+        title: 'Convertir cobertura en atención',
+        text: 'El reto es que la afiliación se traduzca en consulta, diagnóstico, tratamiento y seguimiento.',
+      },
+      {
+        title: 'Asegurar personal e insumos',
+        text: 'Sin médicos, especialistas y medicamentos, la infraestructura no basta.',
+      },
+      {
+        title: 'Coordinar niveles de atención',
+        text: 'La ruta entre unidad médica, hospital rural y especialista debe funcionar sin romper la continuidad del paciente.',
+      },
+    ],
+    connections:
+      'Salud se conecta con sociedad porque las carencias afectan más a personas con menos recursos; con educación porque la salud influye en aprendizaje; con Pemex y finanzas públicas porque el presupuesto limita infraestructura y abasto.',
+    conclusion:
+      'La salud pública requiere algo más que cobertura formal. Necesita una ruta completa de atención que funcione para quienes viven lejos de los grandes centros urbanos.',
+    body:
+      'IMSS-Bienestar busca ampliar acceso para personas sin seguridad social, pero enfrenta retos de abasto, especialistas, coordinación e infraestructura. La distancia entre unidad médica, hospital rural y atención especializada sigue siendo una barrera, especialmente en zonas rurales e indígenas.',
+    meaning:
+      'La universalidad solo se concreta cuando hay personal, medicamentos, transporte, referencia clínica y servicios disponibles de forma cotidiana.',
+    flow: ['Paciente rural', 'Unidad médica', 'Hospital rural', 'Especialista', 'Barreras de acceso'],
+    insights: [
+      {
+        icon: 'bi-universal-access',
+        title: 'Cobertura universal',
+        text: 'La afiliación debe traducirse en atención real.',
+      },
+      {
+        icon: 'bi-geo-alt',
+        title: 'Zonas rurales e indígenas',
+        text: 'La distancia aumenta costos y tiempos de atención.',
+      },
+      {
+        icon: 'bi-capsule',
+        title: 'Abasto de medicamentos',
+        text: 'Sin insumos, la cobertura pierde efectividad.',
+      },
+    ],
+  },
+}
+
+export const topicList = Object.values(topics)
+</file>
+
+<file path="src/hooks/useRevealOnScroll.js">
+import { useEffect } from 'react'
+
+export function useRevealOnScroll(dependency) {
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+
+    const elements = Array.from(document.querySelectorAll('.reveal'))
+    elements.forEach((element) => element.classList.remove('is-visible'))
+
+    if (!('IntersectionObserver' in window)) {
+      elements.forEach((element) => element.classList.add('is-visible'))
+      return undefined
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible')
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.16, rootMargin: '0px 0px -40px 0px' },
+    )
+
+    elements.forEach((element) => observer.observe(element))
+
+    return () => observer.disconnect()
+  }, [dependency])
+}
+</file>
+
+<file path="src/main.jsx">
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap-icons/font/bootstrap-icons.css'
+import './styles/index.css'
+import App from './App.jsx'
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+)
+</file>
+
+<file path="src/pages/Agua.jsx">
+import StatCard from '../components/StatCard'
+import TopicPageScaffold from '../components/TopicPageScaffold'
+import { topics } from '../data/topics'
+
+function Agua() {
+  return (
+    <TopicPageScaffold
+      topic={topics.agua}
+      dataCards={
+        <>
+          <div className="col-md-6">
+            <StatCard
+              icon="bi-water"
+              value="65%"
+              label="Caudal residual de origen doméstico en la Cuenca de México"
+              detail="Dato clave para entender el riesgo sanitario del uso de aguas residuales."
+            />
+          </div>
+          <div className="col-md-6">
+            <StatCard
+              icon="bi-cloud-rain"
+              value="94%"
+              label="Recuperación temporal de presas hacia marzo de 2026"
+              detail="Ocurrió tras 43 meses de sequía continua; no resuelve el problema estructural."
+            />
+          </div>
+        </>
+      }
+    />
+  )
+}
+
+export default Agua
+</file>
+
+<file path="src/pages/Datos.jsx">
+import Breadcrumb from '../components/Breadcrumb'
+import PageLayout from '../components/PageLayout'
+import StatCard from '../components/StatCard'
+import BarChartBox from '../components/charts/BarChartBox'
+import ComparisonChart from '../components/charts/ComparisonChart'
+import HorizontalBarChart from '../components/charts/HorizontalBarChart'
+import LineChartBox from '../components/charts/LineChartBox'
+import {
+  gdpProjectionData,
+  impunityData,
+  inequalityOriginData,
+  pemexSupportData,
+  pisaComparisonData,
+} from '../data/chartData'
+
+function Datos() {
+  return (
+    <PageLayout title="Datos">
+      <Breadcrumb current="Datos" />
+      <section className="page-hero compact-hero">
+        <div className="container">
+          <div className="page-hero-copy reveal">
+            <p className="eyebrow">Datos clave</p>
+            <h1>Datos clave del México presente</h1>
+            <p className="hero-subtitle">
+              Los datos no sustituyen el análisis: solo ayudan a dimensionar algunos
+              problemas. Por eso esta página reúne pocas visualizaciones, elegidas porque
+              comparan tendencias, escalas o brechas importantes.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="section-block">
+        <div className="container">
+          <div className="section-intro">
+            <p className="eyebrow">Selección</p>
+            <h2>Cinco lecturas para ubicar la discusión</h2>
+            <p>
+              Cada visualización apunta a una pregunta: cuánto puede crecer la economía,
+              cuánto cuesta sostener Pemex, qué tan alta es la impunidad, cuánto pesa el
+              origen social y qué brecha educativa enfrenta México.
+            </p>
+          </div>
+          <div className="chart-grid focused-chart-grid">
+            <LineChartBox
+              data={gdpProjectionData}
+              xKey="year"
+              yKey="value"
+              title="PIB proyectado"
+              description="Rango 2025 y trayectoria 2026-2027."
+            />
+            <BarChartBox
+              data={pemexSupportData}
+              xKey="year"
+              yKey="value"
+              title="Apoyo fiscal a Pemex"
+              description="Montos de apoyo 2025 y 2026."
+              unit="millones de dólares"
+            />
+            <BarChartBox
+              data={impunityData}
+              xKey="crime"
+              yKey="value"
+              title="Impunidad"
+              description="Porcentaje por delito."
+              unit="%"
+            />
+            <HorizontalBarChart
+              data={inequalityOriginData}
+              yKey="factor"
+              title="Desigualdad de origen"
+              description="Factores comparables."
+              unit="%"
+              height={360}
+            />
+            <ComparisonChart
+              data={pisaComparisonData}
+              title="PISA 2022"
+              description="México frente al promedio OCDE."
+              unit="puntos"
+            />
+            <StatCard
+              icon="bi-water"
+              value="65%"
+              label="Caudal residual doméstico en la Cuenca de México"
+              detail="Se muestra como tarjeta porque es un dato puntual, no una tendencia."
+            />
+          </div>
+        </div>
+      </section>
+    </PageLayout>
+  )
+}
+
+export default Datos
+</file>
+
+<file path="src/pages/Economia.jsx">
+import StatCard from '../components/StatCard'
+import TopicPageScaffold from '../components/TopicPageScaffold'
+import LineChartBox from '../components/charts/LineChartBox'
+import { gdpProjectionData } from '../data/chartData'
+import { topics } from '../data/topics'
+
+function Economia() {
+  return (
+    <TopicPageScaffold
+      topic={topics.economia}
+      charts={
+        <LineChartBox
+          data={gdpProjectionData}
+          xKey="year"
+          yKey="value"
+          title="Proyección de crecimiento del PIB"
+          description="Rango de 2025 y trayectoria esperada para 2026 y 2027."
+        />
+      }
+      dataCards={
+        <>
+          <div className="col-md-4">
+            <StatCard
+              icon="bi-currency-exchange"
+              value="3.5%"
+              label="Inflación estimada al cierre de 2026"
+              detail="Dato puntual del entorno económico, no una comparación central."
+            />
+          </div>
+          <div className="col-md-4">
+            <StatCard
+              icon="bi-person-workspace"
+              value="260 mil a 460 mil"
+              label="Rango esperado de creación de empleo formal"
+              detail="El rango ayuda a dimensionar incertidumbre laboral."
+            />
+          </div>
+          <div className="col-md-4">
+            <StatCard
+              icon="bi-percent"
+              value="6.5%"
+              label="Tasa de referencia desde mayo de 2026"
+              detail="Dato contextual del entorno monetario señalado en el documento."
+            />
+          </div>
+        </>
+      }
+    />
+  )
+}
+
+export default Economia
+</file>
+
+<file path="src/pages/Educacion.jsx">
+import StatCard from '../components/StatCard'
+import TopicPageScaffold from '../components/TopicPageScaffold'
+import ComparisonChart from '../components/charts/ComparisonChart'
+import { pisaComparisonData } from '../data/chartData'
+import { topics } from '../data/topics'
+
+function Educacion() {
+  return (
+    <TopicPageScaffold
+      topic={topics.educacion}
+      charts={
+        <ComparisonChart
+          data={pisaComparisonData}
+          title="PISA 2022: México vs OCDE"
+          description="Comparación de puntaje promedio."
+          unit="puntos"
+        />
+      }
+      dataCards={
+        <>
+          <div className="col-md-4">
+            <StatCard
+              icon="bi-person-lines-fill"
+              value="24.2 millones"
+              label="Personas mayores de 15 años en rezago educativo"
+            />
+          </div>
+          <div className="col-md-4">
+            <StatCard
+              icon="bi-calendar2-range"
+              value="2 años"
+              label={topics.educacion.featured}
+              detail="Estimación aproximada de pérdida de aprendizaje."
+            />
+          </div>
+          <div className="col-md-4">
+            <StatCard
+              icon="bi-calendar-week"
+              value="150 días"
+              label="Calendario lectivo efectivo señalado para 2025-2026"
+              detail="Dato contextual sobre reducción del tiempo lectivo."
+            />
+          </div>
+        </>
+      }
+    />
+  )
+}
+
+export default Educacion
+</file>
+
+<file path="src/pages/Home.jsx">
+import { Link } from 'react-router-dom'
+import PageHero from '../components/PageHero'
+import PageLayout from '../components/PageLayout'
+import VisualPanel from '../components/VisualPanel'
+import { navigationItems } from '../data/navigation'
+import { topicImages } from '../data/topicImages'
+
+const topicCards = navigationItems.filter((item) => item.path !== '/')
+
+function Home() {
+  return (
+    <PageLayout title="Inicio">
+      <PageHero
+        title="Problemas y retos de el México presente"
+        summary="Una mirada clara a los desafíos económicos, sociales, institucionales y ambientales que definen el rumbo actual del país."
+        image={topicImages.panorama}
+      />
+
+      <section className="section-block">
+        <div className="container">
+          <div className="section-intro">
+            <p className="eyebrow">Portada</p>
+            <h2>Explora los temas</h2>
+            <p>
+              Cada sección aborda un reto desde su contexto, sus datos disponibles y sus
+              consecuencias para la vida pública.
+            </p>
+          </div>
+          <div className="row g-4">
+            {topicCards.map((item) => (
+              <div className="col-md-6 col-xl-4" key={item.path}>
+                <article className="home-topic-card reveal">
+                  <div className="card-icon" aria-hidden="true">
+                    <i className={`bi ${item.icon}`}></i>
+                  </div>
+                  <h3>{item.label}</h3>
+                  <p>{item.description}</p>
+                  <Link className="btn btn-outline-custom" to={item.path}>
+                    Ver tema
+                    <i className="bi bi-arrow-right" aria-hidden="true"></i>
+                  </Link>
+                </article>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section-block section-muted">
+        <div className="container">
+          <VisualPanel
+            title="México entre oportunidad y límite"
+            description="La paradoja central es clara: México cuenta con ubicación estratégica, integración comercial y oportunidad por nearshoring, pero enfrenta restricciones que pueden frenar ese potencial."
+            variant="wide"
+          >
+            <div className="opportunity-grid">
+              <article>
+                <span>Oportunidad</span>
+                <p>Ubicación, manufactura, comercio norteamericano y atracción de nuevas cadenas productivas.</p>
+              </article>
+              <article>
+                <span>Límite</span>
+                <p>Instituciones presionadas, inseguridad, rezago educativo, crisis hídrica, salud pública y finanzas públicas estrechas.</p>
+              </article>
+            </div>
+          </VisualPanel>
+        </div>
+      </section>
+    </PageLayout>
+  )
+}
+
+export default Home
+</file>
+
+<file path="src/pages/Instituciones.jsx">
+import StatCard from '../components/StatCard'
+import TopicPageScaffold from '../components/TopicPageScaffold'
+import { topics } from '../data/topics'
+
+function Instituciones() {
+  return (
+    <TopicPageScaffold
+      topic={topics.instituciones}
+      dataCards={
+        <>
+          <div className="col-md-6">
+            <StatCard
+              icon="bi-piggy-bank"
+              value="4,422 mdp"
+              label="Ahorro fiscal estimado por la reforma de simplificación orgánica"
+              detail="El ahorro debe compararse con la pérdida potencial de capacidades técnicas."
+            />
+          </div>
+          <div className="col-md-6">
+            <StatCard
+              icon="bi-person-badge"
+              value="386 + 464"
+              label="Jueces de Distrito y Magistrados de Circuito que asumieron funciones tras la elección judicial"
+              detail="El reto es preservar independencia y profesionalismo."
+            />
+          </div>
+        </>
+      }
+    />
+  )
+}
+
+export default Instituciones
+</file>
+
+<file path="src/pages/NotFound.jsx">
+import { Link } from 'react-router-dom'
+import PageLayout from '../components/PageLayout'
+
+function NotFound() {
+  return (
+    <PageLayout title="Página no encontrada">
+      <section className="not-found-page">
+        <div className="container">
+          <article className="meaning-panel reveal">
+            <div>
+              <p className="eyebrow">404</p>
+              <h1>Página no encontrada</h1>
+              <p className="hero-subtitle">
+                La ruta solicitada no existe dentro de esta aplicación informativa.
+              </p>
+            </div>
+            <Link className="btn btn-primary-custom" to="/">
+              Volver al inicio
+            </Link>
+          </article>
+        </div>
+      </section>
+    </PageLayout>
+  )
+}
+
+export default NotFound
+</file>
+
+<file path="src/pages/Pemex.jsx">
+import StatCard from '../components/StatCard'
+import TopicPageScaffold from '../components/TopicPageScaffold'
+import BarChartBox from '../components/charts/BarChartBox'
+import { debtProjectionData, pemexSupportData } from '../data/chartData'
+import { topics } from '../data/topics'
+
+function Pemex() {
+  return (
+    <TopicPageScaffold
+      topic={topics.pemex}
+      charts={
+        <BarChartBox
+          data={pemexSupportData}
+          xKey="year"
+          yKey="value"
+          title="Apoyo fiscal a Pemex"
+          description="Montos reportados para 2025 y 2026."
+          unit="millones de dólares"
+        />
+      }
+      dataCards={
+        <div className="col-md-6 col-xl-4">
+          <StatCard
+            icon="bi-percent"
+            value={`${debtProjectionData[0].value}%`}
+            label={debtProjectionData[0].label}
+            detail={debtProjectionData[0].unit}
+          />
+        </div>
+      }
+    />
+  )
+}
+
+export default Pemex
+</file>
+
+<file path="src/pages/Salud.jsx">
+import StatCard from '../components/StatCard'
+import TopicPageScaffold from '../components/TopicPageScaffold'
+import { topics } from '../data/topics'
+
+function Salud() {
+  return (
+    <TopicPageScaffold
+      topic={topics.salud}
+      dataCards={
+        <>
+          <div className="col-md-6">
+            <StatCard
+              icon="bi-hospital"
+              value="81"
+              label="Hospitales rurales de segundo nivel"
+              detail="Infraestructura clave para atención fuera de grandes centros urbanos."
+            />
+          </div>
+          <div className="col-md-6">
+            <StatCard
+              icon="bi-clipboard2-pulse"
+              value="3,982"
+              label="Unidades Médicas Rurales"
+              detail="La magnitud no garantiza por sí sola atención efectiva si faltan personal, insumos o referencia."
+            />
+          </div>
+        </>
+      }
+    />
+  )
+}
+
+export default Salud
+</file>
+
+<file path="src/pages/Seguridad.jsx">
+import StatCard from '../components/StatCard'
+import TopicPageScaffold from '../components/TopicPageScaffold'
+import BarChartBox from '../components/charts/BarChartBox'
+import { impunityData } from '../data/chartData'
+import { topics } from '../data/topics'
+
+function Seguridad() {
+  return (
+    <TopicPageScaffold
+      topic={topics.seguridad}
+      charts={
+        <BarChartBox
+          data={impunityData}
+          xKey="crime"
+          yKey="value"
+          title="Impunidad por tipo de delito"
+          description="Porcentaje reportado para violencia familiar y narcomenudeo."
+          unit="%"
+        />
+      }
+      dataCards={
+        <>
+          <div className="col-md-6">
+            <StatCard
+              icon="bi-file-earmark-check"
+              value="16 de 32"
+              label="Fiscalías estatales con documento formal de política de persecución penal"
+              detail="Se entiende mejor como dato institucional que como dona."
+            />
+          </div>
+          <div className="col-md-6">
+            <StatCard
+              icon="bi-house-exclamation"
+              value="29%"
+              label="Hogares con al menos una víctima de delito en el último año"
+              detail="Equivale a más de 11.4 millones de viviendas."
+            />
+          </div>
+        </>
+      }
+    />
+  )
+}
+
+export default Seguridad
+</file>
+
+<file path="src/pages/Sociedad.jsx">
+import StatCard from '../components/StatCard'
+import TopicPageScaffold from '../components/TopicPageScaffold'
+import VisualPanel from '../components/VisualPanel'
+import HorizontalBarChart from '../components/charts/HorizontalBarChart'
+import { inequalityOriginData } from '../data/chartData'
+import { topics } from '../data/topics'
+
+function Sociedad() {
+  return (
+    <TopicPageScaffold
+      topic={topics.sociedad}
+      charts={
+        <HorizontalBarChart
+          data={inequalityOriginData}
+          yKey="factor"
+          title="Factores de desigualdad de origen"
+          description="Peso relativo de condiciones de origen señaladas en el documento."
+          unit="%"
+          height={360}
+        />
+      }
+      dataCards={
+        <>
+          <div className="col-md-4">
+            <StatCard
+              icon="bi-people"
+              value="29.6%"
+              label="Población en pobreza multidimensional"
+              detail="La cifra resume carencias acumuladas, no solo ingreso."
+            />
+          </div>
+          <div className="col-md-4">
+            <StatCard
+              icon="bi-exclamation-circle"
+              value="5.3%"
+              label="Población en pobreza extrema"
+              detail="Representa una condición de carencia más profunda."
+            />
+          </div>
+          <div className="col-md-4">
+            <StatCard
+              icon="bi-signpost"
+              value="48%"
+              label="Desigualdad asociada con falta de igualdad de oportunidades desde el nacimiento"
+              detail="Explica por qué la movilidad social no depende solo del esfuerzo individual."
+            />
+          </div>
+        </>
+      }
+      extraPanels={
+        <VisualPanel title="Movilidad social">
+          <p className="featured-quote">{topics.sociedad.featured}</p>
+          <p>{topics.sociedad.dataPoint}</p>
+        </VisualPanel>
+      }
+    />
+  )
+}
+
+export default Sociedad
+</file>
+
+<file path="src/styles/charts.css">
+.chart-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  align-items: stretch;
+}
+
+.chart-card {
+  background: var(--surface-container-low);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-sm);
+  padding: 24px;
+}
+
+.chart-header {
+  margin-bottom: 18px;
+}
+
+.chart-header h3 {
+  font-family: var(--font-heading);
+  color: var(--on-surface);
+}
+
+.chart-header p {
+  color: var(--on-surface-variant);
+}
+
+.chart-frame {
+  width: 100%;
+  min-height: 280px;
+}
+
+.chart-note {
+  margin-top: 12px;
+  color: var(--on-surface-variant);
+  font-size: 0.9rem;
+}
+
+.recharts-wrapper text {
+  font-family: var(--font-body);
+}
+
+.recharts-legend-item-text,
+.recharts-tooltip-label,
+.recharts-tooltip-item {
+  color: var(--on-surface-variant) !important;
+  font-family: var(--font-body);
+}
+</file>
+
+<file path="src/styles/components.css">
+.site-header {
+  background: rgba(250, 249, 247, 0.94);
+  border-bottom: 1px solid var(--outline-variant);
+  backdrop-filter: blur(14px);
+}
+
+.navbar {
+  min-height: 72px;
+  padding: 0;
+}
+
+.navbar-brand {
+  color: var(--primary);
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.navbar-brand:hover {
+  color: var(--secondary);
+}
+
+.navbar-toggler {
+  border-color: var(--outline-variant);
+  border-radius: var(--radius-sm);
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+
+.nav-link {
+  color: var(--on-surface-variant);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 10px 12px;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  color: var(--secondary);
+}
+
+.nav-link.active {
+  color: var(--secondary);
+}
+
+.nav-link.active::after {
+  display: block;
+  width: 100%;
+  height: 2px;
+  margin-top: 3px;
+  background: var(--secondary);
+  content: '';
+}
+
+.hero-section {
+  padding: 96px 0 88px;
+  border-bottom: 1px solid var(--outline-variant);
+  background:
+    linear-gradient(90deg, rgba(24, 36, 27, 0.06), transparent 58%),
+    var(--surface);
+}
+
+.hero-copy {
+  max-width: 760px;
+}
+
+.hero-subtitle {
+  max-width: 660px;
+  margin-bottom: 32px;
+  color: var(--on-surface-variant);
+  font-size: 1.18rem;
+}
+
+.hero-panel {
+  display: grid;
+  gap: 16px;
+}
+
+.hero-image .topic-image {
+  min-height: 340px;
+}
+
+.editorial-card,
+.challenge-card,
+.data-card,
+.info-callout {
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-sm);
+}
+
+.editorial-card {
+  padding: 24px;
+}
+
+.editorial-card h2 {
+  margin: 10px 0 10px;
+  font-size: 1.65rem;
+}
+
+.editorial-card p {
+  color: var(--on-surface-variant);
+}
+
+.meta-label {
+  color: var(--secondary);
+}
+
+.section-intro {
+  max-width: 780px;
+  margin-bottom: 38px;
+}
+
+.section-intro p:last-child {
+  color: var(--on-surface-variant);
+  font-size: 1.05rem;
+}
+
+.challenge-grid {
+  align-items: stretch;
+}
+
+.challenge-card {
+  height: 100%;
+  min-height: 260px;
+  padding: 28px;
+  transition:
+    background 180ms ease,
+    border-color 180ms ease;
+}
+
+.challenge-card:hover {
+  background: var(--surface-container-low);
+  border-color: var(--outline);
+}
+
+.card-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 18px;
+  place-items: center;
+  background: var(--primary-container);
+  border-radius: var(--radius-sm);
+  color: var(--on-primary);
+  font-size: 1.2rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  margin-bottom: 16px;
+  padding: 6px 9px;
+  background: var(--surface-container-high);
+  border: 1px solid var(--outline-variant);
+  color: var(--on-surface-variant);
+}
+
+.challenge-card p,
+.data-card p,
+.topic-copy p,
+.info-callout p {
+  color: var(--on-surface-variant);
+}
+
+.topic-section {
+  border-bottom: 1px solid var(--outline-variant);
+}
+
+.topic-copy {
+  max-width: 680px;
+}
+
+.topic-summary {
+  margin-bottom: 22px;
+  color: var(--on-surface);
+  font-size: 1.12rem;
+  font-weight: 500;
+}
+
+.highlight-list {
+  display: grid;
+  gap: 10px;
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.highlight-list li {
+  position: relative;
+  padding: 12px 14px 12px 40px;
+  background: var(--surface-container-low);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-sm);
+  color: var(--on-surface);
+  font-weight: 600;
+}
+
+.highlight-list li::before {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  width: 8px;
+  height: 8px;
+  background: var(--secondary);
+  border-radius: 50%;
+  content: '';
+}
+
+.topic-visual {
+  margin: 0;
+  background: var(--surface-container-low);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.topic-image {
+  width: 100%;
+  min-height: 280px;
+  max-height: 420px;
+  object-fit: cover;
+  display: block;
+  filter: saturate(0.8) contrast(1.05);
+}
+
+.topic-visual figcaption {
+  padding: 14px 16px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--on-surface-variant);
+  background: var(--surface-container-low);
+  border-top: 1px solid var(--outline-variant);
+}
+
+.image-fallback {
+  min-height: 280px;
+  display: grid;
+  place-items: center;
+  background: var(--surface-container-high);
+  color: var(--on-surface-variant);
+  font-family: var(--font-body);
+}
+
+.info-callout {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 18px;
+  max-width: 900px;
+  margin: 48px 0 0;
+  padding: 28px;
+  background: var(--tertiary);
+}
+
+.info-callout .card-icon {
+  background: var(--tertiary-container);
+  color: var(--on-tertiary);
+}
+
+.info-callout h3,
+.info-callout p {
+  color: var(--on-tertiary);
+}
+
+.editorial-table-wrap {
+  margin-top: 44px;
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-sm);
+}
+
+.editorial-table {
+  min-width: 720px;
+  margin: 0;
+  color: var(--on-surface);
+  font-size: 0.95rem;
+}
+
+.editorial-table th {
+  background: var(--primary);
+  color: var(--on-primary);
+  font-weight: 700;
+}
+
+.editorial-table th,
+.editorial-table td {
+  padding: 16px;
+  border-color: var(--outline-variant);
+}
+
+.editorial-table tbody tr:nth-child(even) td {
+  background: var(--surface-container-low);
+}
+
+.data-section {
+  background: var(--surface-container);
+}
+
+.data-card {
+  display: flex;
+  min-height: 238px;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 26px;
+}
+
+.data-card strong {
+  display: block;
+  margin: 8px 0 18px;
+  color: var(--secondary);
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3.15rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.final-reflection {
+  padding: 96px 0;
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+.reflection-content {
+  max-width: 900px;
+}
+
+.final-reflection .eyebrow {
+  color: var(--on-primary-container);
+}
+
+.final-reflection h2,
+.final-reflection p {
+  color: var(--on-primary);
+}
+
+.final-reflection p {
+  font-size: 1.1rem;
+}
+
+.reflection-close {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+  font-weight: 700;
+}
+
+.site-footer {
+  padding: 44px 0;
+  background: var(--surface-container-highest);
+  border-top: 1px solid var(--outline-variant);
+}
+
+.site-footer h2 {
+  margin-bottom: 8px;
+  font-size: 1.55rem;
+}
+
+.site-footer p {
+  color: var(--on-surface-variant);
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-lg-end;
+  gap: 10px 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer-links a {
+  color: var(--on-surface-variant);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.footer-links a:hover,
+.footer-links a:focus {
+  color: var(--secondary);
+}
+</file>
+
+<file path="src/styles/index.css">
+@import './variables.css';
+@import './components.css';
+@import './pages.css';
+@import './charts.css';
+@import './responsive.css';
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  background: var(--background);
+  color: var(--on-background);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+}
+
+body::selection {
+  background: var(--secondary-container);
+  color: var(--on-secondary-container);
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: var(--on-surface);
+  font-family: var(--font-heading);
+  letter-spacing: 0;
+}
+
+h1 {
+  max-width: 780px;
+  margin: 0 0 24px;
+  font-size: clamp(2.75rem, 6vw, 5.2rem);
+  font-weight: 700;
+  line-height: 1.04;
+}
+
+h2 {
+  margin: 0 0 18px;
+  font-size: clamp(2rem, 3.5vw, 3.25rem);
+  font-weight: 650;
+  line-height: 1.14;
+}
+
+h3 {
+  margin: 0 0 12px;
+  font-size: 1.35rem;
+  font-weight: 650;
+  line-height: 1.25;
+}
+
+p {
+  margin: 0;
+}
+
+p + p {
+  margin-top: 16px;
+}
+
+.container {
+  max-width: var(--container-max);
+}
+
+.site-shell {
+  min-height: 100vh;
+  background:
+    linear-gradient(180deg, rgba(250, 249, 247, 0.96), rgba(250, 249, 247, 1)),
+    var(--background);
+}
+
+.section-block {
+  padding: 88px 0;
+}
+
+.section-block:nth-of-type(odd) {
+  background: var(--surface-container-low);
+}
+
+.eyebrow,
+.meta-label,
+.chip {
+  font-family: var(--font-body);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  margin-bottom: 14px;
+  color: var(--secondary);
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 620ms ease,
+    transform 620ms ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.btn {
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  letter-spacing: 0;
+  padding: 12px 18px;
+}
+
+.btn-primary-custom {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--on-primary);
+}
+
+.btn-primary-custom:hover,
+.btn-primary-custom:focus {
+  background: var(--primary-container);
+  border-color: var(--primary-container);
+  color: var(--on-primary);
+}
+
+.btn-outline-custom {
+  background: transparent;
+  border-color: var(--outline);
+  color: var(--primary);
+}
+
+.btn-outline-custom:hover,
+.btn-outline-custom:focus {
+  background: var(--surface-container-high);
+  border-color: var(--secondary);
+  color: var(--secondary);
+}
+
+.btn:focus-visible,
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid rgba(144, 75, 54, 0.38);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+</file>
+
+<file path="src/styles/pages.css">
+.breadcrumb-nav {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 18px 0 0;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  color: var(--on-surface-variant);
+  font-size: 0.9rem;
+}
+
+.breadcrumb-nav a {
+  color: var(--secondary);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.breadcrumb-nav a:hover,
+.breadcrumb-nav a:focus {
+  text-decoration: underline;
+}
+
+.page-hero {
+  padding: 72px 0 76px;
+  border-bottom: 1px solid var(--outline-variant);
+  background:
+    linear-gradient(90deg, rgba(24, 36, 27, 0.06), transparent 58%),
+    var(--surface);
+}
+
+.compact-hero {
+  padding-bottom: 56px;
+}
+
+.page-hero-copy {
+  max-width: 760px;
+}
+
+.page-hero-image .topic-image {
+  min-height: 360px;
+}
+
+.section-muted {
+  background: var(--surface-container-low);
+}
+
+.home-topic-card,
+.insight-card,
+.stat-card,
+.institution-card,
+.narrative-card,
+.key-idea-panel,
+.connections-panel,
+.visual-panel,
+.meaning-panel,
+.challenge-row,
+.table-panel {
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-sm);
+}
+
+.home-topic-card {
+  display: flex;
+  min-height: 310px;
+  height: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 28px;
+}
+
+.home-topic-card p,
+.insight-card p,
+.stat-card p,
+.institution-card dd,
+.narrative-card p,
+.connections-panel p,
+.visual-panel p,
+.meaning-panel p,
+.challenge-row p {
+  color: var(--on-surface-variant);
+}
+
+.home-topic-card .btn,
+.meaning-panel .btn {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: auto;
+}
+
+.opportunity-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.opportunity-grid article {
+  padding: 22px;
+  background: var(--surface);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-sm);
+}
+
+.opportunity-grid span {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--secondary);
+  font-weight: 800;
+}
+
+.insight-stack {
+  display: grid;
+  gap: 16px;
+}
+
+.insight-card,
+.stat-card,
+.key-idea-panel {
+  padding: 24px;
+}
+
+.key-idea-panel {
+  background: var(--primary);
+  border: 1px solid var(--primary-container);
+  border-radius: var(--radius-sm);
+}
+
+.key-idea-panel .eyebrow {
+  color: var(--on-primary-container);
+}
+
+.key-idea-panel h3 {
+  color: var(--on-primary);
+  font-size: 1.55rem;
+}
+
+.stat-card {
+  min-height: 100%;
+}
+
+.stat-card strong {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--secondary);
+  font-family: var(--font-heading);
+  font-size: clamp(2.1rem, 4vw, 3.4rem);
+  line-height: 1;
+}
+
+.stat-card small {
+  display: block;
+  margin-top: 12px;
+  color: var(--on-surface-variant);
+}
+
+.visual-panel {
+  margin-top: 24px;
+  padding: 26px;
+}
+
+.visual-panel-wide {
+  margin-top: 0;
+}
+
+.visual-panel-header {
+  max-width: 780px;
+  margin-bottom: 20px;
+}
+
+.narrative-section {
+  padding: 88px 0;
+  border-top: 1px solid var(--outline-variant);
+}
+
+.narrative-consequences {
+  background: var(--surface-container-low);
+}
+
+.narrative-card {
+  height: 100%;
+  padding: 26px;
+}
+
+.narrative-card h3 {
+  margin-bottom: 12px;
+  font-size: 1.32rem;
+}
+
+.narrative-card::before {
+  display: block;
+  width: 42px;
+  height: 3px;
+  margin-bottom: 18px;
+  background: var(--secondary);
+  content: '';
+}
+
+.data-card-row {
+  margin-top: 4px;
+}
+
+.matrix-grid,
+.pill-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.matrix-item,
+.pill-grid span {
+  padding: 16px;
+  background: var(--surface-container-low);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-sm);
+}
+
+.matrix-item span {
+  display: block;
+  color: var(--on-surface-variant);
+  font-size: 0.92rem;
+}
+
+.matrix-item strong {
+  display: block;
+  margin-top: 8px;
+  color: var(--primary);
+  font-family: var(--font-heading);
+  font-size: 1.45rem;
+}
+
+.flow-diagram {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px;
+}
+
+.flow-step {
+  position: relative;
+  min-height: 84px;
+  display: grid;
+  align-items: center;
+  padding: 18px;
+  background: var(--surface);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-sm);
+  color: var(--on-surface);
+  font-weight: 800;
+}
+
+.flow-step:not(:last-child)::after {
+  position: absolute;
+  right: -12px;
+  z-index: 1;
+  color: var(--secondary);
+  content: '→';
+  font-size: 1.2rem;
+}
+
+.institution-card {
+  height: 100%;
+  padding: 24px;
+}
+
+.institution-card dl,
+.institution-card dd {
+  margin: 0;
+}
+
+.institution-card dt {
+  margin-top: 14px;
+  color: var(--primary);
+  font-weight: 800;
+}
+
+.featured-quote {
+  max-width: 720px;
+  color: var(--primary) !important;
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  line-height: 1.12;
+}
+
+.challenge-list {
+  display: grid;
+  gap: 14px;
+}
+
+.challenge-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: start;
+  padding: 18px 20px;
+}
+
+.challenge-row i {
+  color: var(--secondary);
+  font-size: 1.4rem;
+}
+
+.challenge-row-expanded h3 {
+  margin-bottom: 6px;
+  font-size: 1.18rem;
+}
+
+.connections-section {
+  background: var(--surface-container-low);
+}
+
+.connections-panel {
+  max-width: 960px;
+  padding: 32px;
+}
+
+.connections-panel p:last-child {
+  color: var(--on-surface);
+  font-size: 1.08rem;
+}
+
+.meaning-section {
+  background: var(--primary);
+}
+
+.meaning-panel {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 32px;
+  align-items: center;
+  padding: 32px;
+  background: var(--surface);
+}
+
+.page-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.table-panel {
+  margin-top: 24px;
+  padding: 22px;
+}
+
+.dashboard-tabs {
+  border-bottom-color: var(--outline-variant);
+}
+
+.dashboard-tabs .nav-link {
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  color: var(--on-surface-variant);
+  font-weight: 800;
+}
+
+.dashboard-tabs .nav-link.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--on-primary);
+}
+
+.dashboard-panel {
+  padding-top: 28px;
+}
+
+.not-found-page {
+  padding: 96px 0;
+}
+</file>
+
+<file path="src/styles/responsive.css">
+@media (max-width: 991.98px) {
+  .navbar {
+    min-height: 66px;
+  }
+
+  .navbar-collapse {
+    padding: 12px 0 16px;
+  }
+
+  .nav-link {
+    padding: 12px 0;
+  }
+
+  .nav-link.active::after {
+    width: 42px;
+  }
+
+  .hero-section {
+    padding: 72px 0 64px;
+  }
+
+  .page-hero {
+    padding: 64px 0;
+  }
+
+  .chart-grid,
+  .opportunity-grid,
+  .matrix-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pill-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .meaning-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .page-actions {
+    justify-content: flex-start;
+  }
+
+  .section-block {
+    padding: 72px 0;
+  }
+
+  .narrative-section {
+    padding: 72px 0;
+  }
+
+  .topic-copy {
+    max-width: none;
+  }
+
+  .footer-links {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 767.98px) {
+  h1 {
+    font-size: 2.65rem;
+    line-height: 1.08;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  .hero-subtitle,
+  .final-reflection p {
+    font-size: 1rem;
+  }
+
+  .challenge-card,
+  .data-card,
+  .editorial-card,
+  .info-callout {
+    padding: 22px;
+  }
+
+  .challenge-card,
+  .data-card {
+    min-height: auto;
+  }
+
+  .topic-image,
+  .image-fallback,
+  .hero-image .topic-image,
+  .page-hero-image .topic-image {
+    min-height: 240px;
+  }
+
+  .info-callout {
+    grid-template-columns: 1fr;
+  }
+
+  .editorial-table {
+    min-width: 640px;
+    font-size: 0.9rem;
+  }
+
+  .flow-diagram {
+    grid-template-columns: 1fr;
+  }
+
+  .flow-step:not(:last-child)::after {
+    right: auto;
+    bottom: -18px;
+    left: 18px;
+    transform: rotate(90deg);
+  }
+
+  .dashboard-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .container {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .hero-section {
+    padding-top: 56px;
+  }
+
+  .section-block {
+    padding: 56px 0;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .home-topic-card .btn,
+  .meaning-panel .btn {
+    justify-content: center;
+  }
+
+  .breadcrumb-nav {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .chart-card,
+  .visual-panel,
+  .meaning-panel,
+  .table-panel,
+  .narrative-card,
+  .connections-panel,
+  .key-idea-panel {
+    padding: 20px;
+  }
+
+  .highlight-list li {
+    padding-right: 12px;
+  }
+}
+</file>
+
+<file path="src/styles/variables.css">
+:root {
+  --surface: #faf9f7;
+  --surface-dim: #dadad8;
+  --surface-bright: #faf9f7;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f4f3f1;
+  --surface-container: #efeeec;
+  --surface-container-high: #e9e8e6;
+  --surface-container-highest: #e3e2e0;
+  --surface-variant: #e3e2e0;
+  --surface-tint: #556157;
+
+  --on-surface: #1a1c1b;
+  --on-surface-variant: #434843;
+  --inverse-surface: #2f3130;
+  --inverse-on-surface: #f1f1ef;
+
+  --primary: #18241b;
+  --on-primary: #ffffff;
+  --primary-container: #2d3930;
+  --on-primary-container: #95a397;
+
+  --secondary: #904b36;
+  --on-secondary: #ffffff;
+  --secondary-container: #fea58b;
+  --on-secondary-container: #783925;
+
+  --tertiary: #162232;
+  --on-tertiary: #ffffff;
+  --tertiary-container: #2c3749;
+  --on-tertiary-container: #95a0b5;
+
+  --error: #ba1a1a;
+  --on-error: #ffffff;
+  --error-container: #ffdad6;
+  --on-error-container: #93000a;
+
+  --outline: #747873;
+  --outline-variant: #c3c8c2;
+
+  --background: #faf9f7;
+  --on-background: #1a1c1b;
+
+  --font-heading: "Source Serif 4", Georgia, serif;
+  --font-body: "Public Sans", Arial, sans-serif;
+
+  --container-max: 1200px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --space-sm: 16px;
+  --space-md: 32px;
+  --space-lg: 64px;
+}
+</file>
+
+<file path="vite.config.js">
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react()],
+})
+</file>
+
+</files>

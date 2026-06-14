@@ -1,0 +1,58 @@
+:root {
+  --surface: #faf9f7;
+  --surface-dim: #dadad8;
+  --surface-bright: #faf9f7;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f4f3f1;
+  --surface-container: #efeeec;
+  --surface-container-high: #e9e8e6;
+  --surface-container-highest: #e3e2e0;
+  --surface-variant: #e3e2e0;
+  --surface-tint: #556157;
+
+  --on-surface: #1a1c1b;
+  --on-surface-variant: #434843;
+  --inverse-surface: #2f3130;
+  --inverse-on-surface: #f1f1ef;
+
+  --primary: #18241b;
+  --on-primary: #ffffff;
+  --primary-container: #2d3930;
+  --on-primary-container: #95a397;
+
+  --secondary: #904b36;
+  --on-secondary: #ffffff;
+  --secondary-container: #fea58b;
+  --on-secondary-container: #783925;
+
+  --tertiary: #162232;
+  --on-tertiary: #ffffff;
+  --tertiary-container: #2c3749;
+  --on-tertiary-container: #95a0b5;
+
+  --error: #ba1a1a;
+  --on-error: #ffffff;
+  --error-container: #ffdad6;
+  --on-error-container: #93000a;
+
+  --outline: #747873;
+  --outline-variant: #c3c8c2;
+  --accent-blue: #315f72;
+  --accent-green: #516a46;
+  --accent-gold: #8a6d2d;
+  --warning-bg: #fff5d8;
+  --warning-text: #6b4b00;
+
+  --background: #faf9f7;
+  --on-background: #1a1c1b;
+
+  --font-heading: "Source Serif 4", Georgia, serif;
+  --font-body: "Public Sans", Arial, sans-serif;
+
+  --container-max: 1200px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --space-sm: 16px;
+  --space-md: 32px;
+  --space-lg: 64px;
+}

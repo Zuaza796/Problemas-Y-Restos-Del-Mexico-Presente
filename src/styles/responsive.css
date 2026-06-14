@@ -1,0 +1,190 @@
+@media (max-width: 991.98px) {
+  .navbar {
+    min-height: 66px;
+  }
+
+  .navbar-collapse {
+    padding: 12px 0 16px;
+  }
+
+  .nav-link {
+    padding: 12px 0;
+  }
+
+  .nav-link.active::after {
+    width: 42px;
+  }
+
+  .hero-section {
+    padding: 72px 0 64px;
+  }
+
+  .page-hero {
+    padding: 64px 0;
+  }
+
+  .chart-grid,
+  .opportunity-grid,
+  .matrix-grid,
+  .opportunity-limit-grid,
+  .explainer-grid,
+  .case-grid,
+  .institution-mini-grid,
+  .source-groups,
+  .territory-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .pill-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .meaning-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .page-actions {
+    justify-content: flex-start;
+  }
+
+  .section-block {
+    padding: 72px 0;
+  }
+
+  .narrative-section {
+    padding: 72px 0;
+  }
+
+  .topic-copy {
+    max-width: none;
+  }
+
+  .footer-links {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 767.98px) {
+  h1 {
+    font-size: 2.65rem;
+    line-height: 1.08;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  .hero-subtitle,
+  .final-reflection p {
+    font-size: 1rem;
+  }
+
+  .challenge-card,
+  .data-card,
+  .editorial-card,
+  .info-callout {
+    padding: 22px;
+  }
+
+  .challenge-card,
+  .data-card {
+    min-height: auto;
+  }
+
+  .topic-image,
+  .image-fallback,
+  .hero-image .topic-image,
+  .page-hero-image .topic-image {
+    min-height: 240px;
+  }
+
+  .info-callout {
+    grid-template-columns: 1fr;
+  }
+
+  .editorial-table {
+    min-width: 640px;
+    font-size: 0.9rem;
+  }
+
+  .flow-diagram {
+    grid-template-columns: 1fr;
+  }
+
+  .flow-step:not(:last-child)::after {
+    right: auto;
+    bottom: -18px;
+    left: 18px;
+    transform: rotate(90deg);
+  }
+
+  .cause-effect-flow {
+    grid-template-columns: 1fr;
+  }
+
+  .flow-node:not(:last-child)::after {
+    right: auto;
+    bottom: -18px;
+    left: 18px;
+    transform: rotate(90deg);
+  }
+
+  .dashboard-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .container {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .hero-section {
+    padding-top: 56px;
+  }
+
+  .section-block {
+    padding: 56px 0;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .home-topic-card .btn,
+  .meaning-panel .btn {
+    justify-content: center;
+  }
+
+  .breadcrumb-nav {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .chart-card,
+  .visual-panel,
+  .meaning-panel,
+  .table-panel,
+  .narrative-card,
+  .connections-panel,
+  .key-idea-panel,
+  .problem-explainer,
+  .flow-panel,
+  .source-group,
+  .normalization-card,
+  .editorial-lead {
+    padding: 20px;
+  }
+
+  .warning-note,
+  .human-impact-card,
+  .normalization-card {
+    grid-template-columns: 1fr;
+  }
+
+  .highlight-list li {
+    padding-right: 12px;
+  }
+}

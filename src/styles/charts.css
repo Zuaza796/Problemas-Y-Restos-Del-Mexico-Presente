@@ -1,0 +1,48 @@
+.chart-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  align-items: stretch;
+}
+
+.chart-card {
+  background: var(--surface-container-low);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-sm);
+  padding: 24px;
+}
+
+.chart-header {
+  margin-bottom: 18px;
+}
+
+.chart-header h3 {
+  font-family: var(--font-heading);
+  color: var(--on-surface);
+}
+
+.chart-header p {
+  color: var(--on-surface-variant);
+}
+
+.chart-frame {
+  width: 100%;
+  min-height: 280px;
+}
+
+.chart-note {
+  margin-top: 12px;
+  color: var(--on-surface-variant);
+  font-size: 0.9rem;
+}
+
+.recharts-wrapper text {
+  font-family: var(--font-body);
+}
+
+.recharts-legend-item-text,
+.recharts-tooltip-label,
+.recharts-tooltip-item {
+  color: var(--on-surface-variant) !important;
+  font-family: var(--font-body);
+}
