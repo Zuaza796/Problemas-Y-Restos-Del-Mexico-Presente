@@ -14,7 +14,7 @@ function Pemex() {
           xKey="year"
           yKey="value"
           title="Apoyo fiscal a Pemex"
-          description="Montos citados en el MD para 2025 y 2026."
+          description="Montos reportados para 2025 y 2026."
           unit="millones de dolares"
         />
       }
@@ -32,8 +32,8 @@ function Pemex() {
             <StatCard
               icon="bi-cash-stack"
               value="40,000 mdd"
-              label="Apoyo federal citado para 2025"
-              detail="Dato del MD a partir de la cobertura de Infobae/Moodys."
+              label="Apoyo federal reportado para 2025"
+              detail="Dato basado en la cobertura de Infobae sobre la advertencia de Moodys."
             />
           </div>
           <div className="col-md-4">

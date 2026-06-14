@@ -52,6 +52,7 @@ src/assets/hero.png
 src/assets/react.svg
 src/assets/vite.svg
 src/components/Breadcrumb.jsx
+src/components/CauseEffectFlow.jsx
 src/components/ChallengeCard.jsx
 src/components/ChallengeGrid.jsx
 src/components/ChartCard.jsx
@@ -62,31 +63,41 @@ src/components/charts/DonutChartBox.jsx
 src/components/charts/HorizontalBarChart.jsx
 src/components/charts/LineChartBox.jsx
 src/components/charts/PieChartBox.jsx
+src/components/CitationTag.jsx
 src/components/DataCard.jsx
 src/components/DataGrid.jsx
 src/components/FinalReflection.jsx
 src/components/Footer.jsx
 src/components/Header.jsx
 src/components/Hero.jsx
+src/components/HumanImpactCard.jsx
 src/components/InsightCard.jsx
+src/components/InstitutionalTable.jsx
+src/components/OpportunityLimitGrid.jsx
 src/components/PageHero.jsx
 src/components/PageLayout.jsx
+src/components/ProblemExplainer.jsx
 src/components/ResponsiveTable.jsx
 src/components/SectionIntro.jsx
+src/components/SourceList.jsx
 src/components/StatCard.jsx
 src/components/TopicImage.jsx
 src/components/TopicPageScaffold.jsx
 src/components/TopicSection.jsx
+src/components/VisualDivider.jsx
 src/components/VisualPanel.jsx
+src/components/WarningNote.jsx
 src/data/challenges.js
 src/data/chartData.js
 src/data/keyStats.js
 src/data/navigation.js
+src/data/sources.js
 src/data/topicImages.js
 src/data/topics.js
 src/hooks/useRevealOnScroll.js
 src/main.jsx
 src/pages/Agua.jsx
+src/pages/Conclusion.jsx
 src/pages/Datos.jsx
 src/pages/Economia.jsx
 src/pages/Educacion.jsx
@@ -108,33 +119,6 @@ vite.config.js
 
 <files>
 This section contains the contents of the repository's files.
-
-<file path=".gitignore">
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-
-node_modules
-dist
-dist-ssr
-*.local
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-</file>
 
 <file path="eslint.config.js">
 import js from '@eslint/js'
@@ -322,10 +306,11 @@ src/styles/
 </file>
 
 <file path="src/App.jsx">
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import Agua from './pages/Agua'
+import Conclusion from './pages/Conclusion'
 import Datos from './pages/Datos'
 import Economia from './pages/Economia'
 import Educacion from './pages/Educacion'
@@ -349,13 +334,15 @@ function AppRoutes() {
         <Route path="/" element={<Home />} />
         <Route path="/economia" element={<Economia />} />
         <Route path="/pemex" element={<Pemex />} />
-        <Route path="/instituciones" element={<Instituciones />} />
-        <Route path="/seguridad" element={<Seguridad />} />
-        <Route path="/sociedad" element={<Sociedad />} />
+        <Route path="/pobreza" element={<Sociedad />} />
+        <Route path="/sociedad" element={<Navigate to="/pobreza" replace />} />
         <Route path="/educacion" element={<Educacion />} />
-        <Route path="/agua" element={<Agua />} />
         <Route path="/salud" element={<Salud />} />
+        <Route path="/seguridad" element={<Seguridad />} />
+        <Route path="/agua" element={<Agua />} />
+        <Route path="/instituciones" element={<Instituciones />} />
         <Route path="/datos" element={<Datos />} />
+        <Route path="/conclusion" element={<Conclusion />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
@@ -398,6 +385,27 @@ function Breadcrumb({ current }) {
 }
 
 export default Breadcrumb
+</file>
+
+<file path="src/components/CauseEffectFlow.jsx">
+function CauseEffectFlow({ items, title = 'Flujo de causa y consecuencia' }) {
+  if (!items?.length) return null
+
+  return (
+    <article className="flow-panel reveal">
+      <h3>{title}</h3>
+      <div className="cause-effect-flow" role="list">
+        {items.map((item) => (
+          <div className="flow-node" role="listitem" key={item}>
+            {item}
+          </div>
+        ))}
+      </div>
+    </article>
+  )
+}
+
+export default CauseEffectFlow
 </file>
 
 <file path="src/components/ChallengeCard.jsx">
@@ -703,6 +711,30 @@ function PieChartBox({ data, nameKey = 'label', valueKey = 'value', title, descr
 export default PieChartBox
 </file>
 
+<file path="src/components/CitationTag.jsx">
+import { getSourcesByIds } from '../data/sources'
+
+function CitationTag({ sourceId, label }) {
+  const [source] = getSourcesByIds([sourceId])
+
+  if (!source && !label) return null
+
+  const text = label || `Fuente: ${source.name}`
+
+  if (!source?.url) {
+    return <span className="citation-tag">{text}</span>
+  }
+
+  return (
+    <a className="citation-tag" href={source.url} target="_blank" rel="noreferrer">
+      {text}
+    </a>
+  )
+}
+
+export default CitationTag
+</file>
+
 <file path="src/components/DataCard.jsx">
 function DataCard({ stat }) {
   return (
@@ -786,10 +818,15 @@ function Footer() {
         <div className="row g-4 align-items-start">
           <div className="col-lg-5">
             <h2>Problemas y retos de el México presente</h2>
-            <p>Sitio editorial de difusión informativa.</p>
+            <p>Sitio editorial de difusion informativa.</p>
+            <p className="academic-note">
+              Este sitio web es un proyecto academico de la carrera de Electromecanica,
+              grupo 601, del CONALEP 103.
+            </p>
+            <p className="academic-note">Material elaborado con fines educativos y de difusion.</p>
           </div>
           <div className="col-lg-7">
-            <nav aria-label="Navegación secundaria">
+            <nav aria-label="Navegacion secundaria">
               <ul className="footer-links">
                 {navigationItems.map((item) => (
                   <li key={item.path}>
@@ -818,7 +855,7 @@ function Header() {
 
   return (
     <header className="site-header sticky-top">
-      <nav className="navbar navbar-expand-lg" aria-label="Navegación principal">
+      <nav className="navbar navbar-expand-lg" aria-label="Navegacion principal">
         <div className="container">
           <Link className="navbar-brand" to="/" onClick={() => setOpen(false)}>
             México Presente
@@ -828,7 +865,7 @@ function Header() {
             type="button"
             aria-controls="primary-navigation"
             aria-expanded={open}
-            aria-label="Abrir menú de navegación"
+            aria-label="Abrir menu de navegacion"
             onClick={() => setOpen((current) => !current)}
           >
             <span className="navbar-toggler-icon"></span>
@@ -911,6 +948,24 @@ function Hero() {
 export default Hero
 </file>
 
+<file path="src/components/HumanImpactCard.jsx">
+function HumanImpactCard({ item }) {
+  if (!item) return null
+
+  return (
+    <article className="human-impact-card reveal">
+      <i className={`bi ${item.icon || 'bi-person-heart'}`} aria-hidden="true"></i>
+      <div>
+        <h3>{item.title}</h3>
+        <p>{item.text}</p>
+      </div>
+    </article>
+  )
+}
+
+export default HumanImpactCard
+</file>
+
 <file path="src/components/InsightCard.jsx">
 function InsightCard({ icon = 'bi-lightbulb', title, text, meta }) {
   return (
@@ -926,6 +981,71 @@ function InsightCard({ icon = 'bi-lightbulb', title, text, meta }) {
 }
 
 export default InsightCard
+</file>
+
+<file path="src/components/InstitutionalTable.jsx">
+function InstitutionalTable({ items = [] }) {
+  if (!items.length) return null
+
+  return (
+    <article className="table-panel reveal">
+      <h3>Organismos, funciones y riesgos</h3>
+      <div className="table-responsive editorial-table-wrap">
+        <table className="table editorial-table align-middle">
+          <thead>
+            <tr>
+              <th scope="col">Organismo</th>
+              <th scope="col">Funcion</th>
+              <th scope="col">Que se pierde o debilita</th>
+              <th scope="col">Tema afectado</th>
+            </tr>
+          </thead>
+          <tbody>
+            {items.map((item) => (
+              <tr key={item.name}>
+                <th scope="row">{item.name}</th>
+                <td>{item.function}</td>
+                <td>{item.risk}</td>
+                <td>{item.area}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </article>
+  )
+}
+
+export default InstitutionalTable
+</file>
+
+<file path="src/components/OpportunityLimitGrid.jsx">
+function OpportunityLimitGrid({ opportunities = [], limits = [] }) {
+  if (!opportunities.length && !limits.length) return null
+
+  return (
+    <div className="opportunity-limit-grid">
+      <article>
+        <h3>Oportunidades</h3>
+        <ul>
+          {opportunities.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      </article>
+      <article>
+        <h3>Limites estructurales</h3>
+        <ul>
+          {limits.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      </article>
+    </div>
+  )
+}
+
+export default OpportunityLimitGrid
 </file>
 
 <file path="src/components/PageHero.jsx">
@@ -971,6 +1091,31 @@ function PageLayout({ title, children }) {
 }
 
 export default PageLayout
+</file>
+
+<file path="src/components/ProblemExplainer.jsx">
+import CitationTag from './CitationTag'
+
+function ProblemExplainer({ title, text, sourceIds = [] }) {
+  if (!text) return null
+
+  return (
+    <article className="problem-explainer reveal">
+      <p className="eyebrow">Diagnostico de fondo</p>
+      <h2>{title}</h2>
+      <p>{text}</p>
+      {sourceIds.length ? (
+        <div className="citation-row">
+          {sourceIds.map((sourceId) => (
+            <CitationTag sourceId={sourceId} key={sourceId} />
+          ))}
+        </div>
+      ) : null}
+    </article>
+  )
+}
+
+export default ProblemExplainer
 </file>
 
 <file path="src/components/ResponsiveTable.jsx">
@@ -1023,6 +1168,59 @@ function SectionIntro({ eyebrow, title, summary, centered = false }) {
 export default SectionIntro
 </file>
 
+<file path="src/components/SourceList.jsx">
+import { sourceTypeLabels } from '../data/sources'
+
+function SourceList({ sources = [] }) {
+  if (!sources.length) return null
+
+  const grouped = sources.reduce((acc, source) => {
+    acc[source.type] = acc[source.type] || []
+    acc[source.type].push(source)
+    return acc
+  }, {})
+
+  return (
+    <section className="section-block bibliography-section" id="fuentes">
+      <div className="container">
+        <div className="section-intro">
+          <p className="eyebrow">Bibliografia</p>
+          <h2>Fuentes consultadas</h2>
+          <p>
+            Las fuentes se muestran por tipo para distinguir datos oficiales, analisis
+            tecnico, seguimiento financiero y periodismo usado como contexto.
+          </p>
+        </div>
+        <div className="source-groups">
+          {Object.entries(grouped).map(([type, group]) => (
+            <article className="source-group reveal" key={type}>
+              <h3>{sourceTypeLabels[type] || type}</h3>
+              <ul>
+                {group.map((source) => (
+                  <li key={source.id}>
+                    {source.url ? (
+                      <a href={source.url} target="_blank" rel="noreferrer">
+                        <strong>{source.name}.</strong> {source.title}
+                      </a>
+                    ) : (
+                      <span>
+                        <strong>{source.name}.</strong> {source.title}
+                      </span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default SourceList
+</file>
+
 <file path="src/components/StatCard.jsx">
 function StatCard({ value, label, detail, icon = 'bi-activity' }) {
   return (
@@ -1072,51 +1270,38 @@ export default TopicImage
 import { Link } from 'react-router-dom'
 import { topicImages } from '../data/topicImages'
 import Breadcrumb from './Breadcrumb'
+import CauseEffectFlow from './CauseEffectFlow'
+import CitationTag from './CitationTag'
+import HumanImpactCard from './HumanImpactCard'
 import InsightCard from './InsightCard'
+import InstitutionalTable from './InstitutionalTable'
 import PageHero from './PageHero'
 import PageLayout from './PageLayout'
+import ProblemExplainer from './ProblemExplainer'
 import ResponsiveTable from './ResponsiveTable'
 import VisualPanel from './VisualPanel'
+import WarningNote from './WarningNote'
 
-function FlowDiagram({ items }) {
-  if (!items?.length) return null
+function CitationRow({ sourceIds = [] }) {
+  if (!sourceIds.length) return null
 
   return (
-    <div className="flow-diagram" role="list" aria-label="Secuencia visual">
-      {items.map((item) => (
-        <div className="flow-step" role="listitem" key={item}>
-          {item}
-        </div>
+    <div className="citation-row">
+      {sourceIds.map((sourceId) => (
+        <CitationTag sourceId={sourceId} key={sourceId} />
       ))}
     </div>
   )
 }
 
-function MatrixPanel({ matrix }) {
-  if (!matrix) return null
-
-  return (
-    <VisualPanel title={matrix.title} description="Lectura cualitativa, sin porcentajes inventados.">
-      <div className="matrix-grid">
-        {matrix.items.map(([label, status]) => (
-          <div className="matrix-item" key={label}>
-            <span>{label}</span>
-            <strong>{status}</strong>
-          </div>
-        ))}
-      </div>
-    </VisualPanel>
-  )
-}
-
-function InfoCardGrid({ title, eyebrow, items, variant = 'default' }) {
-  if (!items?.length) return null
+function NarrativeGrid({ title, eyebrow, items = [], variant = 'default' }) {
+  if (!items.length) return null
 
   return (
     <section className={`narrative-section narrative-${variant}`}>
       <div className="container">
         <div className="section-intro">
-          {eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
+          <p className="eyebrow">{eyebrow}</p>
           <h2>{title}</h2>
         </div>
         <div className="row g-4">
@@ -1134,24 +1319,52 @@ function InfoCardGrid({ title, eyebrow, items, variant = 'default' }) {
   )
 }
 
-function InstitutionCards({ institutions, intro }) {
-  if (!institutions?.length) return null
+function ExplainerBlocks({ items = [] }) {
+  if (!items.length) return null
 
   return (
-    <VisualPanel title="¿Por qué importan los organismos autónomos?" description={intro}>
-      <div className="row g-4">
-        {institutions.map((institution) => (
-          <div className="col-md-6 col-xl-4" key={institution.name}>
-            <article className="institution-card">
-              <p className="meta-label">{institution.area}</p>
-              <h3>{institution.name}</h3>
-              <dl>
-                <dt>Función</dt>
-                <dd>{institution.function}</dd>
-                <dt>Riesgo</dt>
-                <dd>{institution.risk}</dd>
-              </dl>
-            </article>
+    <VisualPanel
+      title="Conceptos que conviene distinguir"
+      description="Estos bloques evitan que datos o terminos tecnicos se lean como si fueran lo mismo."
+    >
+      <div className="explainer-grid">
+        {items.map((item) => (
+          <article className="mini-explainer" key={item.title}>
+            <h4>{item.title}</h4>
+            <p>{item.text}</p>
+          </article>
+        ))}
+      </div>
+    </VisualPanel>
+  )
+}
+
+function CaseBlocks({ items = [] }) {
+  if (!items.length) return null
+
+  return (
+    <div className="case-grid">
+      {items.map((item) => (
+        <article className="case-block reveal" key={item.title}>
+          <p className="eyebrow">Caso / lectura concreta</p>
+          <h3>{item.title}</h3>
+          <p>{item.text}</p>
+        </article>
+      ))}
+    </div>
+  )
+}
+
+function MatrixPanel({ matrix }) {
+  if (!matrix) return null
+
+  return (
+    <VisualPanel title={matrix.title} description="Lectura cualitativa para ubicar prioridades.">
+      <div className="matrix-grid">
+        {matrix.items.map(([label, status]) => (
+          <div className="matrix-item" key={label}>
+            <span>{label}</span>
+            <strong>{status}</strong>
           </div>
         ))}
       </div>
@@ -1160,39 +1373,16 @@ function InstitutionCards({ institutions, intro }) {
 }
 
 function TopicPageScaffold({ topic, charts, dataCards, extraPanels, afterSummary }) {
-  const hasCharts = Boolean(charts)
-  const hasDataCards = Boolean(dataCards)
   const hasVisualContent =
-    hasCharts ||
-    hasDataCards ||
+    charts ||
+    dataCards ||
     topic.matrix ||
     topic.flow ||
-    extraPanels ||
+    topic.table ||
+    topic.explainerBlocks ||
+    topic.caseBlocks ||
     topic.institutions ||
-    topic.judicial ||
-    topic.callout ||
-    topic.table
-
-  let visualEyebrow = 'Lectura visual'
-  let visualTitle = 'Lectura visual del problema'
-  let visualDescription =
-    'Los recursos visuales se usan para explicar relaciones, magnitudes o secuencias que ayudan a entender el tema.'
-
-  if (hasCharts && hasDataCards) {
-    visualTitle = 'Datos clave y visualizaciones'
-    visualDescription =
-      'Las gráficas se reservan para comparaciones o tendencias; los datos puntuales se muestran como tarjetas.'
-  } else if (hasCharts) {
-    visualEyebrow = 'Gráfica relevante'
-    visualTitle = 'Dato comparativo central'
-    visualDescription =
-      'Esta gráfica se mantiene porque ayuda a dimensionar una tendencia, diferencia o magnitud importante.'
-  } else if (hasDataCards) {
-    visualEyebrow = 'Datos clave'
-    visualTitle = 'Cifras para dimensionar'
-    visualDescription =
-      'Estos datos se entienden mejor como tarjetas acompañadas de explicación, no como gráficas.'
-  }
+    extraPanels
 
   return (
     <PageLayout title={topic.navLabel}>
@@ -1204,14 +1394,15 @@ function TopicPageScaffold({ topic, charts, dataCards, extraPanels, afterSummary
         image={topicImages[topic.imageKey]}
       />
 
-      <section className="section-block">
+      <section className="section-block topic-opening">
         <div className="container">
           <div className="row g-5 align-items-start">
             <div className="col-lg-7">
               <article className="topic-copy reveal">
-                <p className="eyebrow">Introducción del problema</p>
-                <h2>Cuál es el problema</h2>
-                <p className="topic-summary">{topic.problemIntro || topic.body}</p>
+                <p className="eyebrow">Introduccion del problema</p>
+                <h2>Que problema se aborda</h2>
+                <p className="topic-summary">{topic.problemIntro}</p>
+                <CitationRow sourceIds={topic.sourceIds?.slice(0, 3)} />
               </article>
             </div>
             <div className="col-lg-5">
@@ -1220,8 +1411,11 @@ function TopicPageScaffold({ topic, charts, dataCards, extraPanels, afterSummary
                 <h3>{topic.keyIdea}</h3>
               </article>
               <div className="insight-stack mt-4">
-                {topic.insights?.slice(0, 3).map((insight) => (
-                  <InsightCard key={insight.title} {...insight} />
+                {topic.consequences?.slice(0, 2).map((impact) => (
+                  <HumanImpactCard
+                    key={impact.title}
+                    item={{ ...impact, icon: 'bi-arrow-up-right-circle' }}
+                  />
                 ))}
               </div>
             </div>
@@ -1230,57 +1424,62 @@ function TopicPageScaffold({ topic, charts, dataCards, extraPanels, afterSummary
         </div>
       </section>
 
-      <InfoCardGrid title="Por qué ocurre" eyebrow="Causas principales" items={topic.causes} />
+      <section className="section-block">
+        <div className="container">
+          <ProblemExplainer
+            title="Lo que realmente esta pasando"
+            text={topic.background}
+            sourceIds={topic.sourceIds}
+          />
+          {topic.warning ? <WarningNote {...topic.warning} /> : null}
+        </div>
+      </section>
 
-      <InfoCardGrid
-        title="Consecuencias reales para México"
-        eyebrow="Efectos"
+      <NarrativeGrid title="Causas estructurales" eyebrow="Por que ocurre" items={topic.causes} />
+
+      <NarrativeGrid
+        title="Consecuencias reales"
+        eyebrow="Como afecta"
         items={topic.consequences}
         variant="consequences"
       />
 
       {hasVisualContent ? (
-        <section className="section-block section-muted">
+        <section className="section-block section-muted visual-reading-section">
           <div className="container">
             <div className="section-intro">
-              <p className="eyebrow">{visualEyebrow}</p>
-              <h2>{visualTitle}</h2>
-              <p>{visualDescription}</p>
+              <p className="eyebrow">Lectura visual</p>
+              <h2>Datos, flujos y comparaciones que si aportan</h2>
+              <p>
+                Las graficas se reservan para comparaciones o tendencias. Los datos puntuales
+                se muestran como tarjetas, tablas o secuencias de causa y consecuencia.
+              </p>
             </div>
-            {hasCharts ? <div className="chart-grid focused-chart-grid">{charts}</div> : null}
-            {hasDataCards ? <div className="row g-4 data-card-row">{dataCards}</div> : null}
+            {charts ? <div className="chart-grid focused-chart-grid">{charts}</div> : null}
+            {dataCards ? <div className="row g-4 data-card-row">{dataCards}</div> : null}
             <MatrixPanel matrix={topic.matrix} />
-            {topic.flow ? (
-              <VisualPanel title="Flujo de causa y consecuencia">
-                <FlowDiagram items={topic.flow} />
-              </VisualPanel>
+            <CauseEffectFlow items={topic.flow} />
+            <ExplainerBlocks items={topic.explainerBlocks} />
+            <CaseBlocks items={topic.caseBlocks} />
+            {topic.institutions ? (
+              <>
+                <VisualPanel title="Contrapesos y funciones tecnicas" description={topic.institutionsIntro}>
+                  <div className="institution-mini-grid">
+                    {topic.institutions.map((institution) => (
+                      <InsightCard
+                        key={institution.name}
+                        icon="bi-bank"
+                        title={institution.name}
+                        text={`${institution.function} Riesgo: ${institution.risk}`}
+                      />
+                    ))}
+                  </div>
+                </VisualPanel>
+                <InstitutionalTable items={topic.institutions} />
+              </>
             ) : null}
             {extraPanels}
-            <InstitutionCards institutions={topic.institutions} intro={topic.institutionsIntro} />
-            {topic.judicial ? (
-              <VisualPanel
-                title="Poder Judicial"
-                description="Dimensiones clave para sostener confianza y profesionalismo."
-              >
-                <div className="pill-grid">
-                  {topic.judicial.map((item) => (
-                    <span key={item}>{item}</span>
-                  ))}
-                </div>
-              </VisualPanel>
-            ) : null}
-            {topic.callout ? (
-              <article className="info-callout reveal">
-                <div className="card-icon" aria-hidden="true">
-                  <i className="bi bi-question-circle"></i>
-                </div>
-                <div>
-                  <h3>{topic.callout.title}</h3>
-                  <p>{topic.callout.text}</p>
-                </div>
-              </article>
-            ) : null}
-            <ResponsiveTable table={topic.table} title="Lectura por áreas" />
+            <ResponsiveTable table={topic.table} title="Lectura por areas" />
           </div>
         </section>
       ) : null}
@@ -1290,8 +1489,12 @@ function TopicPageScaffold({ topic, charts, dataCards, extraPanels, afterSummary
           <div className="row g-4">
             <div className="col-lg-5">
               <div className="section-intro">
-                <p className="eyebrow">Retos actuales</p>
+                <p className="eyebrow">Retos principales</p>
                 <h2>Lo que debe resolverse</h2>
+                <p>
+                  Cada reto muestra el obstaculo real y lo que pasa si se deja como problema
+                  normalizado.
+                </p>
               </div>
             </div>
             <div className="col-lg-7">
@@ -1314,8 +1517,8 @@ function TopicPageScaffold({ topic, charts, dataCards, extraPanels, afterSummary
       <section className="section-block connections-section">
         <div className="container">
           <article className="connections-panel reveal">
-            <p className="eyebrow">Cómo se conecta con otros problemas</p>
-            <h2>Relaciones entre temas</h2>
+            <p className="eyebrow">Relacion con otros temas</p>
+            <h2>Los problemas se alimentan entre si</h2>
             <p>{topic.connections}</p>
           </article>
         </div>
@@ -1325,14 +1528,14 @@ function TopicPageScaffold({ topic, charts, dataCards, extraPanels, afterSummary
         <div className="container">
           <article className="meaning-panel reveal">
             <div>
-              <p className="eyebrow">Cierre del tema</p>
-              <h2>Reflexión</h2>
-              <p>{topic.conclusion || topic.meaning}</p>
+              <p className="eyebrow">Cierre reflexivo</p>
+              <h2>Idea final del tema</h2>
+              <p>{topic.conclusion}</p>
             </div>
             <div className="page-actions">
               <Link className="btn btn-outline-custom" to="/">
                 <i className="bi bi-house-door" aria-hidden="true"></i>
-                Volver al inicio
+                Inicio
               </Link>
               <Link className="btn btn-primary-custom" to={topic.nextPath}>
                 Ver {topic.nextLabel}
@@ -1401,6 +1604,18 @@ function TopicSection({ topic, reverse = false }) {
 export default TopicSection
 </file>
 
+<file path="src/components/VisualDivider.jsx">
+function VisualDivider({ label }) {
+  return (
+    <div className="visual-divider" aria-hidden="true">
+      <span>{label}</span>
+    </div>
+  )
+}
+
+export default VisualDivider
+</file>
+
 <file path="src/components/VisualPanel.jsx">
 function VisualPanel({ title, description, children, variant = 'default' }) {
   return (
@@ -1415,6 +1630,24 @@ function VisualPanel({ title, description, children, variant = 'default' }) {
 }
 
 export default VisualPanel
+</file>
+
+<file path="src/components/WarningNote.jsx">
+function WarningNote({ title = 'Punto a verificar', text }) {
+  if (!text) return null
+
+  return (
+    <aside className="warning-note reveal">
+      <i className="bi bi-exclamation-triangle" aria-hidden="true"></i>
+      <div>
+        <h3>{title}</h3>
+        <p>{text}</p>
+      </div>
+    </aside>
+  )
+}
+
+export default WarningNote
 </file>
 
 <file path="src/data/challenges.js">
@@ -1487,86 +1720,50 @@ export const challenges = [
 
 <file path="src/data/chartData.js">
 export const gdpProjectionData = [
-  { year: '2025 mín.', value: -0.5 },
-  { year: '2025 máx.', value: 0.7 },
-  { year: '2026', value: 1.1 },
-  { year: '2027', value: 2.1 },
+  { year: 'Banxico 2026', value: 1.6 },
+  { year: 'Ajuste reportado 2026', value: 1.1 },
+  { year: 'Referencia 2027', value: 2.1 },
 ]
 
-export const inflationData = [
-  { year: '2025', value: 4.1 },
-  { year: '2026', value: 3.5 },
-  { year: '2027', value: 3.0 },
-]
-
-export const employmentRangeData = [
-  { label: 'Mínimo esperado', value: 260000 },
-  { label: 'Máximo esperado', value: 460000 },
+export const iedCompositionData = [
+  { label: 'Reinversion y otros flujos', value: 92.8 },
+  { label: 'Inversion nueva', value: 7.2 },
 ]
 
 export const pemexSupportData = [
-  { year: '2025', value: 40000, unit: 'millones de dólares' },
-  { year: '2026', value: 14000, unit: 'millones de dólares' },
+  { year: '2025', value: 40000, unit: 'millones de dolares' },
+  { year: '2026', value: 14000, unit: 'millones de dolares' },
 ]
 
-export const debtProjectionData = [
-  { label: 'Deuda pública aproximada 2028', value: 55, unit: '% del PIB' },
+export const povertyCardsData = [
+  { label: 'Personas en pobreza multidimensional', value: '38.5 millones' },
+  { label: 'Personas en pobreza extrema', value: '7.0 millones' },
+  { label: 'Personas con rezago educativo', value: '24.2 millones' },
+  { label: 'Personas con carencia de salud', value: '44.5 millones' },
+]
+
+export const pisaComparisonData = [
+  { label: 'Mexico', value: 407 },
+  { label: 'Promedio OCDE', value: 478 },
+]
+
+export const healthComparisonData = [
+  { indicator: 'Gasto por persona', mexico: 1588, ocde: 5967 },
+  { indicator: 'Medicos por mil hab.', mexico: 2.7, ocde: 3.9 },
+  { indicator: 'Enfermeras por mil hab.', mexico: 3.0, ocde: 9.2 },
+  { indicator: 'Camas por mil hab.', mexico: 1.0, ocde: 4.2 },
 ]
 
 export const impunityData = [
+  { crime: 'Cifra negra ENVIPE', value: 93.2 },
   { crime: 'Violencia familiar', value: 98.6 },
   { crime: 'Narcomenudeo', value: 94.1 },
 ]
 
-export const prosecutionPolicyData = [
-  { label: 'Fiscalías con política formal', value: 16 },
-  { label: 'Fiscalías sin política formal', value: 16 },
-]
-
-export const povertyData = [
-  { label: 'Pobreza multidimensional', value: 29.6 },
-  { label: 'Resto de la población', value: 70.4 },
-]
-
-export const extremePovertyData = [
-  { label: 'Pobreza extrema', value: 5.3 },
-  { label: 'Resto de la población', value: 94.7 },
-]
-
-export const inequalityOriginData = [
-  { factor: 'Recursos de la región de origen', value: 54 },
-  { factor: 'Escolaridad de los padres', value: 11 },
-  { factor: 'Región del país', value: 8 },
-  { factor: 'Sexo de nacimiento', value: 7 },
-  { factor: 'Origen rural', value: 6 },
-]
-
-export const pisaComparisonData = [
-  { label: 'México', value: 407 },
-  { label: 'Promedio OCDE', value: 478 },
-]
-
-export const educationLagData = [
-  {
-    label: 'Personas mayores de 15 años en rezago educativo',
-    value: 24.2,
-    unit: 'millones',
-  },
-  {
-    label: 'Niñas, niños y adolescentes con déficit',
-    value: 3.4,
-    unit: 'millones',
-  },
-]
-
-export const wastewaterData = [
-  { label: 'Aguas residuales domésticas', value: 65 },
-  { label: 'Otros orígenes', value: 35 },
-]
-
-export const healthInfrastructureData = [
-  { label: 'Hospitales rurales de segundo nivel', value: 81 },
-  { label: 'Unidades Médicas Rurales', value: 3982 },
+export const waterAvailabilityData = [
+  { label: 'Disponibilidad historica por habitante', value: 17742 },
+  { label: 'Disponibilidad reciente por habitante', value: 3656 },
+  { label: 'Proyeccion 2030', value: 3285 },
 ]
 </file>
 
@@ -1574,53 +1771,43 @@ export const healthInfrastructureData = [
 export const keyStats = [
   {
     value: '1.1%',
-    label: 'Crecimiento del PIB proyectado para 2026',
-    category: 'Economía',
+    label: 'Crecimiento del PIB para 2026 en el ajuste reportado citado por el MD',
+    category: 'Economia',
   },
   {
-    value: '3.5%',
-    label: 'Inflación estimada al cierre de 2026',
-    category: 'Economía',
+    value: '7.2%',
+    label: 'Proporcion de inversion nueva dentro de la IED del 1T2026',
+    category: 'Nearshoring',
   },
   {
-    value: '260,000 a 460,000',
-    label: 'Rango esperado de creación de empleo formal',
-    category: 'Empleo',
+    value: '40,000 mdd',
+    label: 'Apoyo federal a Pemex citado para 2025',
+    category: 'Finanzas publicas',
   },
   {
-    value: '29.6%',
-    label: 'Población en pobreza multidimensional',
-    category: 'Sociedad',
-  },
-  {
-    value: '5.3%',
-    label: 'Población en pobreza extrema',
-    category: 'Sociedad',
-  },
-  {
-    value: '24.2 millones',
-    label: 'Personas mayores de 15 años en rezago educativo',
-    category: 'Educación',
+    value: '38.5 millones',
+    label: 'Personas en pobreza multidimensional en 2024',
+    category: 'Pobreza',
   },
   {
     value: '407 puntos',
-    label: 'Promedio de México en PISA 2022',
-    category: 'Educación',
+    label: 'Promedio de Mexico en PISA 2022',
+    category: 'Educacion',
   },
   {
-    value: '65%',
-    label: 'Proporción aproximada de aguas residuales domésticas en la Cuenca de México',
+    value: '44.5 millones',
+    label: 'Personas con carencia por acceso a servicios de salud',
+    category: 'Salud',
+  },
+  {
+    value: '93.2%',
+    label: 'Cifra negra estimada por ENVIPE 2025',
+    category: 'Seguridad',
+  },
+  {
+    value: '66%',
+    label: 'Territorio nacional en condiciones aridas o semiaridas',
     category: 'Agua',
-  },
-  {
-    value: '81',
-    label: 'Hospitales rurales de segundo nivel en IMSS-Bienestar',
-    category: 'Salud',
-  },
-  {
-    value: '3,982',
-    label: 'Unidades Médicas Rurales',
-    category: 'Salud',
   },
 ]
 </file>
@@ -1631,123 +1818,344 @@ export const navigationItems = [
     path: '/',
     label: 'Inicio',
     icon: 'bi-house-door',
-    description: 'Portada general de los retos nacionales.',
+    description: 'Portada editorial y tesis central del sitio.',
   },
   {
     path: '/economia',
-    label: 'Economía',
+    label: 'Economía y nearshoring',
     icon: 'bi-graph-up-arrow',
-    description: 'Crecimiento, inflación, empleo y nearshoring.',
+    description: 'Oportunidad productiva frente a bajo crecimiento y cuellos de botella.',
   },
   {
     path: '/pemex',
-    label: 'Pemex',
+    label: 'Pemex y finanzas',
     icon: 'bi-fuel-pump',
-    description: 'Presión fiscal y costo de oportunidad.',
+    description: 'Presion fiscal, deuda, rescates y costo de oportunidad.',
   },
   {
-    path: '/instituciones',
-    label: 'Instituciones',
-    icon: 'bi-bank',
-    description: 'Estado de derecho, confianza y contrapesos.',
-  },
-  {
-    path: '/seguridad',
-    label: 'Seguridad',
-    icon: 'bi-shield-exclamation',
-    description: 'Impunidad, denuncia y confianza pública.',
-  },
-  {
-    path: '/sociedad',
-    label: 'Sociedad',
+    path: '/pobreza',
+    label: 'Pobreza y desigualdad',
     icon: 'bi-people',
-    description: 'Pobreza, desigualdad y movilidad social.',
+    description: 'Carencias, territorio, movilidad social y medicion independiente.',
   },
   {
     path: '/educacion',
     label: 'Educación',
     icon: 'bi-journal-text',
-    description: 'Rezago, aprendizaje y competitividad.',
-  },
-  {
-    path: '/agua',
-    label: 'Agua',
-    icon: 'bi-droplet-half',
-    description: 'Crisis hídrica, salud y territorio.',
+    description: 'Aprendizajes, PISA, evaluacion y futuro productivo.',
   },
   {
     path: '/salud',
-    label: 'Salud',
+    label: 'Salud pública',
     icon: 'bi-heart-pulse',
-    description: 'Cobertura, abasto e infraestructura rural.',
+    description: 'Cobertura formal frente a atencion medica real.',
+  },
+  {
+    path: '/seguridad',
+    label: 'Seguridad e impunidad',
+    icon: 'bi-shield-exclamation',
+    description: 'Cifra negra, fiscalias, extorsion y confianza publica.',
+  },
+  {
+    path: '/agua',
+    label: 'Agua y medio ambiente',
+    icon: 'bi-droplet-half',
+    description: 'Crisis hidrica como limite social, economico y territorial.',
+  },
+  {
+    path: '/instituciones',
+    label: 'Instituciones',
+    icon: 'bi-bank',
+    description: 'Contrapesos, Estado de derecho y certidumbre juridica.',
   },
   {
     path: '/datos',
-    label: 'Datos',
+    label: 'Datos clave',
     icon: 'bi-bar-chart',
-    description: 'Dashboard con indicadores y gráficas.',
+    description: 'Resumen visual seleccionado, sin saturacion de graficas.',
+  },
+  {
+    path: '/conclusion',
+    label: 'Conclusión',
+    icon: 'bi-compass',
+    description: 'Mexico ante una oportunidad que puede perderse.',
   },
 ]
 </file>
 
-<file path="src/data/topicImages.js">
-// Cambia aqui las URL de las imagenes. Cada pagina lee su imagen desde este archivo.
+<file path="src/data/sources.js">
+export const sources = [
+  {
+    id: 'banxico-pib',
+    name: 'Banco de Mexico',
+    title: 'Informe Trimestral octubre-diciembre 2025: previsiones de crecimiento del PIB',
+    url: 'https://www.banxico.org.mx/TablasWeb/informes-trimestrales/octubre-diciembre-2025/257998FF-0F4B-4850-A8FF-A6C99BA5FE13.html',
+    type: 'official',
+    usedIn: ['economia', 'datos'],
+  },
+  {
+    id: 'reuters-banxico',
+    name: 'Reuters',
+    title: 'Mexico central bank says financial system solid, warns risks increased slightly',
+    url: '',
+    type: 'financial',
+    usedIn: ['economia'],
+  },
+  {
+    id: 'imco-ied',
+    name: 'IMCO',
+    title: 'Inversion extranjera directa en Mexico: primer trimestre de 2026',
+    url: 'https://imco.org.mx/inversion-extranjera-directa-en-mexico-primer-trimestre-de-2026/',
+    type: 'research',
+    usedIn: ['economia', 'datos'],
+  },
+  {
+    id: 'imco-nearshoring',
+    name: 'IMCO',
+    title: 'Nearshoring: prioridades para el desarrollo regional',
+    url: 'https://imco.org.mx/nearshoring-prioridades-para-el-desarrollo-regional/',
+    type: 'research',
+    usedIn: ['economia'],
+  },
+  {
+    id: 'infobae-pemex',
+    name: 'Infobae Mexico / Moodys',
+    title: 'Moodys advierte que Pemex mantendra alta presion financiera hasta 2028',
+    url: 'https://www.infobae.com/mexico/2026/05/28/moodys-advierte-que-pemex-mantendra-alta-presion-financiera-hasta-2028/',
+    type: 'financial',
+    usedIn: ['pemex', 'datos'],
+  },
+  {
+    id: 'inegi-pobreza',
+    name: 'INEGI',
+    title: 'Pobreza multidimensional 2024',
+    url: 'https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2025/pm/pm2025_08.pdf',
+    type: 'official',
+    usedIn: ['pobreza', 'salud', 'datos'],
+  },
+  {
+    id: 'ibero-pobreza',
+    name: 'Universidad Iberoamericana',
+    title: 'Fin de CONEVAL y medicion de la pobreza del INEGI abre debate en la Ibero',
+    url: 'https://prensa.ibero.mx/es-MX/nota/fin-de-coneval-y-medicion-de-la-pobreza-del-inegi-abre-debate-en-la-ibero',
+    type: 'research',
+    usedIn: ['pobreza', 'instituciones'],
+  },
+  {
+    id: 'imco-pisa',
+    name: 'IMCO',
+    title: 'PISA 2022: dos de cada tres estudiantes en Mexico no alcanzan el nivel basico de aprendizajes en matematicas',
+    url: 'https://imco.org.mx/pisa-2022-dos-de-cada-tres-estudiantes-en-mexico-no-alcanzan-el-nivel-basico-de-aprendizajes-en-matematicas/',
+    type: 'research',
+    usedIn: ['educacion', 'datos'],
+  },
+  {
+    id: 'imco-espiral',
+    name: 'IMCO',
+    title: 'La educacion atrapada en la espiral del silencio',
+    url: 'https://imco.org.mx/la-educacion-atrapada-en-la-espiral-del-silencio/',
+    type: 'research',
+    usedIn: ['educacion', 'instituciones'],
+  },
+  {
+    id: 'sep-calendario',
+    name: 'SEP',
+    title: 'Calendario escolar 2025-2026',
+    url: 'https://calendarioescolar.sep.gob.mx/',
+    type: 'official',
+    usedIn: ['educacion'],
+  },
+  {
+    id: 'ocde-salud',
+    name: 'OCDE',
+    title: 'Health at a Glance 2025: Mexico country note',
+    url: 'https://www.oecd.org/en/publications/2025/11/health-at-a-glance-2025_c50c878f/mexico_139e7e18.html',
+    type: 'official',
+    usedIn: ['salud', 'datos'],
+  },
+  {
+    id: 'imss-bienestar',
+    name: 'IMSS-Bienestar',
+    title: 'Programa IMSS-Bienestar 1979-2025',
+    url: 'http://www.imss.gob.mx/imss-bienestar',
+    type: 'official',
+    usedIn: ['salud'],
+  },
+  {
+    id: 'ciep-salud',
+    name: 'CIEP',
+    title: 'Gasto en salud para 2026',
+    url: 'https://ciep.mx/gasto-en-salud-para-2026-aumentos-en-hospitales-y-medicamentos-recortes-en-salud-mental/',
+    type: 'research',
+    usedIn: ['salud', 'pemex'],
+  },
+  {
+    id: 'elpais-medicamentos',
+    name: 'El Pais / ICIJ',
+    title: 'Mercado negro de farmacos falsos en Mexico',
+    url: 'https://elpais.com/mexico/2025-10-21/la-medicina-del-millon-de-dolares-abre-la-puerta-al-mercado-negro-de-farmacos-falsos-en-mexico.html',
+    type: 'journalism',
+    usedIn: ['salud'],
+  },
+  {
+    id: 'animal-medicinas',
+    name: 'Animal Politico / Nayeli Roldan',
+    title: 'Investigaciones sobre compras publicas de medicamentos y contratos del sector salud',
+    url: 'https://animalpolitico.com/',
+    type: 'journalism',
+    usedIn: ['salud'],
+  },
+  {
+    id: 'inegi-envipe',
+    name: 'INEGI',
+    title: 'ENVIPE 2025',
+    url: 'https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2025/ENVIPE/ENVIPE_25_RR.pdf',
+    type: 'official',
+    usedIn: ['seguridad', 'datos'],
+  },
+  {
+    id: 'impunidad-cero',
+    name: 'Impunidad Cero',
+    title: 'Impunidad en Mexico',
+    url: 'https://www.impunidadcero.org/impunidad-en-mexico/',
+    type: 'research',
+    usedIn: ['seguridad'],
+  },
+  {
+    id: 'mexicoevalua-impunidad',
+    name: 'Mexico Evalua',
+    title: 'Radiografia de la impunidad en Mexico 2024',
+    url: 'https://mexicoevalua.org/radiografia-de-la-impunidad-en-mexico-hallazgos-del-sistema-de-justicia-penal-2024/',
+    type: 'research',
+    usedIn: ['seguridad'],
+  },
+  {
+    id: 'ohchr-justicia',
+    name: 'Mexico Evalua / Impunidad Cero / OHCHR',
+    title: 'Documento sobre independencia judicial e impunidad',
+    url: 'https://www.ohchr.org/sites/default/files/documents/issues/ijudiciary/cfis/contemporary-challenges-democracy/subm-sr-independence-judges-cso-fundacion-justicia-que-queremos-input-2.pdf',
+    type: 'research',
+    usedIn: ['seguridad', 'instituciones'],
+  },
+  {
+    id: 'elpais-extorsion',
+    name: 'El Pais Mexico',
+    title: 'Rehenes de la extorsion en Mexico',
+    url: 'https://elpais.com/mexico/2025-12-07/rehenes-de-la-extorsion-en-mexico.html',
+    type: 'journalism',
+    usedIn: ['seguridad'],
+  },
+  {
+    id: 'imco-agua',
+    name: 'IMCO',
+    title: 'Escasez de agua y sequia en Mexico: crisis actual',
+    url: 'https://imco.org.mx/escasez-de-agua-y-sequia-en-mexico-crisis-actual/',
+    type: 'research',
+    usedIn: ['agua'],
+  },
+  {
+    id: 'imta-programa',
+    name: 'IMTA',
+    title: 'Programa Institucional del IMTA 2025-2030',
+    url: 'https://www.imta.gob.mx/gobmx/2025/PIIMTA-2025-2030.pdf',
+    type: 'official',
+    usedIn: ['agua', 'datos'],
+  },
+  {
+    id: 'conagua-acuiferos',
+    name: 'CONAGUA',
+    title: 'Disponibilidad por acuiferos',
+    url: 'https://sigagis.conagua.gob.mx/gas1/sections/Disponibilidad_Acuiferos.html',
+    type: 'official',
+    usedIn: ['agua'],
+  },
+  {
+    id: 'unam-cuenca',
+    name: 'Gaceta UNAM',
+    title: 'La crisis del agua en la Cuenca de Mexico',
+    url: 'https://www.gaceta.unam.mx/la-crisis-del-agua-en-la-cuenca-de-mexico/',
+    type: 'research',
+    usedIn: ['agua'],
+  },
+  {
+    id: 'unam-agua-especial',
+    name: 'Gaceta UNAM',
+    title: 'El agua, un derecho o un privilegio',
+    url: 'https://www.gaceta.unam.mx/especial-agua/',
+    type: 'research',
+    usedIn: ['agua'],
+  },
+  {
+    id: 'milenio-autonomos',
+    name: 'Milenio',
+    title: 'Senado aprueba la extincion de organismos autonomos',
+    url: 'https://www.milenio.com/politica/senado-aprueba-la-extincion-de-organismos-autonomos',
+    type: 'journalism',
+    usedIn: ['instituciones'],
+  },
+  {
+    id: 'elpais-autonomos',
+    name: 'El Pais Mexico / Elia Castillo Jimenez',
+    title: 'El Senado aprueba la desaparicion de siete organos autonomos',
+    url: 'https://elpais.com/mexico/2024-11-29/el-senado-aprueba-la-desaparicion-de-siete-organos-autonomos-entre-ellos-el-inai-y-el-instituto-de-telecomunicaciones.html',
+    type: 'journalism',
+    usedIn: ['instituciones'],
+  },
+  {
+    id: 'ine-judicial',
+    name: 'INE',
+    title: 'Eleccion Judicial 2025',
+    url: 'https://ine.mx/voto-y-elecciones/eleccion-del-poder-judicial-de-la-federacion-2025/',
+    type: 'official',
+    usedIn: ['instituciones'],
+  },
+  {
+    id: 'reuters-judicial',
+    name: 'Reuters',
+    title: 'Mexico readies for first elections of judges, amid criticism',
+    url: '',
+    type: 'journalism',
+    usedIn: ['instituciones'],
+  },
+  {
+    id: 'elpais-ajuste-judicial',
+    name: 'El Pais Mexico / Elia Castillo Jimenez',
+    title: 'Sheinbaum corrige la reforma judicial',
+    url: 'https://elpais.com/mexico/2026-04-16/sheinbaum-corrige-la-reforma-judicial-menos-candidatos-filtros-tecnicos-y-sin-eleccion-de-magistrados-electorales.html',
+    type: 'journalism',
+    usedIn: ['instituciones'],
+  },
+  {
+    id: 'coparmex-judicial',
+    name: 'COPARMEX',
+    title: 'Retos del nuevo Poder Judicial',
+    url: 'https://coparmex.org.mx/retos-del-nuevo-poder-judicial/',
+    type: 'research',
+    usedIn: ['instituciones'],
+  },
+  {
+    id: 'vozyvoto-judicial',
+    name: 'Voz y Voto',
+    title: 'La reforma judicial mexicana: como se destruye el Estado de derecho',
+    url: 'https://www.vozyvoto.com.mx/articulo/la-reforma-judicial-mexicana-como-se-destruye-el-estado-de-derecho',
+    type: 'journalism',
+    usedIn: ['instituciones'],
+  },
+]
 
-export const topicImages = {
-  panorama: {
-    src: 'https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?auto=format&fit=crop&w=1400&q=80',
-    alt: 'Vista urbana de México relacionada con sus retos actuales',
-    caption:
-      'México enfrenta oportunidades importantes, pero también desafíos económicos, sociales e institucionales.',
-  },
-  economia: {
-    src: 'https://images.unsplash.com/photo-1494412651409-8963ce7935a7?auto=format&fit=crop&w=1400&q=80',
-    alt: 'Zona industrial relacionada con economía y cadenas de suministro',
-    caption:
-      'La economía mexicana combina oportunidades de inversión con retos de infraestructura y desigualdad regional.',
-  },
-  pemex: {
-    src: 'https://images.unsplash.com/photo-1516937941344-00b4e0337589?auto=format&fit=crop&w=1400&q=80',
-    alt: 'Infraestructura energética relacionada con petróleo y finanzas públicas',
-    caption:
-      'Pemex representa uno de los mayores retos fiscales y financieros para el país.',
-  },
-  instituciones: {
-    src: 'https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=1400&q=80',
-    alt: 'Edificio institucional relacionado con Estado de derecho',
-    caption:
-      'La fortaleza institucional es clave para la transparencia, la regulación y la confianza pública.',
-  },
-  seguridad: {
-    src: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1400&q=80',
-    alt: 'Escena urbana relacionada con seguridad pública y justicia',
-    caption:
-      'La impunidad y la desconfianza ciudadana son retos centrales para el sistema de justicia.',
-  },
-  sociedad: {
-    src: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1400&q=80',
-    alt: 'Personas en un entorno comunitario relacionado con desigualdad social',
-    caption:
-      'La pobreza y la desigualdad limitan la movilidad social y el acceso a oportunidades.',
-  },
-  educacion: {
-    src: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1400&q=80',
-    alt: 'Aula relacionada con educación y aprendizaje',
-    caption:
-      'El rezago educativo compromete la competitividad y el desarrollo futuro de México.',
-  },
-  agua: {
-    src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=80',
-    alt: 'Paisaje relacionado con agua y medio ambiente',
-    caption:
-      'La crisis hídrica es un límite ambiental, económico y social para el desarrollo del país.',
-  },
-  salud: {
-    src: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=1400&q=80',
-    alt: 'Hospital relacionado con salud pública',
-    caption:
-      'El sistema de salud busca ampliar cobertura, pero enfrenta retos de abasto, personal e infraestructura.',
-  },
+export const sourceTypeLabels = {
+  official: 'Fuentes oficiales y estadisticas',
+  research: 'Centros de investigacion y evaluacion',
+  financial: 'Calificadoras y analisis financiero',
+  journalism: 'Periodismo mexicano y de investigacion',
+}
+
+export function getSourcesByIds(ids = []) {
+  return ids.map((id) => sources.find((source) => source.id === id)).filter(Boolean)
+}
+
+export function getSourcesForTopic(topicKey) {
+  return sources.filter((source) => source.usedIn.includes(topicKey))
 }
 </file>
 
@@ -1756,732 +2164,659 @@ export const topics = {
   economia: {
     path: '/economia',
     nextPath: '/pemex',
-    nextLabel: 'Pemex',
-    navLabel: 'Economía',
-    eyebrow: 'Crecimiento y oportunidad',
+    nextLabel: 'Pemex y finanzas',
+    navLabel: 'Economía y nearshoring',
+    eyebrow: 'Oportunidad vs realidad',
     title: 'Economía y nearshoring',
     imageKey: 'economia',
     summary:
-      'México tiene una oportunidad real por su cercanía con Estados Unidos y por el T-MEC, pero esa ventaja no se convierte automáticamente en crecimiento para todo el país.',
+      'Mexico tiene una oportunidad historica por su cercania con Estados Unidos, pero el nearshoring no se convierte en desarrollo si faltan agua, energia, talento, seguridad, vivienda, transporte y reglas claras.',
     keyIdea:
-      'El nearshoring no es una promesa automática: necesita infraestructura, seguridad, agua, energía, talento y Estado de derecho.',
+      'La geografia abre la puerta; la infraestructura, la educacion y el Estado de derecho deciden si Mexico entra.',
+    sourceIds: ['banxico-pib', 'reuters-banxico', 'imco-ied', 'imco-nearshoring'],
     problemIntro:
-      'El problema económico no es solo que el crecimiento sea bajo. El reto de fondo es que México tiene una ventana de oportunidad por la reconfiguración de cadenas de suministro, pero no todas las regiones cuentan con las condiciones para aprovecharla. Las empresas no se instalan únicamente porque un país esté cerca de Estados Unidos; también necesitan electricidad confiable, agua disponible, transporte, vivienda para trabajadores, personal técnico, seguridad y reglas claras. Por eso el nearshoring puede beneficiar con fuerza a ciertas ciudades industriales, mientras otras regiones quedan rezagadas.',
+      'El problema economico de Mexico no es un colapso inmediato, sino un crecimiento demasiado lento para el tamano de sus rezagos. Una economia con informalidad, pobreza regional, baja productividad y presion fiscal no puede conformarse con crecer cerca de 1%. Ese ritmo no transforma la estructura productiva ni alcanza para cerrar brechas sociales profundas.',
+    background:
+      'El Banco de Mexico proyecto para 2026 un crecimiento puntual de 1.6% en su informe trimestral, aunque reportes posteriores mencionaron un ajuste hacia 1.1%. Al mismo tiempo, el sistema financiero conserva solidez, capital y liquidez, pero enfrenta riesgos por menor crecimiento, inflacion, tensiones externas y posible deterioro crediticio. La estabilidad macroeconomica importa, pero estabilidad sin crecimiento suficiente se vuelve estancamiento ordenado.',
     causes: [
       {
-        title: 'Infraestructura desigual',
-        text: 'Las regiones con logística, transporte y servicios urbanos tienen más posibilidades de atraer inversión. Donde faltan carreteras eficientes, transporte público o vivienda, la llegada de empresas se vuelve más difícil.',
+        title: 'Crecimiento insuficiente',
+        text: 'El pais avanza, pero no al ritmo que necesita una economia que quiere absorber jovenes, formalizar empleo, elevar salarios y financiar infraestructura. Crecer poco significa recaudar menos, invertir menos y resolver mas lento los rezagos acumulados.',
       },
       {
-        title: 'Agua y energía como límite',
-        text: 'La industria necesita suministro constante. El estrés hídrico y los costos energéticos pueden frenar proyectos incluso en estados con vocación manufacturera.',
+        title: 'IED que no siempre es inversion nueva',
+        text: 'IMCO reporto 23,591 millones de dolares de IED en el primer trimestre de 2026, pero la inversion nueva fue solo 7.2% del total. La reinversion de utilidades es positiva, aunque no prueba por si sola una oleada de nuevas plantas o cadenas productivas.',
       },
       {
-        title: 'Talento técnico insuficiente',
-        text: 'Las cadenas productivas modernas requieren personal capacitado, habilidades técnicas e idiomas. Si la formación educativa no acompaña la demanda laboral, la oportunidad se reduce.',
+        title: 'Condiciones regionales desiguales',
+        text: 'El norte y algunos estados industriales tienen ventajas, mientras otras regiones arrastran falta de talento, transporte, tratamiento de aguas, vivienda y servicios. El nearshoring puede concentrar beneficios si no se construyen condiciones en mas territorios.',
       },
       {
-        title: 'Certidumbre y seguridad',
-        text: 'La inversión necesita reglas estables, trámites razonables y entornos seguros. Si una región se percibe riesgosa o burocrática, pierde competitividad frente a otras.',
+        title: 'Recursos basicos como cuello de botella',
+        text: 'Las empresas no se instalan solo por estar cerca de Estados Unidos. Necesitan suministro continuo de agua y energia, seguridad para operar, reglas estables y una ciudad capaz de alojar trabajadores.',
       },
     ],
     consequences: [
       {
-        title: 'Beneficios concentrados',
-        text: 'Ciudades como Ciudad Juárez, Hermosillo, Chihuahua, Cancún y Saltillo parten con ventajas laborales o industriales, mientras zonas con menos infraestructura enfrentan barreras mayores.',
+        title: 'Oportunidad limitada',
+        text: 'Mexico puede recibir anuncios de inversion sin que eso se traduzca automaticamente en nuevos empleos de alto valor, mayor productividad o desarrollo regional equilibrado.',
       },
       {
-        title: 'Crecimiento por debajo del potencial',
-        text: 'Aunque el país tenga ubicación estratégica, la falta de condiciones locales puede mantener el crecimiento en niveles moderados.',
+        title: 'Brecha territorial',
+        text: 'Los estados mejor preparados atraen mas proyectos, mientras los estados con rezagos educativos, logisticos o regulatorios se alejan de la oportunidad.',
       },
       {
-        title: 'Mayor desigualdad regional',
-        text: 'Si la inversión se concentra en pocos polos, la brecha entre norte industrial, centro urbano y sur rezagado puede ampliarse.',
+        title: 'Dependencia de Estados Unidos',
+        text: 'La integracion con Norteamerica es una ventaja, pero tambien vuelve al pais vulnerable a desaceleraciones, cambios arancelarios o tensiones comerciales estadounidenses.',
       },
     ],
     realChallenges: [
       {
-        title: 'Convertir ubicación en productividad',
-        text: 'La cercanía con Estados Unidos solo genera valor si se acompaña con infraestructura, reglas confiables y servicios que permitan producir con continuidad.',
+        title: 'Convertir estabilidad en crecimiento',
+        text: 'La estabilidad financiera es necesaria, pero no basta. Mexico necesita inversion publica productiva, certidumbre regulatoria y condiciones locales para elevar productividad.',
       },
       {
-        title: 'Preparar capital humano',
-        text: 'Sin educación técnica, matemáticas, lectura, ciencia e inglés, los nuevos empleos pueden quedarse en actividades de bajo valor agregado.',
+        title: 'Separar anuncio de transformacion',
+        text: 'Una cifra alta de IED no significa por si sola llegada masiva de nuevas plantas. El reto es atraer inversion nueva, sofisticada y con encadenamientos locales.',
       },
       {
-        title: 'Evitar un nearshoring excluyente',
-        text: 'El reto es que la inversión no solo fortalezca a las ciudades ya competitivas, sino que también impulse regiones con rezagos históricos.',
+        title: 'Evitar un nearshoring de pocos polos',
+        text: 'Si solo ganan los territorios ya competitivos, el nearshoring puede ampliar la desigualdad regional en lugar de reducirla.',
       },
     ],
     connections:
-      'Este tema se conecta con educación porque la industria necesita talento; con agua y energía porque la producción depende de recursos básicos; con seguridad e instituciones porque la inversión necesita confianza; y con Pemex porque la presión fiscal reduce espacio para infraestructura.',
+      'Educacion se conecta con productividad y nearshoring; seguridad con inversion y empleo; agua con industria, agricultura y vivienda; instituciones con confianza y reglas claras; Pemex con el espacio fiscal para infraestructura.',
     conclusion:
-      'México tiene una oportunidad importante, pero aprovecharla exige construir condiciones. El nearshoring no resolverá por sí solo los problemas estructurales: puede amplificar ventajas existentes o profundizar desigualdades si no se atienden sus requisitos básicos.',
-    body:
-      'La economía combina una expectativa de crecimiento moderada con una inflación que tiende a bajar gradualmente y una tasa de referencia situada en 6.5% desde mayo de 2026. La relocalización de cadenas productivas puede abrir inversión y empleo, aunque su efecto depende de condiciones locales muy concretas.',
-    meaning:
-      'El reto es convertir la ubicación estratégica en productividad distribuida. Sin servicios urbanos, energía confiable, agua suficiente y certidumbre, el nearshoring puede concentrarse en pocos polos y profundizar desigualdades.',
-    insights: [
-      {
-        icon: 'bi-geo-alt',
-        title: 'Ventaja geográfica',
-        text: 'La cercanía con Estados Unidos y el T-MEC abren una oportunidad, pero no sustituyen infraestructura ni seguridad.',
-      },
-      {
-        icon: 'bi-droplet',
-        title: 'Recursos básicos',
-        text: 'El agua y la energía pueden definir si una región puede sostener nuevas industrias.',
-      },
-      {
-        icon: 'bi-person-workspace',
-        title: 'Talento técnico',
-        text: 'La creación de empleo depende de habilidades disponibles y formación alineada con la industria.',
-      },
-    ],
+      'El nearshoring es una ventana, no una garantia. Mexico puede aprovecharla si deja de tratar sus cuellos de botella como temas separados y entiende que agua, energia, seguridad, educacion e instituciones son parte de la politica economica.',
     matrix: {
-      title: 'Condiciones que decide una inversión',
+      title: 'Semáforo de condiciones para nearshoring',
       items: [
-        ['Talento técnico', 'Alto'],
+        ['Talento tecnico', 'Alto'],
+        ['Agua', 'Critico'],
+        ['Energia', 'Alto'],
+        ['Seguridad', 'Critico'],
         ['Vivienda', 'Medio'],
         ['Transporte', 'Medio'],
-        ['Agua', 'Crítico'],
-        ['Energía', 'Alto'],
-        ['Regulación', 'Pendiente'],
-        ['Seguridad', 'Crítico'],
         ['Estado de derecho', 'Alto'],
+        ['Regulacion', 'Pendiente'],
+      ],
+    },
+    table: {
+      columns: ['Oportunidad', 'Obstaculo', 'Consecuencia'],
+      rows: [
+        ['Cercania con Estados Unidos', 'Infraestructura desigual', 'La inversion se concentra en pocos polos'],
+        ['T-MEC y base manufacturera', 'Talento tecnico insuficiente', 'Menos empleos de alto valor'],
+        ['Reinversion de empresas instaladas', 'Poca inversion nueva', 'Menor transformacion productiva'],
+        ['Mercado interno grande', 'Inseguridad y reglas inciertas', 'Mayor costo de operar e invertir'],
       ],
     },
   },
   pemex: {
     path: '/pemex',
-    nextPath: '/instituciones',
-    nextLabel: 'Instituciones',
-    navLabel: 'Pemex',
-    eyebrow: 'Finanzas públicas',
-    title: 'Pemex y presión fiscal',
+    nextPath: '/pobreza',
+    nextLabel: 'Pobreza y desigualdad',
+    navLabel: 'Pemex y finanzas públicas',
+    eyebrow: 'Presion fiscal',
+    title: 'Pemex y finanzas públicas',
     imageKey: 'pemex',
     summary:
-      'Pemex no solo es un tema energético: también es un problema fiscal porque sus necesidades financieras presionan el presupuesto público.',
+      'Pemex es estrategica, pero tambien una carga financiera. El problema de fondo no es ideologico: es fiscal, operativo y de costo de oportunidad.',
     keyIdea:
-      'Cuando el Estado destina recursos a sostener deuda o vencimientos, esos recursos dejan de estar disponibles para otros problemas nacionales.',
+      'Cada peso usado para sostener deuda o flujo operativo de Pemex no puede usarse al mismo tiempo en agua, salud, educacion, seguridad, transporte o infraestructura.',
+    sourceIds: ['infobae-pemex', 'ciep-salud'],
     problemIntro:
-      'El problema central es que Pemex mantiene necesidades de liquidez elevadas y depende de apoyos del gobierno para enfrentar compromisos financieros. Eso crea una presión directa sobre las finanzas públicas. No se trata únicamente de rescatar a una empresa pública, sino de decidir qué se deja de financiar cuando una parte importante del dinero público se usa para cubrir deuda, vencimientos o falta de flujo de caja.',
+      'Pemex arrastra deuda elevada, necesidades constantes de liquidez y dependencia del apoyo federal. El tema no se reduce a estar a favor o en contra de una empresa estatal; la pregunta publica es cuanto espacio fiscal absorbe y que prioridades desplaza.',
+    background:
+      'Moodys advirtio, segun la cobertura citada por Infobae, que Pemex mantendra alta presion financiera al menos hasta 2028 por debil flujo de caja libre, vulnerabilidades operativas y dependencia del gobierno. El MD senala apoyos superiores a 40,000 millones de dolares en 2025 y alrededor de 14,000 millones presupuestados en 2026 para obligaciones de corto plazo.',
     causes: [
       {
-        title: 'Endeudamiento y vencimientos',
-        text: 'La empresa debe cumplir compromisos financieros de corto y mediano plazo. Cuando no genera suficientes recursos propios, el gobierno aparece como respaldo.',
+        title: 'Deuda y vencimientos',
+        text: 'La empresa debe cubrir compromisos financieros grandes. Cuando su flujo no alcanza, el gobierno federal se convierte en respaldo, lo que traslada el problema al presupuesto publico.',
       },
       {
-        title: 'Flujo de caja negativo',
-        text: 'Si los ingresos operativos no alcanzan para sostener inversión y deuda, la empresa entra en una dinámica de apoyo recurrente.',
+        title: 'Refinanciar no equivale a invertir',
+        text: 'Refinanciar deuda sirve para cambiar plazos o cubrir obligaciones existentes. Invertir productivamente significa mejorar exploracion, produccion, mantenimiento, eficiencia o transicion energetica.',
       },
       {
-        title: 'Refinanciar no es invertir',
-        text: 'Refinanciar deuda significa cambiar plazos o cubrir obligaciones existentes. Invertir productivamente implica mejorar exploración, producción, mantenimiento o tecnología.',
+        title: 'Dependencia de apoyo federal',
+        text: 'Cuando la operacion depende de inyecciones recurrentes, la empresa entra en una logica defensiva: sobrevivir financieramente antes que transformarse.',
       },
     ],
     consequences: [
       {
-        title: 'Costo de oportunidad',
-        text: 'El dinero destinado a apoyar a Pemex no puede usarse al mismo tiempo en agua, salud, educación, seguridad o infraestructura productiva.',
+        title: 'Menos espacio fiscal',
+        text: 'Los recursos destinados a rescatar o sostener a Pemex reducen margen para infraestructura hidraulica, hospitales, escuelas, transporte, ciencia o seguridad.',
       },
       {
-        title: 'Menor margen fiscal',
-        text: 'Si la deuda pública se acerca a 55% del PIB hacia 2028, el Estado tendrá menos espacio para responder ante crisis o financiar proyectos estratégicos.',
+        title: 'Costo de oportunidad permanente',
+        text: 'El costo no es solo el monto transferido, sino lo que no se construye mientras esos recursos se destinan a cubrir obligaciones petroleras.',
       },
       {
-        title: 'Inversión desplazada',
-        text: 'Cuando los recursos se orientan a refinanciar deuda, se retrasa la inversión que podría mejorar la capacidad operativa de la empresa.',
+        title: 'Riesgo para inversion publica',
+        text: 'Si el presupuesto se vuelve mas rigido, Mexico tiene menos capacidad para financiar las condiciones que exige el nearshoring.',
       },
     ],
     realChallenges: [
       {
-        title: 'Reducir dependencia del presupuesto',
-        text: 'El reto es que la empresa no requiera apoyos constantes para operar o cumplir vencimientos.',
+        title: 'Separar rescate de transformacion',
+        text: 'Cubrir deuda evita crisis inmediatas, pero no garantiza que Pemex produzca mejor ni que reduzca su dependencia futura.',
       },
       {
-        title: 'Separar rescate de productividad',
-        text: 'Cubrir deuda evita crisis inmediatas, pero no garantiza una empresa más eficiente si no hay inversión productiva.',
+        title: 'Transparentar el costo fiscal',
+        text: 'La sociedad necesita distinguir entre apoyo operativo, refinanciamiento, inversion productiva y transicion energetica.',
       },
       {
-        title: 'Proteger otras prioridades públicas',
-        text: 'La presión fiscal de Pemex no debe desplazar infraestructura hídrica, salud pública, educación o seguridad.',
+        title: 'Proteger prioridades sociales',
+        text: 'El reto es impedir que la presion de Pemex desplace salud, agua, educacion y seguridad, areas que ya tienen deficits severos.',
       },
     ],
     connections:
-      'Pemex se conecta con agua, salud y educación porque compite por recursos presupuestarios. También se relaciona con economía y nearshoring porque menos espacio fiscal significa menos infraestructura para atraer inversión.',
+      'Pemex se conecta con economia porque limita recursos para infraestructura; con salud y educacion porque compite por presupuesto; con agua porque reduce margen para redes y tratamiento; y con instituciones porque requiere transparencia fiscal.',
     conclusion:
-      'El reto de Pemex consiste en evitar que el apoyo financiero permanente se vuelva una carga que limite el desarrollo nacional. Sostener deuda no equivale a construir capacidades productivas.',
-    body:
-      'Los apoyos fiscales a la empresa buscan sostener compromisos financieros y operativos. Incluso cuando Pemex accede a emisiones locales, el documento señala que esos recursos se orientan al refinanciamiento de deuda existente, no a nueva formación de capital.',
-    meaning:
-      'La pregunta de fondo no es solo energética, sino fiscal. Mientras Pemex requiera transferencias elevadas, el margen del Estado para financiar bienes públicos será más estrecho.',
-    insights: [
+      'Sostener a Pemex puede evitar problemas financieros de corto plazo, pero no debe confundirse con una estrategia de desarrollo. Si la empresa no cambia su dinamica operativa, seguira presionando el futuro fiscal del pais.',
+    flow: ['Deuda de Pemex', 'Apoyo federal', 'Menor espacio fiscal', 'Menos inversion publica', 'Infraestructura insuficiente'],
+    explainerBlocks: [
       {
-        icon: 'bi-cash-stack',
-        title: 'Dependencia financiera',
-        text: 'La empresa necesita apoyo público para enfrentar liquidez y vencimientos.',
+        title: 'Refinanciar deuda',
+        text: 'Cubrir o reordenar obligaciones existentes. Ayuda a evitar vencimientos, pero no crea por si mismo nueva capacidad productiva.',
       },
       {
-        icon: 'bi-signpost-split',
-        title: 'Costo de oportunidad',
-        text: 'Los recursos usados en rescate no pueden destinarse al mismo tiempo a infraestructura social o productiva.',
+        title: 'Invertir en produccion',
+        text: 'Destinar recursos a exploracion, mantenimiento, tecnologia y eficiencia para que la empresa genere mas valor operativo.',
       },
       {
-        icon: 'bi-building-gear',
-        title: 'Menor espacio público',
-        text: 'La presión reduce margen para obras, servicios y mantenimiento institucional.',
+        title: 'Sostener flujo operativo',
+        text: 'Cubrir necesidades inmediatas de liquidez para que la empresa siga funcionando, aun si el problema estructural permanece.',
+      },
+      {
+        title: 'Transicion energetica',
+        text: 'Preparar a la empresa para un mercado energetico menos dependiente de combustibles fosiles y mas exigente en eficiencia.',
       },
     ],
   },
-  instituciones: {
-    path: '/instituciones',
-    nextPath: '/seguridad',
-    nextLabel: 'Seguridad',
-    navLabel: 'Instituciones',
-    eyebrow: 'Estado de derecho',
-    title: 'Instituciones y Estado de derecho',
-    imageKey: 'instituciones',
+  pobreza: {
+    path: '/pobreza',
+    nextPath: '/educacion',
+    nextLabel: 'Educación',
+    navLabel: 'Pobreza y desigualdad',
+    eyebrow: 'Derechos sociales',
+    title: 'Pobreza y desigualdad',
+    imageKey: 'sociedad',
     summary:
-      'Las instituciones importan porque ayudan a que las decisiones públicas sean transparentes, evaluables y menos dependientes de intereses políticos inmediatos.',
+      'La pobreza bajo, pero Mexico no puede cantar victoria: casi 40 millones de personas siguen en pobreza y las carencias pesan de forma desigual segun el territorio.',
     keyIdea:
-      'Perder contrapesos no es un asunto administrativo menor: puede reducir transparencia, evaluación independiente y confianza.',
+      'En Mexico el codigo postal pesa demasiado: el lugar donde naces condiciona salud, escuela, empleo, seguridad y movilidad social.',
+    sourceIds: ['inegi-pobreza', 'ibero-pobreza'],
     problemIntro:
-      'El documento describe una reorganización institucional que concentra funciones antes realizadas por organismos autónomos. El problema no es solo dónde queda una oficina o cuánto cuesta mantenerla. La pregunta importante es quién vigila, quién evalúa y quién regula cuando las decisiones afectan derechos, competencia económica, energía, educación o política social. Cuando los contrapesos se debilitan, aumenta el riesgo de decisiones menos técnicas y más políticas.',
+      'La pobreza no es solo falta de ingreso. Tambien significa rezago educativo, falta de acceso efectivo a salud, vivienda insuficiente, servicios debiles, inseguridad social y pocas oportunidades locales. Por eso la pobreza multidimensional permite mirar mejor como se acumulan las carencias.',
+    background:
+      'INEGI reporto en 2024 a 38.5 millones de personas en pobreza multidimensional, equivalente a 29.6% de la poblacion, y a 7.0 millones en pobreza extrema, 5.3%. La reduccion es real, pero la cifra sigue siendo grave. Tambien reporto 24.2 millones de personas con rezago educativo y 44.5 millones con carencia por acceso a servicios de salud.',
     causes: [
       {
-        title: 'Concentración de funciones',
-        text: 'Al trasladar funciones técnicas a dependencias gubernamentales, se reduce la distancia entre quien decide y quien debe evaluar o regular.',
+        title: 'Carencias acumuladas',
+        text: 'Una persona puede mejorar su ingreso y aun vivir sin atencion medica efectiva, educacion suficiente, seguridad social o servicios basicos. Las carencias se refuerzan entre si.',
       },
       {
-        title: 'Ahorro frente a capacidad técnica',
-        text: 'El ahorro estimado puede parecer atractivo, pero debe compararse con el costo de perder medición independiente, transparencia y certidumbre.',
+        title: 'Desigualdad territorial',
+        text: 'Chiapas, Guerrero y Oaxaca siguen con rezagos fuertes. El desarrollo nacional esta partido entre regiones industriales y urbanas con mas capacidades y regiones rurales o del sur con menos servicios.',
       },
       {
-        title: 'Debilidad de contrapesos',
-        text: 'Sin órganos con autonomía, la sociedad cuenta con menos herramientas para revisar decisiones, exigir información y detectar errores.',
+        title: 'Medicion bajo debate',
+        text: 'La desaparicion de CONEVAL traslado funciones al INEGI. INEGI tiene capacidad tecnica, pero el debate de fondo es la independencia, la comparabilidad historica y la evaluacion autonoma de la politica social.',
       },
     ],
     consequences: [
       {
-        title: 'Menor transparencia',
-        text: 'La ciudadanía puede tener más dificultad para conocer cómo se gasta, contrata o decide desde el poder público.',
+        title: 'Futuro condicionado desde la infancia',
+        text: 'Un joven que nace sin buena escuela, internet, transporte, hospital cercano o empleo formal local no compite desde el mismo punto que uno nacido en una ciudad con servicios.',
       },
       {
-        title: 'Menos evaluación independiente',
-        text: 'Sin diagnósticos autónomos, medir pobreza, educación o resultados sociales puede volverse más vulnerable a intereses políticos.',
+        title: 'Movilidad social limitada',
+        text: 'El esfuerzo individual importa, pero no cancela las condiciones de arranque. Para millones, subir de condicion es mas excepcion que regla.',
       },
       {
-        title: 'Menor certidumbre para invertir',
-        text: 'Los mercados regulados necesitan reglas claras. Si la regulación parece inestable, aumentan los riesgos para inversión y competencia.',
+        title: 'Politica social vulnerable al discurso',
+        text: 'Si se debilitan instrumentos independientes de medicion, la reduccion de pobreza puede convertirse en propaganda o disputa politica en lugar de diagnostico verificable.',
       },
     ],
     realChallenges: [
       {
-        title: 'Mantener transparencia efectiva',
-        text: 'El acceso a información debe seguir siendo útil, oportuno y exigible para la sociedad.',
+        title: 'No confundir mejora con solucion',
+        text: 'La reduccion de pobreza debe reconocerse, pero casi 40 millones de personas pobres siguen siendo una emergencia social.',
       },
       {
-        title: 'Proteger decisiones técnicas',
-        text: 'Competencia, energía, telecomunicaciones, educación y pobreza requieren criterios profesionales, no solo decisiones políticas.',
+        title: 'Atender servicios, no solo ingreso',
+        text: 'La politica social debe incluir salud, educacion, vivienda, seguridad social y servicios, no solo transferencias monetarias.',
       },
       {
-        title: 'Cuidar confianza judicial',
-        text: 'La elección popular de cargos judiciales plantea el reto de conservar independencia, profesionalismo y respeto a derechos.',
+        title: 'Cuidar medicion independiente',
+        text: 'Sin datos confiables y comparables, el pais no sabe si sus programas funcionan o solo cambian el relato publico.',
       },
     ],
     connections:
-      'Las instituciones se relacionan con economía porque la inversión necesita certidumbre; con seguridad porque la justicia depende de confianza; con sociedad y educación porque la evaluación independiente permite saber si una política funciona.',
+      'Pobreza se conecta con educacion porque el rezago limita movilidad; con salud porque la carencia de atencion golpea mas a hogares pobres; con agua porque el acceso desigual cuesta mas a periferias; con instituciones porque medir bien es parte de gobernar bien.',
     conclusion:
-      'Un país no solo necesita programas y presupuesto. También necesita instituciones que midan, vigilen y corrijan. Sin contrapesos, los errores públicos pueden durar más y ser más costosos.',
-    body:
-      'La reorganización de organismos autónomos concentra funciones en dependencias gubernamentales. El documento ubica el cambio como parte de una simplificación orgánica que elimina siete organismos y estima un ahorro de 4,422 millones de pesos.',
-    meaning:
-      'Cuando las instituciones son menos predecibles, se debilitan la confianza ciudadana, la certidumbre regulatoria y la capacidad de medir resultados públicos.',
-    insights: [
+      'La pobreza mexicana no es una cifra abstracta: es una red de obstaculos. Reducirla exige ingresos, pero tambien servicios publicos efectivos y evaluacion independiente.',
+    table: {
+      columns: ['Dimension', 'Dato del MD', 'Lectura social'],
+      rows: [
+        ['Pobreza multidimensional', '38.5 millones de personas', 'La mejora no elimina la gravedad del rezago'],
+        ['Pobreza extrema', '7.0 millones de personas', 'Carencia profunda que requiere intervencion prioritaria'],
+        ['Rezago educativo', '24.2 millones de personas', 'Limita empleo, productividad y movilidad'],
+        ['Carencia de salud', '44.5 millones de personas', 'Muestra distancia entre derecho formal y acceso real'],
+      ],
+    },
+  },
+  educacion: {
+    path: '/educacion',
+    nextPath: '/salud',
+    nextLabel: 'Salud pública',
+    navLabel: 'Educación',
+    eyebrow: 'Futuro nacional',
+    title: 'Educación',
+    imageKey: 'educacion',
+    summary:
+      'La educacion es uno de los danos silenciosos mas graves: PISA muestra una crisis de aprendizaje que limita productividad, movilidad social y futuro tecnologico.',
+    keyIdea:
+      'Mexico quiere industrias de mayor valor, pero una parte enorme de sus estudiantes no domina herramientas basicas para entrar a ese futuro.',
+    sourceIds: ['imco-pisa', 'imco-espiral', 'sep-calendario'],
+    problemIntro:
+      'El problema educativo no son solo malas calificaciones. Es una crisis de aprendizaje que afecta lectura, matematicas, ciencia y pensamiento critico. Cuando los estudiantes no desarrollan competencias basicas, el pais pierde capacidad para formar tecnicos, ingenieros, medicos, programadores, cientificos y emprendedores.',
+    background:
+      'En PISA 2022, Mexico obtuvo 407 puntos frente a 478 del promedio OCDE y se ubico en el lugar 35 de 37 paises OCDE evaluados, segun el resumen de IMCO. El mismo analisis senala que dos de cada tres estudiantes mexicanos no alcanzan competencias basicas en matematicas.',
+    causes: [
       {
-        icon: 'bi-eye',
-        title: 'Transparencia',
-        text: 'El acceso a información pública permite vigilar decisiones, gasto y resultados.',
+        title: 'Aprendizajes basicos debilitados',
+        text: 'Si lectura y matematicas fallan, todo lo demas se vuelve mas dificil: ciencia, tecnologia, formacion tecnica, comprension de informacion publica y aprendizaje autonomo.',
       },
       {
-        icon: 'bi-sliders',
-        title: 'Regulación técnica',
-        text: 'Mercados complejos requieren criterios estables y especializados.',
+        title: 'Evaluacion educativa reducida',
+        text: 'IMCO advierte que Mexico perdio instrumentos como el INEE y Mejoredu, y que pruebas nacionales dejaron de aplicarse con continuidad. Sin medicion, el sistema no sabe donde esta el dano.',
       },
       {
-        icon: 'bi-clipboard-data',
-        title: 'Evaluación',
-        text: 'Medir pobreza, educación y desempeño ayuda a corregir políticas con evidencia.',
-      },
-    ],
-    institutionsIntro:
-      '¿Por qué importan los organismos autónomos? Porque separan ciertas funciones técnicas del ciclo político inmediato. No resuelven todos los problemas, pero ofrecen información, regulación y vigilancia que ayudan a que el poder público sea más controlable.',
-    institutions: [
-      {
-        name: 'INAI',
-        function: 'Acceso a la información pública, transparencia y protección de datos.',
-        risk: 'Si su función pierde independencia, la fiscalización ciudadana del gasto y de las contrataciones puede debilitarse.',
-        area: 'Rendición de cuentas',
-      },
-      {
-        name: 'Cofece e IFT',
-        function: 'Competencia económica, mercados regulados y telecomunicaciones.',
-        risk: 'La regulación puede volverse menos predecible, afectar competencia y elevar incertidumbre para inversión y consumidores.',
-        area: 'Competencia',
-      },
-      {
-        name: 'Coneval',
-        function: 'Medición de pobreza y evaluación de política social.',
-        risk: 'Sin diagnóstico independiente, puede ser más difícil saber si una política realmente reduce carencias.',
-        area: 'Política social',
-      },
-      {
-        name: 'CRE y CNH',
-        function: 'Regulación técnica del sector energético.',
-        risk: 'La regulación energética puede quedar más expuesta a criterios políticos y reducir confianza de largo plazo.',
-        area: 'Energía',
-      },
-      {
-        name: 'Mejoredu',
-        function: 'Evaluación y mejora continua del sistema educativo.',
-        risk: 'Se pierde una herramienta para diagnosticar aprendizajes y orientar intervenciones con evidencia.',
-        area: 'Educación',
+        title: 'Reformas sin diagnostico suficiente',
+        text: 'Un modelo educativo puede tener principios valiosos, pero ningun sistema debe quedar exento de evaluacion honesta y comparable.',
       },
     ],
-    flow: ['Transparencia', 'Confianza pública', 'Inversión', 'Desarrollo'],
-    judicial: ['Elección popular', 'Independencia', 'Profesionalismo', 'Confianza'],
+    consequences: [
+      {
+        title: 'Menor capital humano',
+        text: 'Sin habilidades basicas, Mexico compite con empleos de menor valor y tiene menos capacidad de atraer industrias complejas.',
+      },
+      {
+        title: 'Movilidad social mas dificil',
+        text: 'Los hogares con menos recursos tienen menos posibilidades de compensar por fuera lo que la escuela no logra ensenar.',
+      },
+      {
+        title: 'Nearshoring limitado',
+        text: 'La relocalizacion requiere tecnicos y profesionales preparados. Sin ellos, la oportunidad se queda en actividades de bajo valor agregado.',
+      },
+    ],
+    realChallenges: [
+      {
+        title: 'Recuperar matematicas, lectura y ciencias',
+        text: 'El pais necesita politicas de recuperacion de aprendizajes, materiales adecuados, maestros apoyados y seguimiento real de resultados.',
+      },
+      {
+        title: 'Rehabilitar evaluacion tecnica',
+        text: 'Evaluar no debe significar castigar: debe servir para saber que escuelas, regiones y grados necesitan apoyo urgente.',
+      },
+      {
+        title: 'Manejar con cuidado el calendario escolar',
+        text: 'El MD marca el debate del ciclo 2025-2026 como punto a verificar. No debe presentarse como hecho cerrado sin documento oficial vigente de SEP o DOF.',
+      },
+    ],
+    connections:
+      'Educacion se conecta con economia porque define productividad; con pobreza porque condiciona movilidad social; con instituciones porque necesita evaluacion independiente; y con seguridad porque oportunidades educativas reducen vulnerabilidad social.',
+    conclusion:
+      'La educacion no es una pagina mas del diagnostico: es el suelo del futuro. Si Mexico no corrige aprendizajes basicos, su oportunidad industrial tendra un limite humano.',
+    flow: ['Bajo aprendizaje', 'Menor capital humano', 'Menor productividad', 'Empleos de bajo valor', 'Menor movilidad social'],
+    warning: {
+      title: 'Punto a verificar',
+      text: 'El debate sobre un posible recorte del ciclo escolar 2025-2026 debe validarse contra el calendario oficial vigente de la SEP o el Diario Oficial. No debe presentarse como hecho cerrado.',
+    },
+    table: {
+      columns: ['Area', 'Problema', 'Consecuencia'],
+      rows: [
+        ['Matematicas', 'Dos de cada tres estudiantes sin nivel basico, segun IMCO', 'Menor acceso a formacion tecnica'],
+        ['Lectura', 'Dificultad para interpretar informacion', 'Menor pensamiento critico'],
+        ['Ciencias', 'Menor uso de evidencia', 'Menor preparacion para sectores complejos'],
+        ['Evaluacion', 'Menos instrumentos independientes', 'Politicas menos verificables'],
+      ],
+    },
+  },
+  salud: {
+    path: '/salud',
+    nextPath: '/seguridad',
+    nextLabel: 'Seguridad e impunidad',
+    navLabel: 'Salud pública',
+    eyebrow: 'Cobertura vs atencion real',
+    title: 'Salud pública',
+    imageKey: 'salud',
+    summary:
+      'Tener derecho a atencion no significa recibirla a tiempo. La salud publica mexicana enfrenta bajo gasto, carencia de acceso, deficit de personal y problemas de abasto.',
+    keyIdea:
+      'La cobertura formal solo cuenta si se convierte en consulta, diagnostico, medicamento, referencia y tratamiento oportuno.',
+    sourceIds: ['ocde-salud', 'inegi-pobreza', 'imss-bienestar', 'ciep-salud', 'elpais-medicamentos', 'animal-medicinas'],
+    problemIntro:
+      'La salud publica no se mide solo por estar inscrito a un sistema. Una persona necesita llegar a una unidad, encontrar personal, recibir diagnostico, conseguir medicamentos, ser referida si requiere especialista y no quebrar economicamente en el proceso.',
+    background:
+      'La OCDE reporta que Mexico gasta mucho menos en salud que el promedio de sus miembros: 1,588 dolares por persona frente a 5,967, y 5.9% del PIB frente a 9.3%. Tambien hay deficits: 2.7 medicos por cada mil habitantes frente a 3.9 de la OCDE, 3.0 enfermeras frente a 9.2 y 1.0 cama hospitalaria frente a 4.2.',
+    causes: [
+      {
+        title: 'Financiamiento insuficiente',
+        text: 'Con menos gasto por persona y menor proporcion del PIB, el sistema intenta cubrir mas necesidades de las que puede atender con calidad constante.',
+      },
+      {
+        title: 'Deficit de personal e infraestructura',
+        text: 'Faltan medicos, enfermeras, camas, especialistas, equipos y mantenimiento. La infraestructura por si sola no garantiza atencion si no hay operacion cotidiana.',
+      },
+      {
+        title: 'Abasto y compras publicas',
+        text: 'El problema de medicamentos incluye compras, distribucion, vigilancia, corrupcion y mercado irregular. El periodismo citado en el MD se usa como contexto de esas fallas.',
+      },
+    ],
+    consequences: [
+      {
+        title: 'Atencion tardia',
+        text: 'Las citas lejanas, la falta de especialistas y los traslados largos retrasan diagnosticos y tratamientos.',
+      },
+      {
+        title: 'Costo para familias',
+        text: 'Cuando faltan medicamentos o estudios, los hogares absorben gastos que deberian estar cubiertos por el sistema.',
+      },
+      {
+        title: 'Desigualdad sanitaria',
+        text: 'Las zonas rurales e indigenas enfrentan mas barreras para llegar a segundo o tercer nivel de atencion.',
+      },
+    ],
+    realChallenges: [
+      {
+        title: 'Convertir derecho en servicio efectivo',
+        text: 'La cobertura debe reflejarse en atencion medica real, no solo en una afiliacion o red institucional en papel.',
+      },
+      {
+        title: 'Asegurar personal, medicamentos y equipos',
+        text: 'Sin insumos, mantenimiento y especialistas, las unidades se vuelven puertas de entrada sin solucion suficiente.',
+      },
+      {
+        title: 'Ordenar compras y vigilancia',
+        text: 'El abasto exige reglas claras, trazabilidad y combate al mercado irregular de medicamentos.',
+      },
+    ],
+    connections:
+      'Salud se conecta con pobreza porque las carencias golpean mas a hogares vulnerables; con Pemex porque el presupuesto es finito; con educacion porque la enfermedad afecta aprendizaje; y con instituciones porque compras y vigilancia requieren transparencia.',
+    conclusion:
+      'El reto sanitario es cerrar la distancia entre cobertura formal y atencion real. Sin personal, insumos, referencia y abasto, la promesa de universalidad queda incompleta.',
+    flow: ['Paciente rural', 'Unidad medica', 'Hospital rural', 'Especialista', 'Barreras de acceso'],
+    table: {
+      columns: ['Indicador', 'Mexico', 'Promedio OCDE', 'Lectura'],
+      rows: [
+        ['Gasto por persona', '1,588 dolares', '5,967 dolares', 'Menor capacidad de financiar servicios'],
+        ['Gasto como % del PIB', '5.9%', '9.3%', 'Brecha estructural de financiamiento'],
+        ['Medicos por mil habitantes', '2.7', '3.9', 'Menos capacidad de consulta y diagnostico'],
+        ['Enfermeras por mil habitantes', '3.0', '9.2', 'Mayor presion sobre atencion diaria'],
+        ['Camas por mil habitantes', '1.0', '4.2', 'Menor capacidad hospitalaria'],
+      ],
+    },
   },
   seguridad: {
     path: '/seguridad',
-    nextPath: '/sociedad',
-    nextLabel: 'Sociedad',
-    navLabel: 'Seguridad',
+    nextPath: '/agua',
+    nextLabel: 'Agua y medio ambiente',
+    navLabel: 'Seguridad e impunidad',
     eyebrow: 'Justicia penal',
     title: 'Seguridad e impunidad',
     imageKey: 'seguridad',
     summary:
-      'La seguridad no se entiende solo contando delitos u homicidios: también hay que ver denuncia, investigación, sanción y reparación.',
+      'La inseguridad no se mide solo con homicidios: tambien hay extorsion, robo, fraude, amenazas, desaparicion, violencia familiar, miedo a denunciar y cifra negra.',
     keyIdea:
-      'La cifra negra muestra la distancia entre lo que ocurre y lo que el sistema registra o atiende.',
+      'Si casi nadie denuncia y casi nada se resuelve, el delito se vuelve barato.',
+    sourceIds: ['inegi-envipe', 'impunidad-cero', 'mexicoevalua-impunidad', 'ohchr-justicia', 'elpais-extorsion'],
     problemIntro:
-      'El problema de seguridad no termina cuando se cuenta cuántos delitos ocurren. También importa saber si las víctimas denuncian, si la fiscalía investiga, si existe sanción y si la persona afectada obtiene justicia. Cuando la ciudadanía percibe que denunciar no sirve, muchos delitos quedan fuera de las estadísticas. Esa distancia se llama cifra negra y debilita la confianza pública.',
+      'El problema de seguridad no termina al contar delitos. Importa si la victima denuncia, si la fiscalia investiga, si hay peritajes, si se integra bien la carpeta, si llega a sancion y si la persona recupera confianza en el sistema.',
+    background:
+      'ENVIPE 2025 estima millones de victimas adultas y delitos, asi como una percepcion de inseguridad muy alta. El MD subraya la cifra negra como el dato que desnuda al sistema: cuando delitos no se denuncian o no se investigan, la realidad criminal supera lo que dicen los registros oficiales.',
     causes: [
       {
-        title: 'Desconfianza para denunciar',
-        text: 'Si la denuncia implica tiempo, burocracia, riesgo o revictimización, muchas personas prefieren no acudir a la autoridad.',
+        title: 'Miedo y desconfianza',
+        text: 'Muchas personas no denuncian por miedo, tramite largo, revictimizacion o porque sienten que no servira de nada.',
       },
       {
-        title: 'Capacidad limitada de investigación',
-        text: 'Las fiscalías pueden recibir casos, pero sin personal, metodología y seguimiento, las carpetas no avanzan hacia sanciones.',
+        title: 'Fiscalias debiles',
+        text: 'El problema no es solo de jueces. Tambien hay investigaciones mal integradas, falta de peritajes, poca capacidad tecnica y seguimiento insuficiente.',
       },
       {
-        title: 'Impunidad acumulada',
-        text: 'Cuando los delitos no se sancionan, se refuerza la idea de que el sistema no protege a las víctimas.',
+        title: 'Extorsion como impuesto criminal',
+        text: 'El cobro de piso extrae recursos de negocios y familias, sube precios, inhibe empleo y demuestra que grupos criminales pueden imponer reglas paralelas.',
       },
     ],
     consequences: [
       {
-        title: 'Delitos invisibles',
-        text: 'La cifra oficial puede mostrar solo una parte del problema, porque muchos hechos no se denuncian o no se investigan.',
+        title: 'Delito invisible',
+        text: 'Si los delitos no se denuncian, el Estado no los investiga y la estadistica queda incompleta.',
       },
       {
-        title: 'Menor confianza ciudadana',
-        text: 'Si la experiencia de las personas contradice el discurso institucional, la relación con la autoridad se deteriora.',
+        title: 'Impunidad reproducida',
+        text: 'Cuando no hay consecuencias, cometer delitos se vuelve menos riesgoso para el agresor y mas costoso para la victima.',
       },
       {
-        title: 'Reproducción de impunidad',
-        text: 'La falta de consecuencias puede incentivar nuevos delitos y debilitar la convivencia social.',
+        title: 'Inversion y vida diaria afectadas',
+        text: 'La inseguridad encarece transporte, comercio, horarios, seguros, contratacion y decisiones de inversion.',
       },
     ],
     realChallenges: [
       {
         title: 'Hacer que denunciar tenga sentido',
-        text: 'La denuncia debe ser accesible, segura y útil; si no produce respuesta, la cifra negra seguirá creciendo.',
+        text: 'La denuncia debe ser accesible, segura y util. Si no genera investigacion real, la cifra negra seguira alta.',
       },
       {
-        title: 'Investigar con calidad',
-        text: 'No basta con abrir carpetas. Se necesita investigación que llegue a sanción y reparación.',
+        title: 'Profesionalizar fiscalias',
+        text: 'Se necesitan capacidades de investigacion, peritajes, analisis criminal, atencion a victimas y seguimiento digital.',
       },
       {
-        title: 'Medir lo que no se ve',
-        text: 'La política de seguridad debe considerar delitos no denunciados y no depender solo de registros oficiales.',
+        title: 'Atender extorsion como amenaza economica',
+        text: 'No es solo violencia: es una estructura de cobro que compite con el Estado y destruye confianza local.',
       },
     ],
     connections:
-      'La seguridad se conecta con instituciones porque necesita fiscalías confiables; con economía porque la violencia frena inversión; con sociedad porque afecta más a quienes tienen menos herramientas para defenderse.',
+      'Seguridad se conecta con economia porque la inversion necesita operar sin cobro criminal; con instituciones porque fiscalias y tribunales deben funcionar; con pobreza porque las victimas con menos recursos denuncian menos; y con educacion porque la violencia reduce trayectorias de vida.',
     conclusion:
-      'Un país más seguro no se construye solo con menos registros, sino con más confianza, mejor investigación y menor impunidad. La cifra negra recuerda que lo invisible también forma parte del problema.',
-    body:
-      'La impunidad elevada en delitos de impacto social revela una brecha entre ocurrencia, registro e investigación. El documento también registra que 29% de los hogares, más de 11.4 millones de viviendas, tuvo al menos una víctima de delito en el último año.',
-    meaning:
-      'Reducir impunidad exige fiscalías profesionales, información confiable y una relación más cercana entre ciudadanía e instituciones de seguridad.',
-    insights: [
+      'Mexico no puede medir seguridad solo con lo visible. La cifra negra, la extorsion y la impunidad muestran que la justicia debe funcionar antes, durante y despues de la denuncia.',
+    flow: ['Delito', 'No denuncia', 'No investigacion', 'Impunidad', 'Desconfianza', 'Mas cifra negra'],
+    caseBlocks: [
       {
-        icon: 'bi-file-earmark-text',
-        title: 'Denuncia',
-        text: 'La confianza determina si un delito entra al sistema institucional o queda dentro de la cifra negra.',
-      },
-      {
-        icon: 'bi-search',
-        title: 'Investigación',
-        text: 'Sin capacidad investigadora, la denuncia no se convierte en justicia.',
-      },
-      {
-        icon: 'bi-shield-check',
-        title: 'Sanción',
-        text: 'La respuesta efectiva reduce impunidad y reconstruye confianza pública.',
+        title: 'Extorsion: impuesto criminal',
+        text: 'Cuando un negocio paga cobro de piso, no solo pierde dinero. Tambien pierde libertad para abrir, contratar, transportar y crecer. Ese costo se pasa a precios, empleo y miedo comunitario.',
       },
     ],
-    callout: {
-      title: '¿Qué es la cifra negra?',
-      text: 'Es el conjunto de delitos que ocurren, pero no se denuncian o no derivan en una investigación efectiva. Si es alta, la realidad delictiva es mayor que lo que muestran los registros oficiales.',
-    },
-    flow: ['Delito', 'No denuncia', 'No investigación', 'Impunidad', 'Desconfianza', 'Más cifra negra'],
-  },
-  sociedad: {
-    path: '/sociedad',
-    nextPath: '/educacion',
-    nextLabel: 'Educación',
-    navLabel: 'Sociedad',
-    eyebrow: 'Desigualdad y movilidad',
-    title: 'Pobreza, desigualdad y movilidad social',
-    imageKey: 'sociedad',
-    summary:
-      'La pobreza no es solo falta de dinero: también es acumulación de carencias que limitan oportunidades desde el origen.',
-    keyIdea:
-      'El lugar donde una persona nace puede condicionar sus oportunidades futuras.',
-    problemIntro:
-      'La pobreza multidimensional permite entender que la desigualdad no se reduce únicamente al ingreso. Una persona puede enfrentar carencias educativas, falta de acceso a salud, vivienda precaria, servicios insuficientes, empleo inestable y un entorno regional con pocas oportunidades. Cuando esas carencias se acumulan desde la infancia, la movilidad social se vuelve difícil.',
-    causes: [
-      {
-        title: 'Carencias acumuladas',
-        text: 'Educación, salud, vivienda, servicios y empleo se combinan. Una carencia suele reforzar otra.',
-      },
-      {
-        title: 'Región de nacimiento',
-        text: 'Nacer en una región con menos infraestructura, menor conectividad o menos servicios públicos limita oportunidades desde el inicio.',
-      },
-      {
-        title: 'Movilidad educativa estancada',
-        text: 'Si los jóvenes de menores ingresos no superan la escolaridad de sus padres, la desigualdad se reproduce entre generaciones.',
-      },
-    ],
-    consequences: [
-      {
-        title: 'Oportunidades desiguales',
-        text: 'El esfuerzo personal importa, pero no parte del mismo punto para todos. Las condiciones de origen pesan demasiado.',
-      },
-      {
-        title: 'Menor acceso a empleos de calidad',
-        text: 'Sin educación, salud y redes de apoyo, las personas quedan más expuestas a empleos precarios.',
-      },
-      {
-        title: 'Desconfianza social',
-        text: 'Cuando la movilidad parece cerrada, crece la percepción de injusticia y se debilita la cohesión social.',
-      },
-    ],
-    realChallenges: [
-      {
-        title: 'Atender pobreza como sistema',
-        text: 'No basta transferir ingreso si persisten carencias en salud, educación, vivienda y servicios.',
-      },
-      {
-        title: 'Reducir desigualdad territorial',
-        text: 'Las políticas deben mirar regiones concretas, no solo promedios nacionales.',
-      },
-      {
-        title: 'Medir con independencia',
-        text: 'Sin evaluación confiable, es difícil saber si una política reduce pobreza o solo cambia indicadores superficiales.',
-      },
-    ],
-    connections:
-      'Sociedad se conecta con educación porque el rezago limita movilidad; con salud y agua porque las carencias básicas afectan bienestar; con instituciones porque se necesita medición independiente para diseñar políticas efectivas.',
-    conclusion:
-      'La pobreza es una red de obstáculos. Superarla exige mejorar ingresos, pero también servicios, educación, salud, vivienda y oportunidades territoriales.',
-    body:
-      'La pobreza no solo depende del ingreso. También expresa carencias educativas, sanitarias, laborales, de vivienda y de servicios. El documento subraya que 48% de la desigualdad económica se asocia con falta de igualdad de oportunidades desde el nacimiento.',
-    meaning:
-      'El país necesita conectar crecimiento económico con servicios públicos efectivos y políticas que reduzcan desigualdades de origen.',
-    featured: 'El lugar donde una persona nace puede condicionar sus oportunidades futuras.',
-    dataPoint:
-      '48% de la desigualdad económica se asocia con falta de igualdad de oportunidades desde el nacimiento.',
-    insights: [
-      {
-        icon: 'bi-house-heart',
-        title: 'Carencias múltiples',
-        text: 'La pobreza se expresa en ingreso, servicios, salud, educación y vivienda.',
-      },
-      {
-        icon: 'bi-signpost',
-        title: 'Origen territorial',
-        text: 'Los recursos de la región de origen son el factor más fuerte dentro de la desigualdad de origen.',
-      },
-      {
-        icon: 'bi-arrow-up-right-circle',
-        title: 'Movilidad social',
-        text: 'Subir de condición requiere servicios efectivos y mercados incluyentes.',
-      },
-    ],
-  },
-  educacion: {
-    path: '/educacion',
-    nextPath: '/agua',
-    nextLabel: 'Agua',
-    navLabel: 'Educación',
-    eyebrow: 'Aprendizaje y futuro',
-    title: 'Educación y pérdida de aprendizaje',
-    imageKey: 'educacion',
-    summary:
-      'El rezago educativo afecta el futuro económico del país porque limita pensamiento crítico, productividad e innovación.',
-    keyIdea:
-      'Si México quiere empleos de mayor valor, necesita formación sólida en lectura, matemáticas, ciencia, tecnología e idiomas.',
-    problemIntro:
-      'La educación es una base para casi todos los demás retos. Si millones de personas llegan a la vida adulta con rezago educativo, el país tiene menos capacidad para aprovechar industrias de mayor valor, innovar y reducir desigualdad. La pérdida de aprendizaje no solo afecta calificaciones; afecta la posibilidad de comprender información, resolver problemas y acceder a empleos técnicos.',
-    causes: [
-      {
-        title: 'Rezago acumulado',
-        text: 'El documento registra 24.2 millones de personas mayores de 15 años en rezago educativo y 3.4 millones de niñas, niños y adolescentes con déficit.',
-      },
-      {
-        title: 'Menos tiempo lectivo',
-        text: 'El calendario lectivo efectivo señalado para 2025-2026 fue de 150 días, lo que reduce tiempo para recuperar aprendizajes.',
-      },
-      {
-        title: 'Evaluación debilitada',
-        text: 'Sin instrumentos sólidos de evaluación, es más difícil saber dónde están las brechas y qué intervenciones funcionan.',
-      },
-    ],
-    consequences: [
-      {
-        title: 'Menor pensamiento crítico',
-        text: 'La comprensión lectora y científica ayuda a analizar información. Si falla, la ciudadanía tiene menos herramientas para decidir.',
-      },
-      {
-        title: 'Menor productividad',
-        text: 'Sin habilidades matemáticas y técnicas, el país compite con empleos de menor complejidad.',
-      },
-      {
-        title: 'Más desigualdad',
-        text: 'Quienes nacen en hogares con menos recursos tienen menos oportunidades de recuperar aprendizajes por cuenta propia.',
-      },
-      {
-        title: 'Menor innovación',
-        text: 'La ciencia, tecnología e industria avanzada requieren formación que no se improvisa.',
-      },
-    ],
-    realChallenges: [
-      {
-        title: 'Recuperar aprendizajes básicos',
-        text: 'Leer, escribir, razonar matemáticamente y comprender ciencia son condiciones para seguir aprendiendo.',
-      },
-      {
-        title: 'Vincular educación y economía',
-        text: 'El nearshoring requiere talento técnico. Sin formación adecuada, la oportunidad puede quedarse en empleos de bajo valor.',
-      },
-      {
-        title: 'Diagnosticar con evidencia',
-        text: 'Sin evaluación clara, las políticas educativas pueden avanzar sin saber si realmente mejoran aprendizajes.',
-      },
-    ],
-    connections:
-      'Educación se conecta con economía y nearshoring por la demanda de talento técnico; con sociedad porque define movilidad social; con instituciones porque requiere evaluación independiente.',
-    conclusion:
-      'La educación no es un tema aislado: es una condición para que México produzca mejor, reduzca desigualdad y participe en sectores de mayor valor.',
-    body:
-      'El bajo desempeño en PISA y el rezago entre personas mayores de 15 años apuntan a una brecha estructural. El documento también señala un calendario lectivo de apenas 150 días efectivos para 2025-2026, lo que agrava la pérdida de aprendizajes.',
-    meaning:
-      'Sin recuperación de aprendizajes y evaluación sólida, el nearshoring puede encontrar un cuello de botella en capital humano.',
-    featured: 'Pérdida aproximada de 2 años de aprendizaje',
-    insights: [
-      {
-        icon: 'bi-book',
-        title: 'Comprensión',
-        text: 'Leer e interpretar información sostiene pensamiento crítico.',
-      },
-      {
-        icon: 'bi-calculator',
-        title: 'Matemáticas',
-        text: 'Resolver problemas abre puertas a empleos técnicos.',
-      },
-      {
-        icon: 'bi-tools',
-        title: 'Competitividad',
-        text: 'El aprendizaje define la capacidad de aprovechar industrias de mayor valor.',
-      },
-    ],
-    table: {
-      columns: ['Área', 'Reto educativo', 'Consecuencia'],
-      rows: [
-        ['Ciencias', 'Dificultad para explicar fenómenos y usar evidencia', 'Menor preparación técnica y científica'],
-        ['Matemáticas', 'Rezago en resolución de problemas', 'Menor acceso a empleos de mayor complejidad'],
-        ['Comprensión lectora', 'Dificultad para interpretar información', 'Menor pensamiento crítico y aprendizaje autónomo'],
-      ],
-    },
   },
   agua: {
     path: '/agua',
-    nextPath: '/salud',
-    nextLabel: 'Salud',
-    navLabel: 'Agua',
-    eyebrow: 'Vulnerabilidad socioambiental',
-    title: 'Crisis hídrica',
+    nextPath: '/instituciones',
+    nextLabel: 'Instituciones',
+    navLabel: 'Agua y medio ambiente',
+    eyebrow: 'Limite economico y social',
+    title: 'Agua y medio ambiente',
     imageKey: 'agua',
     summary:
-      'La crisis hídrica no se resuelve solo con que llueva más: también depende de acuíferos, infraestructura, distribución y gobernanza.',
+      'El agua ya no es solo un tema ambiental: es un limite para salud, agricultura, vivienda, industria, nearshoring y desigualdad territorial.',
     keyIdea:
-      'El agua es una condición básica para salud, industria, agricultura, vivienda y nearshoring.',
+      'La crisis hidrica no se resuelve solo con que llueva: depende de acuiferos, redes, tratamiento, distribucion, gobernanza y consumo.',
+    sourceIds: ['imco-agua', 'imta-programa', 'conagua-acuiferos', 'unam-cuenca', 'unam-agua-especial'],
     problemIntro:
-      'El documento señala una recuperación temporal de presas al 94% hacia marzo de 2026 tras 43 meses de sequía continua, pero eso no significa que el problema esté resuelto. La crisis hídrica tiene causas estructurales: acuíferos sobreexplotados, hundimiento, tandeos, mala calidad del agua, tratamiento insuficiente y desigualdad en el acceso.',
+      'Mexico trata muchas veces el agua como si fuera infinita. No lo es. La disponibilidad depende de cuencas, acuiferos, infraestructura, fugas, tratamiento, concesiones, tarifas, planeacion urbana y desigualdad en el acceso.',
+    background:
+      'El IMTA senala que cerca de 66% del territorio nacional tiene condiciones aridas o semiaridas y que la disponibilidad natural media por habitante ha caido de 17,742 metros cubicos anuales a 3,656, con proyeccion de 3,285 hacia 2030. Tambien indica que la agricultura consume mas de 70% del agua concesionada.',
     causes: [
       {
-        title: 'Sobreexplotación de acuíferos',
-        text: 'Extraer más agua de la que se recupera reduce disponibilidad futura y agrava hundimientos.',
+        title: 'Sobreexplotacion de acuiferos',
+        text: 'Extraer mas agua de la que se recarga reduce disponibilidad futura, agrava hundimientos y vuelve mas fragil el abastecimiento urbano e industrial.',
       },
       {
-        title: 'Infraestructura insuficiente',
-        text: 'Redes deterioradas, tratamiento limitado y distribución desigual hacen que el agua no llegue con calidad ni continuidad.',
+        title: 'Infraestructura y fugas',
+        text: 'La solucion no puede ser solo pedir ahorro domestico mientras redes viejas pierden grandes volumenes. Se requieren medicion, reparacion, tratamiento y reuso.',
       },
       {
-        title: 'Uso riesgoso de aguas residuales',
-        text: 'El documento señala que 65% del caudal residual en la Cuenca de México es de origen doméstico y puede generar riesgos sanitarios si no se gestiona bien.',
+        title: 'Gobernanza desigual',
+        text: 'Concesiones, tarifas, tomas irregulares, planeacion urbana y consumo agricola o industrial deben revisarse con criterios de eficiencia y justicia.',
       },
     ],
     consequences: [
       {
-        title: 'Tandeos y desigualdad',
-        text: 'Las zonas periféricas y de menores ingresos suelen enfrentar suministro intermitente y agua de peor calidad.',
+        title: 'Tandeos y mala calidad',
+        text: 'Las colonias pobres suelen recibir agua antes con menor continuidad, peor calidad o mayor dependencia de pipas.',
       },
       {
         title: 'Riesgo sanitario',
-        text: 'El uso de aguas residuales sin tratamiento suficiente puede introducir patógenos a la cadena alimentaria.',
+        text: 'El manejo insuficiente de aguas residuales y el acceso intermitente pueden afectar higiene, alimentos y salud publica.',
       },
       {
-        title: 'Límite para industria',
-        text: 'Sin agua confiable, proyectos productivos y nearshoring pierden viabilidad en ciertas regiones.',
+        title: 'Freno a inversion e industria',
+        text: 'El nearshoring necesita agua confiable. Sin ella, nuevos proyectos pierden viabilidad o presionan aun mas a comunidades.',
       },
     ],
     realChallenges: [
       {
-        title: 'Distinguir lluvia de solución',
-        text: 'Una recuperación temporal de presas ayuda, pero no corrige sobreexplotación, fugas ni mala gestión.',
+        title: 'Distinguir lluvia de solucion',
+        text: 'Una recuperacion temporal de presas puede aliviar, pero no corrige acuiferos sobreexplotados, fugas ni desigualdad en el acceso.',
       },
       {
-        title: 'Invertir en tratamiento y redes',
-        text: 'Sin infraestructura, el agua disponible no se convierte en acceso seguro.',
+        title: 'Tecnificar y medir usos',
+        text: 'La agricultura, la industria y las ciudades necesitan medicion real, reuso y eficiencia, no solo llamados generales al ahorro.',
       },
       {
-        title: 'Gobernar con enfoque territorial',
-        text: 'La crisis no afecta igual a todos; las políticas deben atender desigualdad urbana, rural e industrial.',
+        title: 'Gobernar por cuencas y territorio',
+        text: 'La Cuenca de Mexico muestra que una ciudad puede expulsar agua, hundirse y depender de otras regiones al mismo tiempo.',
       },
     ],
     connections:
-      'Agua se conecta con salud por los riesgos sanitarios; con economía porque limita industria y nearshoring; con sociedad porque el acceso desigual afecta más a hogares vulnerables.',
+      'Agua se conecta con salud por riesgos sanitarios; con economia por industria y nearshoring; con pobreza por desigualdad de acceso; con Pemex y finanzas porque requiere inversion; y con instituciones porque exige regulacion y cumplimiento.',
     conclusion:
-      'La crisis hídrica es un problema de recursos, infraestructura y justicia territorial. Llover más puede aliviar, pero no reemplaza una política de agua de largo plazo.',
-    body:
-      'La crisis hídrica combina sobreexplotación, hundimiento, tandeos, mala calidad del agua y una gestión insuficiente de aguas residuales. El problema conecta infraestructura, territorio, salud y gobernanza.',
-    meaning:
-      'Resolver el agua implica mirar más allá de la lluvia: se requiere infraestructura, tratamiento, regulación y coordinación metropolitana.',
-    flow: ['Sobreexplotación', 'Menor disponibilidad', 'Tandeos', 'Desigualdad', 'Riesgo sanitario y económico'],
-    insights: [
-      {
-        icon: 'bi-droplet',
-        title: 'Sobreexplotación',
-        text: 'La extracción sostenida presiona reservas subterráneas y eleva vulnerabilidad.',
-      },
-      {
-        icon: 'bi-building-down',
-        title: 'Hundimiento',
-        text: 'El agotamiento del subsuelo agrava daños urbanos e infraestructura.',
-      },
-      {
-        icon: 'bi-diagram-3',
-        title: 'Gobernanza',
-        text: 'La coordinación institucional es tan importante como la obra física.',
-      },
-    ],
+      'La crisis del agua es una prueba de seriedad publica. Sin infraestructura, medicion y justicia territorial, el agua faltara primero donde ya faltan otros derechos.',
+    flow: ['Sobreexplotacion', 'Menor disponibilidad', 'Tandeos', 'Desigualdad', 'Riesgo sanitario y economico'],
+    warning: {
+      title: 'Lectura cuidadosa',
+      text: 'Si se menciona recuperacion temporal de presas, debe explicarse como alivio coyuntural, no como solucion estructural de acuiferos, redes y gobernanza.',
+    },
   },
-  salud: {
-    path: '/salud',
+  instituciones: {
+    path: '/instituciones',
     nextPath: '/datos',
-    nextLabel: 'Datos',
-    navLabel: 'Salud',
-    eyebrow: 'Cobertura y acceso',
-    title: 'Salud pública',
-    imageKey: 'salud',
+    nextLabel: 'Datos clave',
+    navLabel: 'Instituciones y Estado de derecho',
+    eyebrow: 'Contrapesos',
+    title: 'Instituciones y Estado de derecho',
+    imageKey: 'instituciones',
     summary:
-      'Cobertura no significa atención real: para atender a la población se necesitan médicos, especialistas, medicamentos, transporte y hospitales funcionales.',
+      'Las instituciones no son un tema abstracto: sirven para medir, regular, transparentar, evaluar y limitar abusos de poder.',
     keyIdea:
-      'La salud pública se mide por el acceso efectivo, no solo por la existencia formal de una red de atención.',
+      'Menos autonomia puede significar menos vigilancia independiente, menos transparencia y mas discrecionalidad.',
+    sourceIds: [
+      'milenio-autonomos',
+      'elpais-autonomos',
+      'ine-judicial',
+      'reuters-judicial',
+      'elpais-ajuste-judicial',
+      'coparmex-judicial',
+      'vozyvoto-judicial',
+      'ibero-pobreza',
+    ],
     problemIntro:
-      'El sistema de salud busca ampliar cobertura mediante IMSS-Bienestar, especialmente para personas sin seguridad social formal. Sin embargo, la cobertura solo se vuelve real cuando una persona puede llegar a una unidad, recibir diagnóstico, encontrar medicamentos, ser referida a un hospital y acceder a especialistas si los necesita. En zonas rurales e indígenas, cada paso puede convertirse en una barrera.',
+      'El debilitamiento de organismos autonomos y los cambios judiciales afectan la forma en que se mide la pobreza, se regula la competencia, se protege informacion publica, se ordena energia, se evalua educacion y se resuelven conflictos.',
+    background:
+      'El Senado aprobo la desaparicion de siete organismos autonomos y reguladores, entre ellos INAI, CONEVAL, IFT, COFECE, CRE, CNH y Mejoredu. El argumento oficial fue austeridad y simplificacion, pero el riesgo senalado en el MD es la perdida de vigilancia independiente y la concentracion de funciones en el gobierno.',
     causes: [
       {
-        title: 'Distancia y transporte',
-        text: 'Llegar a una unidad médica puede implicar tiempo y costo, especialmente en comunidades rurales.',
+        title: 'Concentracion de funciones',
+        text: 'Si el gobierno absorbe funciones de medicion, evaluacion y regulacion, disminuye la distancia entre quien decide y quien debe vigilar.',
       },
       {
-        title: 'Falta de especialistas',
-        text: 'La atención de segundo y tercer nivel suele concentrarse en centros urbanos, dejando zonas periféricas con menor acceso.',
+        title: 'Ahorro administrativo como argumento unico',
+        text: 'Ahorrar recursos puede sonar razonable, pero debe compararse con el costo democratico y tecnico de perder contrapesos.',
       },
       {
-        title: 'Abasto y coordinación',
-        text: 'La centralización administrativa exige coordinar compras, nómina, insumos y operación diaria sin interrumpir servicios.',
+        title: 'Reforma judicial con riesgos',
+        text: 'La eleccion de cargos judiciales puede presentarse como democratizacion, pero abre retos de independencia, profesionalizacion, captura politica y campanas opacas.',
       },
     ],
     consequences: [
       {
-        title: 'Cobertura incompleta',
-        text: 'Una persona puede estar dentro del sistema y aun así no recibir atención oportuna.',
+        title: 'Menor transparencia',
+        text: 'Sin un garante fuerte de informacion publica, la sociedad puede tener mas dificultad para conocer gasto, contratos y decisiones.',
       },
       {
-        title: 'Desigualdad sanitaria',
-        text: 'Las zonas rurales e indígenas enfrentan más obstáculos para acceder a medicina especializada.',
+        title: 'Menos evaluacion independiente',
+        text: 'Pobreza, educacion y politica social quedan mas expuestas a lectura politica si se pierde autonomia tecnica.',
       },
       {
-        title: 'Presión sobre familias',
-        text: 'Cuando faltan medicamentos o traslados, las familias absorben costos que deberían estar cubiertos por el sistema.',
+        title: 'Incertidumbre juridica',
+        text: 'La inversion, la seguridad y los derechos necesitan tribunales y reguladores confiables, no decisiones impredecibles.',
       },
     ],
     realChallenges: [
       {
-        title: 'Convertir cobertura en atención',
-        text: 'El reto es que la afiliación se traduzca en consulta, diagnóstico, tratamiento y seguimiento.',
+        title: 'Sostener funciones, no solo oficinas',
+        text: 'Si cambia la arquitectura institucional, las funciones de transparencia, evaluacion y regulacion deben conservar independencia real.',
       },
       {
-        title: 'Asegurar personal e insumos',
-        text: 'Sin médicos, especialistas y medicamentos, la infraestructura no basta.',
+        title: 'Proteger independencia judicial',
+        text: 'La justicia necesita corregir nepotismo y lentitud sin caer en politizacion o seleccion por popularidad.',
       },
       {
-        title: 'Coordinar niveles de atención',
-        text: 'La ruta entre unidad médica, hospital rural y especialista debe funcionar sin romper la continuidad del paciente.',
+        title: 'Relacionar Estado de derecho con desarrollo',
+        text: 'La certidumbre juridica afecta inversion, seguridad, derechos, democracia y confianza publica.',
       },
     ],
     connections:
-      'Salud se conecta con sociedad porque las carencias afectan más a personas con menos recursos; con educación porque la salud influye en aprendizaje; con Pemex y finanzas públicas porque el presupuesto limita infraestructura y abasto.',
+      'Instituciones se conectan con economia porque la inversion necesita reglas; con seguridad porque fiscalias y jueces deben funcionar; con pobreza y educacion porque se requiere medicion independiente; y con agua y energia porque la regulacion tecnica importa.',
     conclusion:
-      'La salud pública requiere algo más que cobertura formal. Necesita una ruta completa de atención que funcione para quienes viven lejos de los grandes centros urbanos.',
-    body:
-      'IMSS-Bienestar busca ampliar acceso para personas sin seguridad social, pero enfrenta retos de abasto, especialistas, coordinación e infraestructura. La distancia entre unidad médica, hospital rural y atención especializada sigue siendo una barrera, especialmente en zonas rurales e indígenas.',
-    meaning:
-      'La universalidad solo se concreta cuando hay personal, medicamentos, transporte, referencia clínica y servicios disponibles de forma cotidiana.',
-    flow: ['Paciente rural', 'Unidad médica', 'Hospital rural', 'Especialista', 'Barreras de acceso'],
-    insights: [
+      'Un pais no se fortalece solo concentrando poder. Se fortalece cuando puede medirse, vigilarse, corregirse y limitar abusos incluso cuando eso incomoda al gobierno en turno.',
+    flow: ['Menos autonomia', 'Menor evaluacion independiente', 'Menos transparencia', 'Menor confianza', 'Mas discrecionalidad'],
+    institutionsIntro:
+      'Estos organismos no resolvian todos los problemas, pero separaban funciones tecnicas del ciclo politico inmediato.',
+    institutions: [
       {
-        icon: 'bi-universal-access',
-        title: 'Cobertura universal',
-        text: 'La afiliación debe traducirse en atención real.',
+        name: 'INAI',
+        function: 'Acceso a informacion publica y proteccion de datos.',
+        risk: 'Menor capacidad ciudadana para vigilar gasto, contratos y decisiones.',
+        area: 'Transparencia',
       },
       {
-        icon: 'bi-geo-alt',
-        title: 'Zonas rurales e indígenas',
-        text: 'La distancia aumenta costos y tiempos de atención.',
+        name: 'CONEVAL',
+        function: 'Medicion de pobreza y evaluacion de politica social.',
+        risk: 'Menor independencia y comparabilidad en diagnosticos sociales.',
+        area: 'Politica social',
       },
       {
-        icon: 'bi-capsule',
-        title: 'Abasto de medicamentos',
-        text: 'Sin insumos, la cobertura pierde efectividad.',
+        name: 'COFECE',
+        function: 'Competencia economica.',
+        risk: 'Mayor riesgo de decisiones politicas o mercados menos competidos.',
+        area: 'Economia',
+      },
+      {
+        name: 'IFT',
+        function: 'Telecomunicaciones y radiodifusion.',
+        risk: 'Regulacion tecnica menos independiente.',
+        area: 'Telecomunicaciones',
+      },
+      {
+        name: 'CRE y CNH',
+        function: 'Regulacion energetica e hidrocarburos.',
+        risk: 'Menor certeza para inversion energetica.',
+        area: 'Energia',
+      },
+      {
+        name: 'Mejoredu',
+        function: 'Mejora y evaluacion educativa.',
+        risk: 'Menos diagnostico independiente del sistema educativo.',
+        area: 'Educacion',
+      },
+    ],
+    caseBlocks: [
+      {
+        title: 'Eleccion judicial',
+        text: 'Mexico realizo en 2025 una eleccion judicial inedita. El reto no es negar problemas del Poder Judicial, sino corregirlos sin sacrificar independencia, imparcialidad y profesionalismo.',
       },
     ],
   },
@@ -2542,28 +2877,48 @@ createRoot(document.getElementById('root')).render(
 <file path="src/pages/Agua.jsx">
 import StatCard from '../components/StatCard'
 import TopicPageScaffold from '../components/TopicPageScaffold'
+import HorizontalBarChart from '../components/charts/HorizontalBarChart'
+import { waterAvailabilityData } from '../data/chartData'
 import { topics } from '../data/topics'
 
 function Agua() {
   return (
     <TopicPageScaffold
       topic={topics.agua}
+      charts={
+        <HorizontalBarChart
+          data={waterAvailabilityData}
+          yKey="label"
+          title="Disponibilidad natural media por habitante"
+          description="Caida historica y proyeccion hacia 2030 citadas por IMTA."
+          unit="m3 anuales"
+          height={300}
+        />
+      }
       dataCards={
         <>
-          <div className="col-md-6">
+          <div className="col-md-4">
             <StatCard
-              icon="bi-water"
-              value="65%"
-              label="Caudal residual de origen doméstico en la Cuenca de México"
-              detail="Dato clave para entender el riesgo sanitario del uso de aguas residuales."
+              icon="bi-map"
+              value="66%"
+              label="Territorio nacional arido o semiarido"
+              detail="Dato citado por el IMTA."
             />
           </div>
-          <div className="col-md-6">
+          <div className="col-md-4">
             <StatCard
-              icon="bi-cloud-rain"
-              value="94%"
-              label="Recuperación temporal de presas hacia marzo de 2026"
-              detail="Ocurrió tras 43 meses de sequía continua; no resuelve el problema estructural."
+              icon="bi-flower1"
+              value="70%+"
+              label="Agua concesionada usada por la agricultura"
+              detail="Debe leerse como reto de tecnificacion, no como culpa simple al campo."
+            />
+          </div>
+          <div className="col-md-4">
+            <StatCard
+              icon="bi-tools"
+              value="35%"
+              label="Perdida aproximada de agua por fugas en CDMX"
+              detail="Dato citado en el MD a partir de especialistas de la UNAM."
             />
           </div>
         </>
@@ -2573,6 +2928,89 @@ function Agua() {
 }
 
 export default Agua
+</file>
+
+<file path="src/pages/Conclusion.jsx">
+import Breadcrumb from '../components/Breadcrumb'
+import CauseEffectFlow from '../components/CauseEffectFlow'
+import PageLayout from '../components/PageLayout'
+import SourceList from '../components/SourceList'
+import VisualPanel from '../components/VisualPanel'
+import { sources } from '../data/sources'
+
+const normalizations = [
+  'Se normaliza que millones no denuncien.',
+  'Se normaliza que estudiantes no aprendan matematicas basicas.',
+  'Se normaliza que la gente espere atencion medica.',
+  'Se normaliza que el agua falte en colonias pobres.',
+  'Se normaliza que Pemex absorba recursos publicos.',
+  'Se normaliza que instituciones independientes desaparezcan bajo el argumento de ahorro.',
+]
+
+function Conclusion() {
+  return (
+    <PageLayout title="Mexico ante una oportunidad que puede perderse">
+      <Breadcrumb current="Conclusion" />
+      <section className="conclusion-hero">
+        <div className="container">
+          <div className="conclusion-copy reveal">
+            <p className="eyebrow">Conclusion</p>
+            <h1>Mexico ante una oportunidad que puede perderse</h1>
+            <p>
+              Mexico no falla por falta de potencial. Falla cuando permite que problemas
+              estructurales se acumulen hasta volverse normales.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="section-block">
+        <div className="container">
+          <div className="row g-4">
+            {normalizations.map((item) => (
+              <div className="col-md-6" key={item}>
+                <article className="normalization-card reveal">
+                  <i className="bi bi-exclamation-diamond" aria-hidden="true"></i>
+                  <p>{item}</p>
+                </article>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section-block section-muted">
+        <div className="container">
+          <VisualPanel
+            title="La ventana no es infinita"
+            description="Nearshoring, estabilidad financiera y bono demografico son oportunidades reales, pero dependen de decisiones publicas verificables."
+          >
+            <CauseEffectFlow
+              title="Oportunidad que exige capacidades"
+              items={[
+                'Ventajas reales',
+                'Problemas estructurales',
+                'Decisiones publicas',
+                'Desarrollo o oportunidad perdida',
+              ]}
+            />
+            <p className="closing-essay">
+              El pais no necesita pesimismo. Necesita seriedad. Una nacion no se transforma
+              negando sus datos, atacando a quien los mide o maquillando sus carencias. Se
+              transforma cuando reconoce la gravedad de sus problemas y construye soluciones
+              verificables: infraestructura que funcione, educacion que ensene, agua que se
+              cuide, justicia que investigue e instituciones que puedan vigilar al poder.
+            </p>
+          </VisualPanel>
+        </div>
+      </section>
+
+      <SourceList sources={sources} />
+    </PageLayout>
+  )
+}
+
+export default Conclusion
 </file>
 
 <file path="src/pages/Datos.jsx">
@@ -2585,25 +3023,25 @@ import HorizontalBarChart from '../components/charts/HorizontalBarChart'
 import LineChartBox from '../components/charts/LineChartBox'
 import {
   gdpProjectionData,
+  iedCompositionData,
   impunityData,
-  inequalityOriginData,
   pemexSupportData,
   pisaComparisonData,
+  waterAvailabilityData,
 } from '../data/chartData'
 
 function Datos() {
   return (
-    <PageLayout title="Datos">
-      <Breadcrumb current="Datos" />
+    <PageLayout title="Datos clave">
+      <Breadcrumb current="Datos clave" />
       <section className="page-hero compact-hero">
         <div className="container">
           <div className="page-hero-copy reveal">
             <p className="eyebrow">Datos clave</p>
-            <h1>Datos clave del México presente</h1>
+            <h1>Datos clave</h1>
             <p className="hero-subtitle">
-              Los datos no sustituyen el análisis: solo ayudan a dimensionar algunos
-              problemas. Por eso esta página reúne pocas visualizaciones, elegidas porque
-              comparan tendencias, escalas o brechas importantes.
+              Los datos no sustituyen el analisis. Sirven para dimensionar algunos problemas,
+              pero cada cifra debe leerse junto con sus causas y consecuencias.
             </p>
           </div>
         </div>
@@ -2612,12 +3050,11 @@ function Datos() {
       <section className="section-block">
         <div className="container">
           <div className="section-intro">
-            <p className="eyebrow">Selección</p>
-            <h2>Cinco lecturas para ubicar la discusión</h2>
+            <p className="eyebrow">Seleccion editorial</p>
+            <h2>Visualizaciones necesarias, no saturacion</h2>
             <p>
-              Cada visualización apunta a una pregunta: cuánto puede crecer la economía,
-              cuánto cuesta sostener Pemex, qué tan alta es la impunidad, cuánto pesa el
-              origen social y qué brecha educativa enfrenta México.
+              Esta pagina resume el sitio con pocas piezas: crecimiento, IED, Pemex, pobreza,
+              PISA, impunidad, salud y agua. Las cifras simples van en tarjetas.
             </p>
           </div>
           <div className="chart-grid focused-chart-grid">
@@ -2625,45 +3062,73 @@ function Datos() {
               data={gdpProjectionData}
               xKey="year"
               yKey="value"
-              title="PIB proyectado"
-              description="Rango 2025 y trayectoria 2026-2027."
+              title="PIB / crecimiento proyectado"
+              description="Mexico crece, pero poco para el tamano de sus retos."
+            />
+            <BarChartBox
+              data={iedCompositionData}
+              xKey="label"
+              yKey="value"
+              title="IED total vs inversion nueva"
+              description="La inversion nueva fue 7.2% del total en 1T2026."
+              unit="%"
             />
             <BarChartBox
               data={pemexSupportData}
               xKey="year"
               yKey="value"
               title="Apoyo fiscal a Pemex"
-              description="Montos de apoyo 2025 y 2026."
-              unit="millones de dólares"
+              description="Dato financiero clave para entender costo de oportunidad."
+              unit="millones de dolares"
+            />
+            <ComparisonChart
+              data={pisaComparisonData}
+              title="PISA Mexico vs OCDE"
+              description="Brecha educativa que afecta productividad y movilidad."
+              unit="puntos"
             />
             <BarChartBox
               data={impunityData}
               xKey="crime"
               yKey="value"
-              title="Impunidad"
-              description="Porcentaje por delito."
+              title="Cifra negra / impunidad"
+              description="La distancia entre delito ocurrido y justicia efectiva."
               unit="%"
             />
             <HorizontalBarChart
-              data={inequalityOriginData}
-              yKey="factor"
-              title="Desigualdad de origen"
-              description="Factores comparables."
-              unit="%"
-              height={360}
+              data={waterAvailabilityData}
+              yKey="label"
+              title="Agua disponible por habitante"
+              description="Caida historica y proyeccion hacia 2030."
+              unit="m3 anuales"
+              height={300}
             />
-            <ComparisonChart
-              data={pisaComparisonData}
-              title="PISA 2022"
-              description="México frente al promedio OCDE."
-              unit="puntos"
-            />
-            <StatCard
-              icon="bi-water"
-              value="65%"
-              label="Caudal residual doméstico en la Cuenca de México"
-              detail="Se muestra como tarjeta porque es un dato puntual, no una tendencia."
-            />
+          </div>
+          <div className="row g-4 mt-1">
+            <div className="col-md-4">
+              <StatCard
+                icon="bi-people"
+                value="38.5 millones"
+                label="Personas en pobreza multidimensional"
+                detail="La pobreza no es solo ingreso."
+              />
+            </div>
+            <div className="col-md-4">
+              <StatCard
+                icon="bi-heart-pulse"
+                value="44.5 millones"
+                label="Personas con carencia de acceso a salud"
+                detail="Cobertura formal no garantiza atencion real."
+              />
+            </div>
+            <div className="col-md-4">
+              <StatCard
+                icon="bi-map"
+                value="66%"
+                label="Territorio arido o semiarido"
+                detail="El agua es limite ambiental, social y economico."
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -2677,8 +3142,9 @@ export default Datos
 <file path="src/pages/Economia.jsx">
 import StatCard from '../components/StatCard'
 import TopicPageScaffold from '../components/TopicPageScaffold'
+import BarChartBox from '../components/charts/BarChartBox'
 import LineChartBox from '../components/charts/LineChartBox'
-import { gdpProjectionData } from '../data/chartData'
+import { gdpProjectionData, iedCompositionData } from '../data/chartData'
 import { topics } from '../data/topics'
 
 function Economia() {
@@ -2686,38 +3152,48 @@ function Economia() {
     <TopicPageScaffold
       topic={topics.economia}
       charts={
-        <LineChartBox
-          data={gdpProjectionData}
-          xKey="year"
-          yKey="value"
-          title="Proyección de crecimiento del PIB"
-          description="Rango de 2025 y trayectoria esperada para 2026 y 2027."
-        />
+        <>
+          <LineChartBox
+            data={gdpProjectionData}
+            xKey="year"
+            yKey="value"
+            title="Crecimiento del PIB"
+            description="Banxico y ajuste posterior citado en el MD para 2026."
+          />
+          <BarChartBox
+            data={iedCompositionData}
+            xKey="label"
+            yKey="value"
+            title="IED: inversion nueva vs resto"
+            description="La inversion nueva represento 7.2% del total en 1T2026, segun IMCO."
+            unit="%"
+          />
+        </>
       }
       dataCards={
         <>
           <div className="col-md-4">
             <StatCard
-              icon="bi-currency-exchange"
-              value="3.5%"
-              label="Inflación estimada al cierre de 2026"
-              detail="Dato puntual del entorno económico, no una comparación central."
+              icon="bi-currency-dollar"
+              value="23,591 mdd"
+              label="IED recibida en el primer trimestre de 2026"
+              detail="Dato reportado por IMCO; debe leerse junto con su composicion."
             />
           </div>
           <div className="col-md-4">
             <StatCard
-              icon="bi-person-workspace"
-              value="260 mil a 460 mil"
-              label="Rango esperado de creación de empleo formal"
-              detail="El rango ayuda a dimensionar incertidumbre laboral."
+              icon="bi-arrow-repeat"
+              value="92.8%"
+              label="Reinversion y otros flujos dentro de la IED"
+              detail="La reinversion muestra permanencia, no necesariamente nuevas plantas."
             />
           </div>
           <div className="col-md-4">
             <StatCard
-              icon="bi-percent"
-              value="6.5%"
-              label="Tasa de referencia desde mayo de 2026"
-              detail="Dato contextual del entorno monetario señalado en el documento."
+              icon="bi-globe-americas"
+              value="43.3%"
+              label="Participacion de Estados Unidos en la IED del 1T2026"
+              detail="Ventaja de integracion, pero tambien dependencia externa."
             />
           </div>
         </>
@@ -2743,8 +3219,8 @@ function Educacion() {
       charts={
         <ComparisonChart
           data={pisaComparisonData}
-          title="PISA 2022: México vs OCDE"
-          description="Comparación de puntaje promedio."
+          title="PISA 2022: Mexico vs OCDE"
+          description="Puntaje promedio citado por IMCO."
           unit="puntos"
         />
       }
@@ -2752,25 +3228,26 @@ function Educacion() {
         <>
           <div className="col-md-4">
             <StatCard
-              icon="bi-person-lines-fill"
-              value="24.2 millones"
-              label="Personas mayores de 15 años en rezago educativo"
+              icon="bi-calculator"
+              value="2 de cada 3"
+              label="Estudiantes sin competencias basicas en matematicas"
+              detail="Sintesis de IMCO a partir de PISA 2022."
             />
           </div>
           <div className="col-md-4">
             <StatCard
-              icon="bi-calendar2-range"
-              value="2 años"
-              label={topics.educacion.featured}
-              detail="Estimación aproximada de pérdida de aprendizaje."
+              icon="bi-bar-chart-steps"
+              value="35 de 37"
+              label="Lugar de Mexico entre paises OCDE evaluados"
+              detail="El dato dimensiona rezago relativo."
             />
           </div>
           <div className="col-md-4">
             <StatCard
-              icon="bi-calendar-week"
-              value="150 días"
-              label="Calendario lectivo efectivo señalado para 2025-2026"
-              detail="Dato contextual sobre reducción del tiempo lectivo."
+              icon="bi-clipboard-data"
+              value="Menos evaluacion"
+              label="INEE eliminado y Mejoredu desaparecida, segun el MD"
+              detail="El reto es diagnosticar sin perder independencia tecnica."
             />
           </div>
         </>
@@ -2784,31 +3261,118 @@ export default Educacion
 
 <file path="src/pages/Home.jsx">
 import { Link } from 'react-router-dom'
+import CauseEffectFlow from '../components/CauseEffectFlow'
+import OpportunityLimitGrid from '../components/OpportunityLimitGrid'
 import PageHero from '../components/PageHero'
 import PageLayout from '../components/PageLayout'
 import VisualPanel from '../components/VisualPanel'
 import { navigationItems } from '../data/navigation'
 import { topicImages } from '../data/topicImages'
 
-const topicCards = navigationItems.filter((item) => item.path !== '/')
+const topicCards = navigationItems.filter((item) => !['/', '/conclusion'].includes(item.path))
 
 function Home() {
   return (
     <PageLayout title="Inicio">
       <PageHero
+        eyebrow="Portada editorial"
         title="Problemas y retos de el México presente"
-        summary="Una mirada clara a los desafíos económicos, sociales, institucionales y ambientales que definen el rumbo actual del país."
+        summary="México 2026: oportunidades históricas frente a problemas estructurales."
         image={topicImages.panorama}
       />
+
+      <section className="section-block thesis-section">
+        <div className="container">
+          <div className="row g-5 align-items-start">
+            <div className="col-lg-7">
+              <article className="editorial-lead reveal">
+                <p className="eyebrow">Tesis central</p>
+                <h2>Mexico tiene potencial, pero tambien limites que ya no puede normalizar.</h2>
+                <p>
+                  El pais cuenta con cercania a Estados Unidos, tratados comerciales, base
+                  manufacturera, poblacion joven, mercado interno y oportunidad por nearshoring.
+                  Pero esas ventajas chocan con bajo crecimiento, presion fiscal, Pemex,
+                  inseguridad, impunidad, deterioro educativo, crisis hidrica, desigualdad,
+                  debilidad institucional y perdida de contrapesos.
+                </p>
+                <p>
+                  Este sitio no busca propaganda ni opinion suelta. Explica problemas de fondo
+                  con datos, contexto y fuentes, mostrando por que importan, que los causa y que
+                  consecuencias tienen para la vida diaria.
+                </p>
+              </article>
+            </div>
+            <div className="col-lg-5">
+              <VisualPanel title="La paradoja mexicana" variant="wide">
+                <OpportunityLimitGrid
+                  opportunities={[
+                    'Cercania con Estados Unidos',
+                    'Tratados comerciales',
+                    'Base manufacturera',
+                    'Poblacion joven',
+                    'Mercado interno',
+                    'Nearshoring',
+                  ]}
+                  limits={[
+                    'Falta de agua',
+                    'Energia e infraestructura insuficiente',
+                    'Inseguridad',
+                    'Impunidad',
+                    'Rezago educativo',
+                    'Presion fiscal',
+                    'Debilidad institucional',
+                  ]}
+                />
+              </VisualPanel>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section-block section-muted">
+        <div className="container">
+          <div className="section-intro">
+            <p className="eyebrow">Mapa conceptual</p>
+            <h2>Los retos no estan aislados</h2>
+            <p>
+              El valor del diagnostico esta en ver conexiones: una falla educativa limita la
+              productividad, una fiscalia debil alimenta impunidad y una crisis de agua puede
+              frenar industria, salud y vivienda.
+            </p>
+          </div>
+          <div className="connection-map">
+            <CauseEffectFlow
+              title="Educacion y productividad"
+              items={['Educacion', 'Productividad', 'Nearshoring']}
+            />
+            <CauseEffectFlow
+              title="Seguridad e inversion"
+              items={['Seguridad', 'Inversion', 'Empleo']}
+            />
+            <CauseEffectFlow
+              title="Pemex y presupuesto"
+              items={['Pemex', 'Presion fiscal', 'Menos infraestructura']}
+            />
+            <CauseEffectFlow
+              title="Agua y desarrollo regional"
+              items={['Agua', 'Industria / salud / agricultura', 'Desarrollo regional']}
+            />
+            <CauseEffectFlow
+              title="Instituciones y confianza"
+              items={['Instituciones', 'Confianza', 'Estado de derecho']}
+            />
+          </div>
+        </div>
+      </section>
 
       <section className="section-block">
         <div className="container">
           <div className="section-intro">
-            <p className="eyebrow">Portada</p>
+            <p className="eyebrow">Pestañas principales</p>
             <h2>Explora los temas</h2>
             <p>
-              Cada sección aborda un reto desde su contexto, sus datos disponibles y sus
-              consecuencias para la vida pública.
+              Cada seccion desarrolla introduccion, diagnostico, causas, consecuencias, retos,
+              conexiones y cierre reflexivo.
             </p>
           </div>
           <div className="row g-4">
@@ -2830,27 +3394,6 @@ function Home() {
           </div>
         </div>
       </section>
-
-      <section className="section-block section-muted">
-        <div className="container">
-          <VisualPanel
-            title="México entre oportunidad y límite"
-            description="La paradoja central es clara: México cuenta con ubicación estratégica, integración comercial y oportunidad por nearshoring, pero enfrenta restricciones que pueden frenar ese potencial."
-            variant="wide"
-          >
-            <div className="opportunity-grid">
-              <article>
-                <span>Oportunidad</span>
-                <p>Ubicación, manufactura, comercio norteamericano y atracción de nuevas cadenas productivas.</p>
-              </article>
-              <article>
-                <span>Límite</span>
-                <p>Instituciones presionadas, inseguridad, rezago educativo, crisis hídrica, salud pública y finanzas públicas estrechas.</p>
-              </article>
-            </div>
-          </VisualPanel>
-        </div>
-      </section>
     </PageLayout>
   )
 }
@@ -2869,20 +3412,28 @@ function Instituciones() {
       topic={topics.instituciones}
       dataCards={
         <>
-          <div className="col-md-6">
+          <div className="col-md-4">
             <StatCard
-              icon="bi-piggy-bank"
-              value="4,422 mdp"
-              label="Ahorro fiscal estimado por la reforma de simplificación orgánica"
-              detail="El ahorro debe compararse con la pérdida potencial de capacidades técnicas."
+              icon="bi-bank"
+              value="7"
+              label="Organismos autonomos o reguladores desaparecidos"
+              detail="INAI, CONEVAL, IFT, COFECE, CRE, CNH y Mejoredu."
             />
           </div>
-          <div className="col-md-6">
+          <div className="col-md-4">
+            <StatCard
+              icon="bi-piggy-bank"
+              value="Ahorro"
+              label="Argumento oficial de simplificacion administrativa"
+              detail="Debe compararse con el costo de perder capacidades independientes."
+            />
+          </div>
+          <div className="col-md-4">
             <StatCard
               icon="bi-person-badge"
-              value="386 + 464"
-              label="Jueces de Distrito y Magistrados de Circuito que asumieron funciones tras la elección judicial"
-              detail="El reto es preservar independencia y profesionalismo."
+              value="2025"
+              label="Eleccion judicial inedita"
+              detail="Abre retos de independencia, profesionalismo y captura politica."
             />
           </div>
         </>
@@ -2928,7 +3479,7 @@ export default NotFound
 import StatCard from '../components/StatCard'
 import TopicPageScaffold from '../components/TopicPageScaffold'
 import BarChartBox from '../components/charts/BarChartBox'
-import { debtProjectionData, pemexSupportData } from '../data/chartData'
+import { pemexSupportData } from '../data/chartData'
 import { topics } from '../data/topics'
 
 function Pemex() {
@@ -2941,19 +3492,37 @@ function Pemex() {
           xKey="year"
           yKey="value"
           title="Apoyo fiscal a Pemex"
-          description="Montos reportados para 2025 y 2026."
-          unit="millones de dólares"
+          description="Montos citados en el MD para 2025 y 2026."
+          unit="millones de dolares"
         />
       }
       dataCards={
-        <div className="col-md-6 col-xl-4">
-          <StatCard
-            icon="bi-percent"
-            value={`${debtProjectionData[0].value}%`}
-            label={debtProjectionData[0].label}
-            detail={debtProjectionData[0].unit}
-          />
-        </div>
+        <>
+          <div className="col-md-4">
+            <StatCard
+              icon="bi-calendar-range"
+              value="2028"
+              label="Horizonte de presion financiera advertido por Moodys"
+              detail="La advertencia apunta a flujo debil y dependencia del apoyo federal."
+            />
+          </div>
+          <div className="col-md-4">
+            <StatCard
+              icon="bi-cash-stack"
+              value="40,000 mdd"
+              label="Apoyo federal citado para 2025"
+              detail="Dato del MD a partir de la cobertura de Infobae/Moodys."
+            />
+          </div>
+          <div className="col-md-4">
+            <StatCard
+              icon="bi-signpost-split"
+              value="Costo de oportunidad"
+              label="Recursos que no pueden usarse simultaneamente en otros bienes publicos"
+              detail="Agua, salud, educacion, seguridad, transporte e infraestructura compiten por presupuesto."
+            />
+          </div>
+        </>
       }
     />
   )
@@ -2973,20 +3542,36 @@ function Salud() {
       topic={topics.salud}
       dataCards={
         <>
-          <div className="col-md-6">
+          <div className="col-md-3 col-sm-6">
             <StatCard
-              icon="bi-hospital"
-              value="81"
-              label="Hospitales rurales de segundo nivel"
-              detail="Infraestructura clave para atención fuera de grandes centros urbanos."
+              icon="bi-cash-coin"
+              value="1,588 USD"
+              label="Gasto por persona en salud en Mexico"
+              detail="Promedio OCDE: 5,967 USD."
             />
           </div>
-          <div className="col-md-6">
+          <div className="col-md-3 col-sm-6">
+            <StatCard
+              icon="bi-person-vcard"
+              value="2.7"
+              label="Medicos por cada mil habitantes"
+              detail="Promedio OCDE: 3.9."
+            />
+          </div>
+          <div className="col-md-3 col-sm-6">
+            <StatCard
+              icon="bi-hospital"
+              value="1.0"
+              label="Cama hospitalaria por cada mil habitantes"
+              detail="Promedio OCDE: 4.2."
+            />
+          </div>
+          <div className="col-md-3 col-sm-6">
             <StatCard
               icon="bi-clipboard2-pulse"
-              value="3,982"
-              label="Unidades Médicas Rurales"
-              detail="La magnitud no garantiza por sí sola atención efectiva si faltan personal, insumos o referencia."
+              value="44.5 millones"
+              label="Personas con carencia por acceso a salud"
+              detail="Dato de INEGI citado en el MD."
             />
           </div>
         </>
@@ -3014,27 +3599,35 @@ function Seguridad() {
           data={impunityData}
           xKey="crime"
           yKey="value"
-          title="Impunidad por tipo de delito"
-          description="Porcentaje reportado para violencia familiar y narcomenudeo."
+          title="Cifra negra e impunidad"
+          description="Una grafica basta para mostrar la magnitud del problema."
           unit="%"
         />
       }
       dataCards={
         <>
-          <div className="col-md-6">
+          <div className="col-md-4">
             <StatCard
-              icon="bi-file-earmark-check"
-              value="16 de 32"
-              label="Fiscalías estatales con documento formal de política de persecución penal"
-              detail="Se entiende mejor como dato institucional que como dona."
+              icon="bi-eye-slash"
+              value="93.2%"
+              label="Cifra negra estimada por ENVIPE 2025"
+              detail="Delitos que no se denuncian o no derivan en investigacion."
             />
           </div>
-          <div className="col-md-6">
+          <div className="col-md-4">
             <StatCard
               icon="bi-house-exclamation"
               value="29%"
-              label="Hogares con al menos una víctima de delito en el último año"
-              detail="Equivale a más de 11.4 millones de viviendas."
+              label="Hogares con al menos una victima de delito"
+              detail="Mas de 11.4 millones de viviendas, segun el MD."
+            />
+          </div>
+          <div className="col-md-4">
+            <StatCard
+              icon="bi-shop-window"
+              value="Extorsion"
+              label="Impuesto criminal sobre negocios y familias"
+              detail="Se explica como fenomeno economico y de control territorial."
             />
           </div>
         </>
@@ -3050,56 +3643,58 @@ export default Seguridad
 import StatCard from '../components/StatCard'
 import TopicPageScaffold from '../components/TopicPageScaffold'
 import VisualPanel from '../components/VisualPanel'
-import HorizontalBarChart from '../components/charts/HorizontalBarChart'
-import { inequalityOriginData } from '../data/chartData'
 import { topics } from '../data/topics'
 
 function Sociedad() {
   return (
     <TopicPageScaffold
-      topic={topics.sociedad}
-      charts={
-        <HorizontalBarChart
-          data={inequalityOriginData}
-          yKey="factor"
-          title="Factores de desigualdad de origen"
-          description="Peso relativo de condiciones de origen señaladas en el documento."
-          unit="%"
-          height={360}
-        />
-      }
+      topic={topics.pobreza}
       dataCards={
         <>
-          <div className="col-md-4">
+          <div className="col-md-3 col-sm-6">
             <StatCard
               icon="bi-people"
-              value="29.6%"
-              label="Población en pobreza multidimensional"
-              detail="La cifra resume carencias acumuladas, no solo ingreso."
+              value="38.5 millones"
+              label="Personas en pobreza multidimensional en 2024"
+              detail="Equivale a 29.6% de la poblacion."
             />
           </div>
-          <div className="col-md-4">
+          <div className="col-md-3 col-sm-6">
             <StatCard
               icon="bi-exclamation-circle"
-              value="5.3%"
-              label="Población en pobreza extrema"
-              detail="Representa una condición de carencia más profunda."
+              value="7.0 millones"
+              label="Personas en pobreza extrema"
+              detail="5.3% de la poblacion."
             />
           </div>
-          <div className="col-md-4">
+          <div className="col-md-3 col-sm-6">
             <StatCard
-              icon="bi-signpost"
-              value="48%"
-              label="Desigualdad asociada con falta de igualdad de oportunidades desde el nacimiento"
-              detail="Explica por qué la movilidad social no depende solo del esfuerzo individual."
+              icon="bi-journal-x"
+              value="24.2 millones"
+              label="Personas con rezago educativo"
+              detail="Una carencia que condiciona empleo y movilidad."
+            />
+          </div>
+          <div className="col-md-3 col-sm-6">
+            <StatCard
+              icon="bi-heart-pulse"
+              value="44.5 millones"
+              label="Personas con carencia por acceso a salud"
+              detail="Muestra la distancia entre ingreso y derechos efectivos."
             />
           </div>
         </>
       }
       extraPanels={
-        <VisualPanel title="Movilidad social">
-          <p className="featured-quote">{topics.sociedad.featured}</p>
-          <p>{topics.sociedad.dataPoint}</p>
+        <VisualPanel
+          title="Lectura territorial"
+          description="La desigualdad no se distribuye igual: Chiapas, Guerrero y Oaxaca siguen concentrando rezagos importantes."
+        >
+          <div className="territory-strip">
+            <span>Norte industrial</span>
+            <span>Centro urbano</span>
+            <span>Sur con rezagos persistentes</span>
+          </div>
         </VisualPanel>
       }
     />
@@ -3545,6 +4140,224 @@ export default Sociedad
 .footer-links a:hover,
 .footer-links a:focus {
   color: var(--secondary);
+}
+
+.academic-note {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--outline-variant);
+  color: var(--on-surface);
+  font-weight: 700;
+}
+
+.citation-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.citation-tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 6px 10px;
+  background: var(--surface-container-low);
+  border: 1px solid var(--outline-variant);
+  border-radius: 999px;
+  color: var(--secondary);
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.citation-tag::before {
+  margin-right: 6px;
+  content: 'Fuente:';
+  color: var(--on-surface-variant);
+  font-weight: 700;
+}
+
+.citation-tag:hover,
+.citation-tag:focus {
+  border-color: var(--secondary);
+  color: var(--secondary);
+}
+
+.warning-note {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 16px;
+  margin-top: 24px;
+  padding: 22px;
+  background: var(--warning-bg);
+  border: 1px solid #e4c46c;
+  border-radius: var(--radius-sm);
+  color: var(--warning-text);
+}
+
+.warning-note i {
+  font-size: 1.35rem;
+}
+
+.warning-note h3,
+.warning-note p {
+  color: var(--warning-text);
+}
+
+.cause-effect-flow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px;
+}
+
+.flow-panel {
+  margin-top: 24px;
+  padding: 26px;
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-sm);
+}
+
+.flow-node {
+  position: relative;
+  min-height: 82px;
+  display: grid;
+  align-items: center;
+  padding: 16px;
+  background: var(--surface);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-sm);
+  color: var(--on-surface);
+  font-weight: 800;
+}
+
+.flow-node:not(:last-child)::after {
+  position: absolute;
+  right: -12px;
+  z-index: 1;
+  color: var(--secondary);
+  content: '→';
+  font-size: 1.15rem;
+}
+
+.opportunity-limit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.opportunity-limit-grid article {
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-sm);
+}
+
+.opportunity-limit-grid ul {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 18px;
+}
+
+.problem-explainer,
+.case-block {
+  max-width: 920px;
+  padding: 32px;
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-sm);
+}
+
+.problem-explainer p {
+  color: var(--on-surface-variant);
+  font-size: 1.08rem;
+}
+
+.explainer-grid,
+.case-grid,
+.institution-mini-grid,
+.source-groups {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.mini-explainer,
+.source-group,
+.normalization-card,
+.human-impact-card {
+  background: var(--surface);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-sm);
+}
+
+.mini-explainer {
+  padding: 20px;
+}
+
+.mini-explainer h4 {
+  margin-bottom: 8px;
+  color: var(--on-surface);
+  font-family: var(--font-heading);
+  font-size: 1.12rem;
+}
+
+.case-grid {
+  margin-top: 24px;
+}
+
+.case-block p:last-child {
+  color: var(--on-surface-variant);
+}
+
+.human-impact-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+  padding: 18px;
+}
+
+.human-impact-card i {
+  color: var(--secondary);
+  font-size: 1.25rem;
+}
+
+.human-impact-card h3 {
+  font-size: 1.05rem;
+}
+
+.visual-divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 28px 0;
+  color: var(--on-surface-variant);
+  font-weight: 800;
+}
+
+.visual-divider::before,
+.visual-divider::after {
+  height: 1px;
+  flex: 1;
+  background: var(--outline-variant);
+  content: '';
+}
+
+.territory-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.territory-strip span {
+  padding: 18px;
+  background: var(--surface);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-sm);
+  color: var(--primary);
+  font-weight: 800;
 }
 </file>
 
@@ -4107,6 +4920,112 @@ button:focus-visible {
 .not-found-page {
   padding: 96px 0;
 }
+
+.thesis-section {
+  background: var(--surface);
+}
+
+.editorial-lead {
+  padding: 34px;
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-sm);
+}
+
+.editorial-lead p {
+  color: var(--on-surface-variant);
+  font-size: 1.07rem;
+}
+
+.connection-map {
+  display: grid;
+  gap: 18px;
+}
+
+.visual-reading-section .chart-grid {
+  margin-bottom: 18px;
+}
+
+.bibliography-section {
+  background: var(--surface);
+}
+
+.source-group {
+  padding: 24px;
+}
+
+.source-group h3 {
+  font-size: 1.25rem;
+}
+
+.source-group ul {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding-left: 18px;
+}
+
+.source-group a {
+  color: var(--on-surface);
+  text-decoration: none;
+}
+
+.source-group a:hover,
+.source-group a:focus {
+  color: var(--secondary);
+  text-decoration: underline;
+}
+
+.conclusion-hero {
+  padding: 110px 0 96px;
+  background:
+    linear-gradient(90deg, rgba(24, 36, 27, 0.9), rgba(24, 36, 27, 0.72)),
+    var(--primary);
+  color: var(--on-primary);
+}
+
+.conclusion-copy {
+  max-width: 880px;
+}
+
+.conclusion-copy h1,
+.conclusion-copy p {
+  color: var(--on-primary);
+}
+
+.conclusion-copy p:last-child {
+  max-width: 760px;
+  font-size: 1.2rem;
+}
+
+.normalization-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 16px;
+  min-height: 120px;
+  padding: 24px;
+}
+
+.normalization-card i {
+  color: var(--secondary);
+  font-size: 1.35rem;
+}
+
+.normalization-card p {
+  color: var(--on-surface);
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  line-height: 1.32;
+}
+
+.closing-essay {
+  max-width: 920px;
+  margin-top: 22px;
+  padding-top: 22px;
+  border-top: 1px solid var(--outline-variant);
+  color: var(--on-surface-variant);
+  font-size: 1.08rem;
+}
 </file>
 
 <file path="src/styles/responsive.css">
@@ -4137,7 +5056,13 @@ button:focus-visible {
 
   .chart-grid,
   .opportunity-grid,
-  .matrix-grid {
+  .matrix-grid,
+  .opportunity-limit-grid,
+  .explainer-grid,
+  .case-grid,
+  .institution-mini-grid,
+  .source-groups,
+  .territory-strip {
     grid-template-columns: 1fr;
   }
 
@@ -4224,6 +5149,17 @@ button:focus-visible {
     transform: rotate(90deg);
   }
 
+  .cause-effect-flow {
+    grid-template-columns: 1fr;
+  }
+
+  .flow-node:not(:last-child)::after {
+    right: auto;
+    bottom: -18px;
+    left: 18px;
+    transform: rotate(90deg);
+  }
+
   .dashboard-tabs {
     flex-wrap: nowrap;
     overflow-x: auto;
@@ -4264,8 +5200,19 @@ button:focus-visible {
   .table-panel,
   .narrative-card,
   .connections-panel,
-  .key-idea-panel {
+  .key-idea-panel,
+  .problem-explainer,
+  .flow-panel,
+  .source-group,
+  .normalization-card,
+  .editorial-lead {
     padding: 20px;
+  }
+
+  .warning-note,
+  .human-impact-card,
+  .normalization-card {
+    grid-template-columns: 1fr;
   }
 
   .highlight-list li {
@@ -4314,6 +5261,11 @@ button:focus-visible {
 
   --outline: #747873;
   --outline-variant: #c3c8c2;
+  --accent-blue: #315f72;
+  --accent-green: #516a46;
+  --accent-gold: #8a6d2d;
+  --warning-bg: #fff5d8;
+  --warning-text: #6b4b00;
 
   --background: #faf9f7;
   --on-background: #1a1c1b;
@@ -4338,6 +5290,97 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
 })
+</file>
+
+<file path=".gitignore">
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# repomix
+repomix-output.xml
+</file>
+
+<file path="src/data/topicImages.js">
+// Cambia aqui las URL de las imagenes. Cada pagina lee su imagen desde este archivo.
+
+export const topicImages = {
+  panorama: {
+    src: 'https://movimientoantorchista.org.mx/uploads/images/20200816072558.jpg',
+    alt: 'Vista urbana de México relacionada con sus retos actuales',
+    caption:
+      'México enfrenta oportunidades importantes, pero también desafíos económicos, sociales e institucionales.',
+  },
+  economia: {
+    src: 'https://images.unsplash.com/photo-1494412651409-8963ce7935a7?auto=format&fit=crop&w=1400&q=80',
+    alt: 'Zona industrial relacionada con economía y cadenas de suministro',
+    caption:
+      'La economía mexicana combina oportunidades de inversión con retos de infraestructura y desigualdad regional.',
+  },
+  pemex: {
+    src: 'https://images.unsplash.com/photo-1516937941344-00b4e0337589?auto=format&fit=crop&w=1400&q=80',
+    alt: 'Infraestructura energética relacionada con petróleo y finanzas públicas',
+    caption:
+      'Pemex representa uno de los mayores retos fiscales y financieros para el país.',
+  },
+  instituciones: {
+    src: 'https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=1400&q=80',
+    alt: 'Edificio institucional relacionado con Estado de derecho',
+    caption:
+      'La fortaleza institucional es clave para la transparencia, la regulación y la confianza pública.',
+  },
+  seguridad: {
+    src: 'https://cdn01.pucp.education/idehpucp/images/2025/07/asdaf-1024x576-1.jpg',
+    alt: 'Escena urbana relacionada con seguridad pública y justicia',
+    caption:
+      'La impunidad y la desconfianza ciudadana son retos centrales para el sistema de justicia.',
+  },
+  sociedad: {
+    src: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1400&q=80',
+    alt: 'Personas en un entorno comunitario relacionado con desigualdad social',
+    caption:
+      'La pobreza y la desigualdad limitan la movilidad social y el acceso a oportunidades.',
+  },
+  educacion: {
+    src: 'https://www.eluniversal.com.mx/resizer/v2/XJF6GJVOJZEI5KEK55GVNDF7DI.jpg?auth=27c6c943359c92f5e22fa9a9568027768ca0586a7ed1f6552e304e8d8228f340&smart=true&height=666',
+    alt: 'Aula relacionada con educación y aprendizaje',
+    caption:
+      'El rezago educativo compromete la competitividad y el desarrollo futuro de México.',
+  },
+  agua: {
+    src: 'https://extraconfidencial.com/wp-content/uploads/2020/05/water-pollution.jpg',
+    alt: 'Paisaje relacionado con agua y medio ambiente',
+    caption:
+      'La crisis hídrica es un límite ambiental, económico y social para el desarrollo del país.',
+  },
+  salud: {
+    src: 'https://www.movimientoantorchista.org.mx/uploads/images/image_750x422_62beebc5bbef6.jpg',
+    alt: 'Hospital relacionado con salud pública',
+    caption:
+      'El sistema de salud busca ampliar cobertura, pero enfrenta retos de abasto, personal e infraestructura.',
+  },
+}
 </file>
 
 </files>

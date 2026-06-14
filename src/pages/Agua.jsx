@@ -13,7 +13,7 @@ function Agua() {
           data={waterAvailabilityData}
           yKey="label"
           title="Disponibilidad natural media por habitante"
-          description="Caida historica y proyeccion hacia 2030 citadas por IMTA."
+          description="Caida historica y proyeccion hacia 2030 reportadas por IMTA."
           unit="m3 anuales"
           height={300}
         />
@@ -25,7 +25,7 @@ function Agua() {
               icon="bi-map"
               value="66%"
               label="Territorio nacional arido o semiarido"
-              detail="Dato citado por el IMTA."
+              detail="Dato reportado por el IMTA."
             />
           </div>
           <div className="col-md-4">
@@ -41,7 +41,7 @@ function Agua() {
               icon="bi-tools"
               value="35%"
               label="Perdida aproximada de agua por fugas en CDMX"
-              detail="Dato citado en el MD a partir de especialistas de la UNAM."
+              detail="Dato retomado de especialistas de la UNAM."
             />
           </div>
         </>

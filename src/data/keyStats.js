@@ -1,7 +1,7 @@
 export const keyStats = [
   {
     value: '1.1%',
-    label: 'Crecimiento del PIB para 2026 en el ajuste reportado citado por el MD',
+    label: 'Crecimiento del PIB para 2026 en el ajuste reportado',
     category: 'Economia',
   },
   {
@@ -11,7 +11,7 @@ export const keyStats = [
   },
   {
     value: '40,000 mdd',
-    label: 'Apoyo federal a Pemex citado para 2025',
+    label: 'Apoyo federal a Pemex reportado para 2025',
     category: 'Finanzas publicas',
   },
   {

@@ -37,7 +37,7 @@ function Salud() {
               icon="bi-clipboard2-pulse"
               value="44.5 millones"
               label="Personas con carencia por acceso a salud"
-              detail="Dato de INEGI citado en el MD."
+              detail="Dato de INEGI sobre carencia por acceso a salud."
             />
           </div>
         </>

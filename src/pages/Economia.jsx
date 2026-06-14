@@ -16,7 +16,7 @@ function Economia() {
             xKey="year"
             yKey="value"
             title="Crecimiento del PIB"
-            description="Banxico y ajuste posterior citado en el MD para 2026."
+            description="Banxico y el ajuste posterior reportado para 2026."
           />
           <BarChartBox
             data={iedCompositionData}

@@ -9,7 +9,7 @@ function DataGrid() {
         <SectionIntro
           eyebrow="Datos clave"
           title="Cifras para dimensionar los retos"
-          summary="Una selección de indicadores presentes en el documento base para leer economía, sociedad, educación, agua y salud con mayor claridad."
+          summary="Una selección de indicadores clave para leer economía, sociedad, educación, agua y salud con mayor claridad."
         />
         <div className="row g-4">
           {keyStats.map((stat) => (

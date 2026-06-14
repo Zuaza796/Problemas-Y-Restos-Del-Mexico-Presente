@@ -12,7 +12,7 @@ function Educacion() {
         <ComparisonChart
           data={pisaComparisonData}
           title="PISA 2022: Mexico vs OCDE"
-          description="Puntaje promedio citado por IMCO."
+          description="Puntaje promedio reportado por IMCO."
           unit="puntos"
         />
       }
@@ -38,7 +38,7 @@ function Educacion() {
             <StatCard
               icon="bi-clipboard-data"
               value="Menos evaluacion"
-              label="INEE eliminado y Mejoredu desaparecida, segun el MD"
+              label="INEE eliminado y Mejoredu desaparecida, segun IMCO"
               detail="El reto es diagnosticar sin perder independencia tecnica."
             />
           </div>

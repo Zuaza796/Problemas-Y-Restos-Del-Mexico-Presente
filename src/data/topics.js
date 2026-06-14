@@ -105,7 +105,7 @@ export const topics = {
     problemIntro:
       'Pemex arrastra deuda elevada, necesidades constantes de liquidez y dependencia del apoyo federal. El tema no se reduce a estar a favor o en contra de una empresa estatal; la pregunta publica es cuanto espacio fiscal absorbe y que prioridades desplaza.',
     background:
-      'Moodys advirtio, segun la cobertura citada por Infobae, que Pemex mantendra alta presion financiera al menos hasta 2028 por debil flujo de caja libre, vulnerabilidades operativas y dependencia del gobierno. El MD senala apoyos superiores a 40,000 millones de dolares en 2025 y alrededor de 14,000 millones presupuestados en 2026 para obligaciones de corto plazo.',
+      'Moodys advirtio, segun la cobertura de Infobae, que Pemex mantendra alta presion financiera al menos hasta 2028 por debil flujo de caja libre, vulnerabilidades operativas y dependencia del gobierno. Tambien se reportan apoyos superiores a 40,000 millones de dolares en 2025 y alrededor de 14,000 millones presupuestados en 2026 para obligaciones de corto plazo.',
     causes: [
       {
         title: 'Deuda y vencimientos',
@@ -236,7 +236,7 @@ export const topics = {
     conclusion:
       'La pobreza mexicana no es una cifra abstracta: es una red de obstaculos. Reducirla exige ingresos, pero tambien servicios publicos efectivos y evaluacion independiente.',
     table: {
-      columns: ['Dimension', 'Dato del MD', 'Lectura social'],
+      columns: ['Dimension', 'Dato clave', 'Lectura social'],
       rows: [
         ['Pobreza multidimensional', '38.5 millones de personas', 'La mejora no elimina la gravedad del rezago'],
         ['Pobreza extrema', '7.0 millones de personas', 'Carencia profunda que requiere intervencion prioritaria'],
@@ -301,7 +301,7 @@ export const topics = {
       },
       {
         title: 'Manejar con cuidado el calendario escolar',
-        text: 'El MD marca el debate del ciclo 2025-2026 como punto a verificar. No debe presentarse como hecho cerrado sin documento oficial vigente de SEP o DOF.',
+        text: 'El debate del ciclo 2025-2026 debe tratarse como punto a verificar. No debe presentarse como hecho cerrado sin documento oficial vigente de SEP o DOF.',
       },
     ],
     connections:
@@ -351,7 +351,7 @@ export const topics = {
       },
       {
         title: 'Abasto y compras publicas',
-        text: 'El problema de medicamentos incluye compras, distribucion, vigilancia, corrupcion y mercado irregular. El periodismo citado en el MD se usa como contexto de esas fallas.',
+        text: 'El problema de medicamentos incluye compras, distribucion, vigilancia, corrupcion y mercado irregular. El periodismo de investigacion se usa como contexto de esas fallas.',
       },
     ],
     consequences: [
@@ -414,7 +414,7 @@ export const topics = {
     problemIntro:
       'El problema de seguridad no termina al contar delitos. Importa si la victima denuncia, si la fiscalia investiga, si hay peritajes, si se integra bien la carpeta, si llega a sancion y si la persona recupera confianza en el sistema.',
     background:
-      'ENVIPE 2025 estima millones de victimas adultas y delitos, asi como una percepcion de inseguridad muy alta. El MD subraya la cifra negra como el dato que desnuda al sistema: cuando delitos no se denuncian o no se investigan, la realidad criminal supera lo que dicen los registros oficiales.',
+      'ENVIPE 2025 estima millones de victimas adultas y delitos, asi como una percepcion de inseguridad muy alta. La cifra negra desnuda al sistema: cuando delitos no se denuncian o no se investigan, la realidad criminal supera lo que dicen los registros oficiales.',
     causes: [
       {
         title: 'Miedo y desconfianza',
@@ -563,7 +563,7 @@ export const topics = {
     problemIntro:
       'El debilitamiento de organismos autonomos y los cambios judiciales afectan la forma en que se mide la pobreza, se regula la competencia, se protege informacion publica, se ordena energia, se evalua educacion y se resuelven conflictos.',
     background:
-      'El Senado aprobo la desaparicion de siete organismos autonomos y reguladores, entre ellos INAI, CONEVAL, IFT, COFECE, CRE, CNH y Mejoredu. El argumento oficial fue austeridad y simplificacion, pero el riesgo senalado en el MD es la perdida de vigilancia independiente y la concentracion de funciones en el gobierno.',
+      'El Senado aprobo la desaparicion de siete organismos autonomos y reguladores, entre ellos INAI, CONEVAL, IFT, COFECE, CRE, CNH y Mejoredu. El argumento oficial fue austeridad y simplificacion, pero el riesgo principal es la perdida de vigilancia independiente y la concentracion de funciones en el gobierno.',
     causes: [
       {
         title: 'Concentracion de funciones',

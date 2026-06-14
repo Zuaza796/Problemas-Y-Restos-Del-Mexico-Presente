@@ -33,7 +33,7 @@ function Seguridad() {
               icon="bi-house-exclamation"
               value="29%"
               label="Hogares con al menos una victima de delito"
-              detail="Mas de 11.4 millones de viviendas, segun el MD."
+              detail="Mas de 11.4 millones de viviendas, de acuerdo con ENVIPE 2025."
             />
           </div>
           <div className="col-md-4">
